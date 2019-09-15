@@ -7,7 +7,7 @@
 #X obj 145 232 line~;
 #X msg 150 194 1 \, 0 500;
 #X obj 120 282 *~ 0.5;
-#X obj 120 303 dac~ 1 2;
+#X obj 120 337 dac~ 1;
 #X connect 1 0 0 0;
 #X connect 1 0 2 0;
 #X connect 2 0 6 0;
@@ -16,4 +16,3 @@
 #X connect 5 0 4 1;
 #X connect 6 0 5 0;
 #X connect 7 0 8 0;
-#X connect 7 0 8 1;
