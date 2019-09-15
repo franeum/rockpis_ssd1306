@@ -1,5 +1,16 @@
 # myrockpis_test
 
-* install alsa: sudo apt install alsa-tools
-* install puredata: sudo apt install puredata
-* starting puredata: puredata -nogui
+upgrade system:
+```
+sudo apt-get update
+sudo apt-get dist-upgrade
+```
+install alsa: 
+```
+sudo apt install alsa-tools
+sudo apt install puredata
+```
+starting puredata: 
+```
+puredata -nogui file.pd
+```
