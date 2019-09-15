@@ -7,7 +7,7 @@ sudo apt-get dist-upgrade
 ```
 install alsa: 
 ```
-sudo apt install alsa-tools
+sudo apt install alsa-utils
 sudo apt install puredata
 ```
 starting puredata with output device 3: 
