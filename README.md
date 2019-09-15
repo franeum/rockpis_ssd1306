@@ -12,5 +12,5 @@ sudo apt install puredata
 ```
 starting puredata with output device 3: 
 ```
-puredata -nogui -alsa -outchannels 3 file.pd
+puredata -nogui -alsa -audiooutdev 3 file.pd
 ```
