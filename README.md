@@ -10,7 +10,7 @@ install alsa:
 sudo apt install alsa-tools
 sudo apt install puredata
 ```
-starting puredata: 
+starting puredata with output device 3: 
 ```
-puredata -nogui file.pd
+puredata -nogui -alsa -outchannels 3 file.pd
 ```
