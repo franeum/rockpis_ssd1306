@@ -1,5 +1,19 @@
 # myrockpis_test
 
+
+connessione con la rockpis:
+lato Mac:
+* attivare la condivisione internet e il bridge
+* da terminale cercare l'ip della scheda:
+```
+fping -g 192.168.x.0/24
+```
+* connettersi alla scheda via ssh:
+```
+ssh rock@192.168.x.x
+```
+* inserire la password
+
 upgrade system:
 ```
 sudo apt-get update
