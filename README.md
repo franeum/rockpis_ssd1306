@@ -14,7 +14,7 @@ verificare che lo spazio sulla SDcard sia giusto:
 ```
 df -h
 ```
-in caso di dimensioni errate eseguire le operazioni indicate in questo tutorial:
+in caso di dimensioni errate eseguire le operazioni indicate in questo tutorial:  
 https://www.youtube.com/watch?v=R4VovMDnsIE
 
 starting puredata with output device 3: 
