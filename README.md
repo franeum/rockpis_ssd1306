@@ -97,3 +97,5 @@ puredata -nogui -alsa -audiodev 3,3 -inchannels 8 file.pd
 ## pinout
 
 ![](/immagini/rockpis_audio_interface.png)
+
+*N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
