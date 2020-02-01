@@ -25,7 +25,8 @@ nmcli con show
 ```
 ip a
 ```
-l'ip potrebbe essere qualcosa come 10.0.x.x oppure 192.168.x.x. Annotare i primi 3 valori (es: 10.0.1 oppure 192.168.1). questi rappresentano l'indirizzo di sottorete (*subnet_addr*) che ci interessa
+l'ip potrebbe essere qualcosa come 10.0.x.x oppure 192.168.x.x. Annotare i primi 3 valori (es: 10.0.1 oppure 192.168.1). questi rappresentano l'indirizzo di sottorete (*subnet_addr*) che ci interessa. 
+
 6. collegare la *rockpis* alla porta ethernet e pingare l'intera sottorete:
 ```
 fping -r 1 -g subnet_addr.0/24
