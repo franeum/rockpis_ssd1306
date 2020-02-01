@@ -1,5 +1,56 @@
 # myrockpis_test
 
+## Collegare la *rockpis* via ssh su Debian
+
+### creare una connessione tramite la porta ethernet
+1. avviare una finestra di terminale e cercare il nome dell'interfaccia ethernet del computer:
+```
+ip a
+```
+l'interfaccia sarà **eth0** oppure qualcosa come **enxx**. Questo rappresenta il nostro *eth-device-name*  
+
+2. creare una connessione con il seguente comando:
+```
+nmcli con add con-name my-eth-1 ifname <eth-device-name> type ethernet ipv4.method shared
+```
+3. attivare la connessione:
+```
+nmcli con up my-eth-1
+```
+4. verificare che la connessione sia attiva:
+```
+nmcli con show
+```
+5. ottenere l'ip dell'interfaccia ethernet:
+```
+ip a
+```
+l'ip potrebbe essere qualcosa come 10.0.x.x oppure 192.168.x.x. Annotare i primi 3 valori (es: 10.0.1 oppure 192.168.1). questi rappresentano l'indirizzo di sottorete (*subnet_addr*) che ci interessa
+6. collegare la *rockpis* alla porta ethernet e pingare l'intera sottorete:
+```
+fping -r 1 -g subnet_addr.0/24
+```
+Nel mio caso l'ip della porta ethernet è 10.42.0.1, quindi per pingare la sottorete eseguirò il comando:  
+```
+fping -r 1 -g 10.42.0.0/24
+```
+Se tutto ha funzionato il comando dovrebbe restituire almeno due ip, quello della scheda ethernet del computer e quello della rockpis, nel mio caso:
+```
+$ fping -r 1 -g 10.42.0.0/24 2> /dev/null | grep -v -i unreachable 
+10.42.0.1 is alive
+10.42.0.250 is alive
+```
+7. il primo ip è quello locale, il secondo è quello della rockpis, a questo punto possiamo connetterci alla scheda con il protocollo ssh:
+```
+ssh rock@10.42.0.250
+```
+
+
+## riavviare la rete
+sudo /etc/init.d/networking stop
+sudo /etc/init.d/networking start
+
+
 
 connessione con la rockpis:
 lato Mac:
