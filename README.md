@@ -40,10 +40,13 @@ $ fping -r 1 -g 10.42.0.0/24 2> /dev/null | grep -v -i unreachable
 10.42.0.1 is alive
 10.42.0.250 is alive
 ```
-7. il primo ip è quello locale, il secondo è quello della rockpis, a questo punto possiamo connetterci alla scheda con il protocollo ssh:
+7. il primo ip è quello locale, il secondo è quello della rockpis, a questo punto possiamo connetterci (l'utente di default è *rock*) alla scheda con il protocollo ssh:
 ```
 ssh rock@10.42.0.250
 ```
+e inserire la password ```rock```
+
+
 
 
 ## riavviare la rete
