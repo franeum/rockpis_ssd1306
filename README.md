@@ -49,11 +49,7 @@ e inserire la password ```rock```
 
 
 
-## riavviare la rete
-sudo /etc/init.d/networking stop
-sudo /etc/init.d/networking start
-
-
+## Mac
 
 connessione con la rockpis:
 lato Mac:
@@ -68,6 +64,9 @@ ssh rock@192.168.x.x
 ```
 * inserire la password
 
+
+## Preparing the system
+
 upgrade system:
 ```
 sudo apt-get update
@@ -76,6 +75,7 @@ sudo apt-get dist-upgrade
 install alsa: 
 ```
 sudo apt install alsa-utils
+sudo apt install jackd2
 sudo apt install puredata
 ```
 verificare che lo spazio sulla SDcard sia giusto:
