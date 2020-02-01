@@ -1,4 +1,4 @@
-# myrockpis_test
+# rock pi s test
 
 ## Collegare la *rockpis* via ssh su Debian
 
@@ -95,7 +95,7 @@ puredata -nogui -alsa -audiodev 3,3 -inchannels 8 file.pd
 *TODO: using jack2 instead of alsamixer*
 
 ## pinout
-<p style="text-align:center;">
+<p align="center">
   <img src="/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
 </p>
 
