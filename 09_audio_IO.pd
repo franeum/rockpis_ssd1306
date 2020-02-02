@@ -1,0 +1,18 @@
+#N canvas 272 249 676 655 10;
+#X msg 318 64 \; pd dsp 1;
+#X obj 318 17 loadbang;
+#X obj 170 517 dac~;
+#X obj 173 177 adc~ 1;
+#X obj 300 401 delwrite~ \$0-d01 1000;
+#X obj 300 278 sig~ 250;
+#X obj 300 310 vd~ \$0-d01;
+#X obj 300 335 *~ 0.75;
+#X connect 1 0 0 0;
+#X connect 3 0 4 0;
+#X connect 3 0 2 0;
+#X connect 3 0 2 1;
+#X connect 5 0 6 0;
+#X connect 6 0 7 0;
+#X connect 7 0 4 0;
+#X connect 7 0 2 0;
+#X connect 7 0 2 1;
