@@ -101,3 +101,25 @@ puredata -nogui -alsa -audiodev 3,3 -inchannels 8 file.pd
 </p>
 
 *N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
+
+## avviare puredata al boot di rockpis
+
+1. installare **cron** 
+```
+sudo apt install cron
+```
+2. eseguire il seguente comando:
+```
+crontab -e
+```
+3. aggiungere questa voce al file che si apre:
+```
+@reboot puredata -nogui -alsa -audiodev 3,3 -inchannels 8 /path/to/file.pd
+```
+in questo modo il file file.pd si avvia con pd all'avvio del rockpis.
+
+
+## installare supercollider
+```
+sudo apt install supercollider
+```
