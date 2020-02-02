@@ -1,4 +1,4 @@
-#N canvas 619 373 851 539 12;
+#N canvas 623 401 851 539 12;
 #X obj 56 44 singleton~;
 #X obj 266 44 singleton2~;
 #X obj 66 54 singleton~;
@@ -34,5 +34,8 @@
 #X obj 177 313 catch~ sig;
 #X obj 307 314 catch~ sig2;
 #X obj 239 374 dac~;
+#X msg 469 61 \; pd dsp 1;
+#X obj 469 31 loadbang;
 #X connect 32 0 34 0;
 #X connect 33 0 34 1;
+#X connect 36 0 35 0;
