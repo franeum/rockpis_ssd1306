@@ -6,7 +6,7 @@
 #X obj 300 401 delwrite~ \$0-d01 1000;
 #X obj 300 278 sig~ 250;
 #X obj 300 310 vd~ \$0-d01;
-#X obj 300 335 *~ 0.75;
+#X obj 300 335 *~ 0.0;
 #X connect 1 0 0 0;
 #X connect 3 0 4 0;
 #X connect 3 0 2 0;
