@@ -92,7 +92,7 @@ starting puredata with output device 3:
 puredata -nogui -alsa -audiodev 3,3 -inchannels 8 file.pd
 ```
 
-*TODO: using jack2 instead of alsamixer*
+*TODO: using jackd2 instead of alsamixer*
 
 ## pinout
 
