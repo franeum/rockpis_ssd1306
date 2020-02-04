@@ -123,3 +123,9 @@ in questo modo il file file.pd si avvia con pd all'avvio del rockpis.
 ```
 sudo apt install supercollider
 ```
+
+# TODO:
+1. preparare delle synthDefs e inviarle a ```~/.local/share/SuperCollider/synthdefs```
+2. installare in python il modulo ```supercollider```
+3. avviare il server(```scsynth```)
+4. testare 
