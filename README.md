@@ -118,11 +118,32 @@ crontab -e
 ```
 in questo modo il file file.pd si avvia con pd all'avvio del rockpis.
 
+## Configurazione del wifi
 
-## installare supercollider
+attivare la connessione tramite il frontend ```nmtui``` di ```nm``` sull'interfaccia wireless ```wlan0```
+```
+sudo nmtui
+```
+
+## supercollider
+### introduzione
+
+Sclang ha bisogno di un display per funzionare, quindi data l'assenza dello stesso in rockpis, bisogna cercare un ambiente alternativo per guidare Scsynth. L'opzione è python e il modulo ```supercollider```. Successivamente all'installazione del software si può inviare al rockpis il file con le ```synthdefs```, avviare il motore audio (Scsynth) e iniziare a guidarlo da python.
+
+### installazione del software necessario
+
+Eseguire questi comandi per installare il software:
+
 ```
 sudo apt install supercollider
+sudo apt install liblo7 liblo-dev
+pip3 install Cython
+pip3 install liblo
+pip3 install supercollider
 ```
+*N.B. l'installazione di Cython potrebbe essere molto lunga*
+
+### 
 
 # TODO:
 1. preparare delle synthDefs e inviarle a ```~/.local/share/SuperCollider/synthdefs```
