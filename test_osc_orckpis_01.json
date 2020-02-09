@@ -1,0 +1,70 @@
+{
+  "type": "root",
+  "id": "root",
+  "linkId": "",
+  "color": "auto",
+  "css": "",
+  "default": "",
+  "value": "",
+  "precision": 2,
+  "address": "/root",
+  "preArgs": "",
+  "target": "",
+  "bypass": false,
+  "traversing": false,
+  "variables": {},
+  "tabs": [
+    {
+      "type": "tab",
+      "id": "tab_1",
+      "linkId": "",
+      "label": "auto",
+      "color": "auto",
+      "css": "",
+      "detached": true,
+      "default": "",
+      "value": "",
+      "precision": 2,
+      "address": "/tab_1",
+      "preArgs": "",
+      "target": "",
+      "bypass": false,
+      "variables": "@{parent.variables}",
+      "widgets": [
+        {
+          "type": "matrix",
+          "top": 0,
+          "left": 0,
+          "id": "matrix_1",
+          "linkId": "",
+          "width": 700,
+          "height": 700,
+          "label": "auto",
+          "color": "auto",
+          "css": "",
+          "widgetType": "toggle",
+          "matrix": [
+            8,
+            8
+          ],
+          "start": 0,
+          "spacing": 0,
+          "traversing": true,
+          "border": true,
+          "props": {},
+          "default": "",
+          "value": "",
+          "precision": 2,
+          "address": "/matrix_1",
+          "preArgs": "",
+          "target": "",
+          "bypass": false
+        }
+      ],
+      "tabs": [],
+      "scroll": true
+    }
+  ],
+  "scroll": true,
+  "label": false
+}

@@ -127,6 +127,17 @@ sudo nmtui
 puredata riceve tranquillamente i messaggi tramite l'oggetto ```netreceive```. 
 TODO: una *patch* generica di ricezione.
 
+Una volta che la connessione wi-fi del rockpis è attiva è possibile connettersi con lo stesso tramite il protocollo ```ssh```:
+
+```
+ssh rock@192.168.1.11
+```
+
+e scollegare quindi il cavo ethernet. Il rockpis comincia a camminare con le sue gambe!
+
+
+-----------------------------
+
 ## supercollider (ANCORA NON FUNZIONANTE)
 ### introduzione
 
