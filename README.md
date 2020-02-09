@@ -138,6 +138,10 @@ e scollegare quindi il cavo ethernet. Il rockpis comincia a camminare con le sue
 
 -----------------------------
 
+## setup di jack
+
+### TODO
+
 ## supercollider (ANCORA NON FUNZIONANTE)
 ### introduzione
 
