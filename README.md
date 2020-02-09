@@ -124,8 +124,21 @@ attivare la connessione tramite il frontend ```nmtui``` di ```nm``` sull'interfa
 ```
 sudo nmtui
 ```
+puredata riceve tranquillamente i messaggi tramite l'oggetto ```netreceive```. 
+TODO: una *patch* generica di ricezione.
 
-## supercollider
+Una volta che la connessione wi-fi del rockpis è attiva è possibile connettersi con lo stesso tramite il protocollo ```ssh```:
+
+```
+ssh rock@192.168.1.11
+```
+
+e scollegare quindi il cavo ethernet. Il rockpis comincia a camminare con le sue gambe!
+
+
+-----------------------------
+
+## supercollider (ANCORA NON FUNZIONANTE)
 ### introduzione
 
 Sclang ha bisogno di un display per funzionare, quindi data l'assenza dello stesso in rockpis, bisogna cercare un ambiente alternativo per guidare Scsynth. L'opzione è python e il modulo ```supercollider```. Successivamente all'installazione del software si può inviare al rockpis il file con le ```synthdefs```, avviare il motore audio (Scsynth) e iniziare a guidarlo da python.
