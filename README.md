@@ -29,7 +29,7 @@ La scheda si presenta in varie configurazioni hardware, ma in questo progetto è
 
 ## Pinout audio
 <p align="center">
-  <img src="/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
+  <img src="https://raw.githubusercontent.com/franeum/rockpis_for_audio/master/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
 </p>
 
 *N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
