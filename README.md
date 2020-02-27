@@ -1,6 +1,5 @@
-# rockpis for audio. Appunti sparsi di configurazione
+# `rockpis` for audio. Appunti sparsi di configurazione
 
-----------
 ----------
 
 # Indice
