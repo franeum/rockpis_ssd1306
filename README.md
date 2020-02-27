@@ -2,9 +2,9 @@
 
 ## Indice
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
-  * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
-  * [Collegarsi a rockpis con Mac OS x](#mac-os-x)  
-  
+    * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
+    * [Collegarsi a rockpis con Mac OS x](#mac-os-x)  
+
 2. [Aggiornare il sistema e installare il software audio](#preparing-the-system)  
 3. [Configurazione del wifi](#configurazione-del-wifi)  
 4. [Pinout](#pinout)  
@@ -14,8 +14,8 @@
 8. [`jack` in realtime priority](#jack-in-realtime-priority)  
 9. [Installazione di `supercollider`](#installazione-di-supercollider)   
 10. [Uso di un display virtuale con `xvfb`](#uso-di-un-display-virtuale-con-xvfb)   
-  * [Installazione di `xvfb`](#installazione-di-xvfb)  
-  * [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)   
+    * [Installazione di `xvfb`](#installazione-di-xvfb)  
+    * [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)   
  
 11. [Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
 12. [Opzione `python`](#opzione-python)
