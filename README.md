@@ -5,7 +5,7 @@
 # Indice
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
     * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
-    * [Collegarsi a rockpis con Mac OS x](#mac-os-x)  
+    * [Collegarsi a rockpis con Mac OS X](#mac-os-x)  
 
 2. [Aggiornare il sistema e installare il software audio](#preparing-the-system)
 3. [Configurazione del wifi](#configurazione-del-wifi)
