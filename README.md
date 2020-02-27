@@ -1,4 +1,22 @@
-# rock pi s test
+# rock pi s test. Appunti sparsi di configurazione
+
+## Indice
+[Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
+[Collegarsi a rockpis con Mac OS x](#mac-os-x)  
+[Aggiornare il sistema e installare il software audio](#preparing-the-system) 
+[Configurazione del wifi](#configurazione-del-wifi)  
+[Pinout](#pinout)  
+[Installare e avviare `puredata`](#installare-e-avviare-puredata)  
+[Avviare `puredata` al boot di rockpis](avviare-puredata-al-boot-di-rockpis)  
+[setup di `jack`](#setup-di-jack)  
+[`jack` in realtime priority](#jack-in-realtime-priority)  
+[Installazione di `supercollider`](#installazione-di-supercollider)   
+[Uso di un display virtuale con `xvfb`](#uso-di-un-display-virtuale-con-xvfb)   
+  1. [Installazione di `xvfb`](#installazione-di-xvfb)  
+  2. [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)  
+[Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)  
+[Opzione `python`](#opzione-python)
+
 
 ## Collegare la *rockpis* via ssh su Debian
 
@@ -50,7 +68,7 @@ e inserire la password ```rock```
 
 
 
-## Mac
+## Mac OS X
 
 connessione con la rockpis:
 lato Mac:
@@ -63,7 +81,14 @@ fping -g 192.168.x.0/24
 ```
 ssh rock@192.168.x.x
 ```
-* inserire la password
+oppure (più comodo):
+```
+ssh rock@rockpis
+```
+* inserire la password (`rock`)
+
+
+
 
 
 ## Preparing the system
@@ -77,7 +102,6 @@ install alsa:
 ```
 sudo apt install alsa-utils
 sudo apt install jackd2
-sudo apt install puredata
 ```
 verificare che lo spazio sulla SDcard sia giusto:
 ```
@@ -86,37 +110,7 @@ df -h
 in caso di dimensioni errate eseguire le operazioni indicate in questo tutorial:  
 https://www.youtube.com/watch?v=R4VovMDnsIE
 
-con ```alsamixer``` possiamo configurare i dac e gli adc
 
-starting puredata with output device 3: 
-```
-puredata -nogui -alsa -audiodev 3,3 -inchannels 8 file.pd
-```
-
-*TODO: using jackd2 instead of alsamixer*
-
-## pinout
-<p align="center">
-  <img src="/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
-</p>
-
-*N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
-
-## avviare puredata al boot di rockpis
-
-1. installare **cron** 
-```
-sudo apt install cron
-```
-2. eseguire il seguente comando:
-```
-crontab -e
-```
-3. aggiungere questa voce al file che si apre:
-```
-@reboot puredata -nogui -alsa -audiodev 3,3 -inchannels 8 /path/to/file.pd
-```
-in questo modo il file file.pd si avvia con pd all'avvio del rockpis.
 
 ## Configurazione del wifi
 
@@ -138,16 +132,155 @@ e scollegare quindi il cavo ethernet. Il rockpis comincia a camminare con le sue
 
 -----------------------------
 
+
+## pinout
+<p align="center">
+  <img src="/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
+</p>
+
+*N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
+
+
+## installare e avviare puredata
+
+```
+sudo apt install puredata
+```
+con ```alsamixer``` possiamo configurare i dac e gli adc
+
+starting puredata with output device 3: 
+```
+puredata -nogui -alsa -audiodev 3,3 -inchannels 8 file.pd
+```
+
+*TODO: using jackd2 instead of alsamixer*
+
+
+## avviare puredata al boot di rockpis
+
+1. installare **cron** 
+```
+sudo apt install cron
+```
+2. eseguire il seguente comando:
+```
+crontab -e
+```
+3. aggiungere questa voce al file che si apre:
+```
+@reboot puredata -nogui -alsa -audiodev 3,3 -inchannels 8 /path/to/file.pd
+```
+in questo modo il file file.pd si avvia con pd all'avvio del rockpis.
+
+
 ## setup di jack
 
-### TODO
+varificare il nome del dispositivo audio con il comando:
+```
+cat /proc/asound/cards
+```
+nel mio caso il dispositivo è ```rockchiprk3308a```.  
+Per avviare `jackd` su richiesta copiare la seguente riga nel file `~/.jackdrc` (se il file non esiste, crearlo con `vim ~/.jackdrc`):
+```
+/usr/bin/jackd -R -P 95 -d alsa -d hw:rockchiprk3308a -r 44100 -p 256
+```
+l'opzione -p è 1024, verificare che il valore 256 non crei troppi dropouts. In quel caso incrementare il valore (che deve essere una potenza di 2).
 
-## supercollider (ANCORA NON FUNZIONANTE)
-### introduzione
+
+
+## jack in realtime priority
+
+l'opzione -R del comando precedente tendenzialmente non funziona e restituisce il seguente errore:
+```
+Cannot use real-time scheduling (RR/95)(1: Operation not permitted)
+```
+Per abilitare la priorità realtime è necessario compiere i seguenti passi:
+
+
+1. Nella directory `/etc/security/limits.d/` verificare la presenza del file `audio.conf.disabled`. Se presente copiare il file con il nome `audio.conf`, tramite il seguente comando:
+```
+sudo cp audio.conf.disabled audio.conf
+```
+
+2. Nel file `audio.conf` verificare la presenza delle seguenti righe 
+```
+@audio   -  rtprio     95
+@audio   -  memlock    unlimited
+```
+
+3. Verificare l'esistenza del gruppo `audio` nel sistema con il comando `groups`. Se il grouppo non esiste, crearlo tramite il seguente comando:
+```
+sudo groupadd audio
+```
+
+4. Aggiungere l'utente al gruppo `audio`:
+```
+sudo usermod -a -G audio yourUserID
+```
+dove yourUserID sarà presumibilmente `rock`
+
+5. Uscire dal sistema e riloggarsi con `ssh`
+
+
+
+## Installazione di supercollider
+```
+sudo apt install supercollider
+```
+
+### uso di un display virtuale con xvfb
+#### installazione di xvfb
+```
+sudo apt update
+sudo apt install [-y] xvfb --fix-missing
+```
+
+#### avvio e test di sclang con xvfb
+```
+xvfb-run --auto-servernum /usr/bin/sclang ["$ @"]
+```
+
+A questo punto si apre un terminale interattivo `sclang`. Avviare il server:
+```
+s.boot
+```
+Create una funzione:
+```
+{SinOsc.ar([440,442],0,0.5)}.play
+```
+Spegnere il server e uscire dalla sessione interattiva:
+```
+s.quit
+0.quit
+```
+
+#### esecuzione di uno script sc
+
+Per eseguire uno script sc è succifiente eseguire il seguente comando:
+```
+xvfb-run --auto-servernum /usr/bin/sclang file.scd
+```
+All'interno del file è bene incapsulare come primo argomento del metodo `.waitForBoot()`.  
+
+Esempio:
+1. con `vim` creare il file `test.scd` e scrivere al suo interno le seguenti righe:
+```
+Server.default.waitForBoot({
+        {SinOsc.ar([440,442],0,0.5)}.play
+})
+```
+2. salvare e uscire con `:wq`
+3. eseguire il seguente comando per avviare `sclang` con `scsynth` e `jackd`:
+```
+xvfb-run --auto-servernum sclang test.scd
+```
+
+
+### opzione python (non ancora funzionante)
 
 Sclang ha bisogno di un display per funzionare, quindi data l'assenza dello stesso in rockpis, bisogna cercare un ambiente alternativo per guidare Scsynth. L'opzione è python e il modulo ```supercollider```. Successivamente all'installazione del software si può inviare al rockpis il file con le ```synthdefs```, avviare il motore audio (Scsynth) e iniziare a guidarlo da python.
 
-### installazione del software necessario
+#### installazione del software necessario
 
 Eseguire questi comandi per installare il software:
 
