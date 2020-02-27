@@ -159,7 +159,7 @@ puredata -nogui -jack file.pd
 ```
 dopo aver [configurato opportunamente](#setup-di-jack) `jack`. Se `jack` non si auto-avvia all'avvio di `puredata`, eseguire da shell il coseguente comando:
 
-```sh
+```sh 
 bash ./.jackdrc
 ```
 
