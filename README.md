@@ -1,8 +1,9 @@
 # rockpis for audio. Appunti sparsi di configurazione
 
 ----------
+----------
 
-## Indice
+# Indice
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
     * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
     * [Collegarsi a rockpis con Mac OS x](#mac-os-x)  
