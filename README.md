@@ -13,8 +13,8 @@
 [Installazione di `supercollider`](#installazione-di-supercollider)   
 [Uso di un display virtuale con `xvfb`](#uso-di-un-display-virtuale-con-xvfb)   
   1. [Installazione di `xvfb`](#installazione-di-xvfb)  
-  2. [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)  
-[Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)  
+  2. [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)    
+[Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
 [Opzione `python`](#opzione-python)
 
 
@@ -159,7 +159,7 @@ puredata -nogui -jack file.pd
 ```
 dopo aver [configurato opportunamente](#setup-di-jack) `jack`. Se `jack` non si auto-avvia all'avvio di `puredata`, eseguire da shell il coseguente comando:
 
-```sh 
+``` 
 bash ./.jackdrc
 ```
 
@@ -280,7 +280,7 @@ Server.default.waitForBoot({
 2. salvare e uscire con `:wq`
 3. eseguire il seguente comando per avviare `sclang` con `scsynth` e `jackd`:
 ```
-xvfb-run --auto-servernum sclang test.scd
+xvfb-run --auto-servernum sclang test.scd  
 ```
 
 
@@ -292,7 +292,7 @@ Sclang ha bisogno di un display per funzionare, quindi data l'assenza dello stes
 
 Eseguire questi comandi per installare il software:
 
-```
+```python
 sudo apt install supercollider
 sudo apt install liblo7 liblo-dev
 pip3 install Cython
