@@ -3,7 +3,7 @@
 ## Indice
 [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
 [Collegarsi a rockpis con Mac OS x](#mac-os-x)  
-[Aggiornare il sistema e installare il software audio](#preparing-the-system) 
+[Aggiornare il sistema e installare il software audio](#preparing-the-system)  
 [Configurazione del wifi](#configurazione-del-wifi)  
 [Pinout](#pinout)  
 [Installare e avviare `puredata`](#installare-e-avviare-puredata)  
