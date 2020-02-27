@@ -1,5 +1,8 @@
 # rockpis for audio  
-Appunti sparsi di configurazione della scheda Rock Pi S per musicisti, o presunti tali. La scheda [Rock Pi S](https://wiki.radxa.com/RockpiS), la più piccola della famiglia [Rock](https://wiki.radxa.com/Home) è provvista di un'uscita stereofonica e di ben 8 entrate microfoniche nella v1.1, ridotte a 6 nell'ultima versione, v1.2. Per questa ragione la rockpis si presta ad applicazioni musicali avanzate, a differenza delle altre schede simil-Raspberry.
+Appunti sparsi di configurazione della scheda Rock Pi S per musicisti, o presunti tali.  
+La scheda [Rock Pi S](https://wiki.radxa.com/RockpiS), la più piccola della famiglia [Rock](https://wiki.radxa.com/Home), è provvista di un'uscita stereofonica e di ben 8 entrate microfoniche (v1.1), ridotte a 6 nell'ultima versione (v1.2). La ragione di quest'equipaggiamento risiede nell'esigenza di fornire a un dispositivo IoT le capacità hardware per dotarsi di riconoscimento vocale. 
+
+La rockpis si presta ad applicazioni musicali avanzate, a differenza delle altre schede simil-Raspberry, che nel migliore dei casi sono provviste di una sola entrata microfonica e un'uscita stereo (es. Nano pi)
 
 ----------
 
