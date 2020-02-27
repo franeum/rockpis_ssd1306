@@ -23,6 +23,13 @@ Appunti sparsi di configurazione della scheda [Rock Pi S](https://wiki.radxa.com
 11. [Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
 12. [Opzione `python`](#opzione-python)
 
+## pinout
+<p align="center">
+  <img src="/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
+</p>
+
+*N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
+
 ## Collegarsi a rockpis via ssh
 ## Collegare la *rockpis* via ssh su Debian
 
@@ -137,14 +144,6 @@ e scollegare quindi il cavo ethernet. Il rockpis comincia a camminare con le sue
 
 
 -----------------------------
-
-
-## pinout
-<p align="center">
-  <img src="/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
-</p>
-
-*N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
 
 
 ## installare e avviare puredata
