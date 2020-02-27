@@ -1,4 +1,6 @@
-# rock pi s test. Appunti sparsi di configurazione
+# rockpis for audio. Appunti sparsi di configurazione
+
+----------
 
 ## Indice
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
