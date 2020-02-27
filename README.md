@@ -1,15 +1,16 @@
-# `rockpis` for audio. Appunti sparsi di configurazione
+# rockpis for audio  
+Appunti sparsi di configurazione della scheda [Rock Pi S](https://wiki.radxa.com/RockpiS)
 
 ----------
 
-# Indice
+# Indice  
+1. [Pinout](#pinout)
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
     * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
     * [Collegarsi a rockpis con Mac OS X](#mac-os-x)  
 
-2. [Aggiornare il sistema e installare il software audio](#preparing-the-system)
+2. [Aggiornare il sistema e installare il software per l'audio](#preparing-the-system)
 3. [Configurazione del wifi](#configurazione-del-wifi)
-4. [Pinout](#pinout)
 5. [Installare e avviare `puredata`](#installare-e-avviare-puredata)  
 6. [Avviare `puredata` al boot di rockpis](avviare-puredata-al-boot-di-rockpis)  
 7. [setup di `jack`](#setup-di-jack)  
