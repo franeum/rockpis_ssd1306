@@ -78,8 +78,8 @@ $ fping -r 1 -g 10.42.0.0/24 2> /dev/null | grep -v -i unreachable
 7. il primo ip è quello locale, il secondo è quello della rockpis, a questo punto possiamo connetterci (l'utente di default è *rock*) alla scheda con il protocollo ssh:
 ```
 ssh rock@10.42.0.250
-```ollegare la *rockpis* via 
-e inserire la password ```rock```
+``` 
+e inserire la password `rock`
 
 
 ## ssh su Mac OS X
