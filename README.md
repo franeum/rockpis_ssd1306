@@ -8,7 +8,7 @@ La scheda si presenta in varie configurazioni hardware, ma in questo progetto è
 ----------
 
 # Indice  
-1. [Pinout](#pinout)
+1. [Pinout audio](#pinout-audio)
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
     * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
     * [Collegarsi a rockpis con Mac OS X](#mac-os-x)  
@@ -27,7 +27,7 @@ La scheda si presenta in varie configurazioni hardware, ma in questo progetto è
 11. [Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
 12. [Opzione `python`](#opzione-python)
 
-## pinout
+## Pinout audio
 <p align="center">
   <img src="/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
 </p>
