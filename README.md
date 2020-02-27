@@ -9,11 +9,11 @@ La scheda si presenta in varie configurazioni hardware, ma in questo progetto è
 
 # Indice  
 1. [Pinout audio](#pinout-audio)
-1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
-    * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
-    * [Collegarsi a rockpis con Mac OS X](#mac-os-x)  
+1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh-tramite-connessione-ethernet)
+    * [Collegarsi a rockpis con Debian](#ssh-su-debian)  
+    * [Collegarsi a rockpis con Mac OS X](#ssh-su-mac-os-x)  
 
-2. [Aggiornare il sistema e installare il software per l'audio](#preparing-the-system)
+2. [Aggiornare il sistema e installare il software per l'audio](#preparare-il-sistema)
 3. [Configurazione del wifi](#configurazione-del-wifi)
 5. [Installare e avviare `puredata`](#installare-e-avviare-puredata)  
 6. [Avviare `puredata` al boot di rockpis](avviare-puredata-al-boot-di-rockpis)  
@@ -34,10 +34,9 @@ La scheda si presenta in varie configurazioni hardware, ma in questo progetto è
 
 *N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8*
 
-## Collegarsi a rockpis via ssh
-## Collegare la *rockpis* via ssh su Debian
+## Collegarsi a rockpis via ssh (tramite connessione ethernet)
+### ssh su Debian
 
-### creare una connessione tramite la porta ethernet
 1. avviare una finestra di terminale e cercare il nome dell'interfaccia ethernet del computer:
 ```
 ip a
@@ -79,13 +78,11 @@ $ fping -r 1 -g 10.42.0.0/24 2> /dev/null | grep -v -i unreachable
 7. il primo ip è quello locale, il secondo è quello della rockpis, a questo punto possiamo connetterci (l'utente di default è *rock*) alla scheda con il protocollo ssh:
 ```
 ssh rock@10.42.0.250
-```
+```ollegare la *rockpis* via 
 e inserire la password ```rock```
 
 
-
-
-## Mac OS X
+## ssh su Mac OS X
 
 connessione con la rockpis:
 lato Mac:
@@ -108,24 +105,26 @@ ssh rock@rockpis
 
 
 
-## Preparing the system
+## Preparare il sistema
 
-upgrade system:
+upgrade:
 ```
-sudo apt-get update
-sudo apt-get dist-upgrade
+sudo apt update
+sudo apt dist-upgrade
 ```
-install alsa: 
-```
-sudo apt install alsa-utils
-sudo apt install jackd2
-```
+
 verificare che lo spazio sulla SDcard sia giusto:
 ```
 df -h
 ```
 in caso di dimensioni errate eseguire le operazioni indicate in questo tutorial:  
 [link](https://www.youtube.com/watch?v=R4VovMDnsIE)
+
+installare `alsa` e `jack`: 
+```
+sudo apt install alsa-utils
+sudo apt install jackd2
+```
 
 
 
