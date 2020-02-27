@@ -1,24 +1,26 @@
 # rock pi s test. Appunti sparsi di configurazione
 
 ## Indice
-[Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
-[Collegarsi a rockpis con Mac OS x](#mac-os-x)  
-[Aggiornare il sistema e installare il software audio](#preparing-the-system)  
-[Configurazione del wifi](#configurazione-del-wifi)  
-[Pinout](#pinout)  
-[Installare e avviare `puredata`](#installare-e-avviare-puredata)  
-[Avviare `puredata` al boot di rockpis](avviare-puredata-al-boot-di-rockpis)  
-[setup di `jack`](#setup-di-jack)  
-[`jack` in realtime priority](#jack-in-realtime-priority)  
-[Installazione di `supercollider`](#installazione-di-supercollider)   
-[Uso di un display virtuale con `xvfb`](#uso-di-un-display-virtuale-con-xvfb)   
-  1. [Installazione di `xvfb`](#installazione-di-xvfb)  
-  2. [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)   
+1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh)
+  * [Collegarsi a rockpis con debian](#collegare-la-*rockpis*-via-ssh-su-debian)  
+  * [Collegarsi a rockpis con Mac OS x](#mac-os-x)  
+  
+2. [Aggiornare il sistema e installare il software audio](#preparing-the-system)  
+3. [Configurazione del wifi](#configurazione-del-wifi)  
+4. [Pinout](#pinout)  
+5. [Installare e avviare `puredata`](#installare-e-avviare-puredata)  
+6. [Avviare `puredata` al boot di rockpis](avviare-puredata-al-boot-di-rockpis)  
+7. [setup di `jack`](#setup-di-jack)  
+8. [`jack` in realtime priority](#jack-in-realtime-priority)  
+9. [Installazione di `supercollider`](#installazione-di-supercollider)   
+10. [Uso di un display virtuale con `xvfb`](#uso-di-un-display-virtuale-con-xvfb)   
+  * [Installazione di `xvfb`](#installazione-di-xvfb)  
+  * [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)   
  
-[Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
-[Opzione `python`](#opzione-python)
+11. [Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
+12. [Opzione `python`](#opzione-python)
 
-
+## Collegarsi a rockpis via ssh
 ## Collegare la *rockpis* via ssh su Debian
 
 ### creare una connessione tramite la porta ethernet
