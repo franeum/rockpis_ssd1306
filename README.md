@@ -13,7 +13,8 @@
 [Installazione di `supercollider`](#installazione-di-supercollider)   
 [Uso di un display virtuale con `xvfb`](#uso-di-un-display-virtuale-con-xvfb)   
   1. [Installazione di `xvfb`](#installazione-di-xvfb)  
-  2. [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)    
+  2. [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)   
+ 
 [Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
 [Opzione `python`](#opzione-python)
 
