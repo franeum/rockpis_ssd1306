@@ -108,7 +108,7 @@ verificare che lo spazio sulla SDcard sia giusto:
 df -h
 ```
 in caso di dimensioni errate eseguire le operazioni indicate in questo tutorial:  
-https://www.youtube.com/watch?v=R4VovMDnsIE
+[link](https://www.youtube.com/watch?v=R4VovMDnsIE)
 
 
 
@@ -153,7 +153,15 @@ starting puredata with output device 3:
 puredata -nogui -alsa -audiodev 3,3 -inchannels 8 file.pd
 ```
 
-*TODO: using jackd2 instead of alsamixer*
+Per avviare `puredata` con `jackd`:
+```
+puredata -nogui -jack file.pd
+```
+dopo aver [configurato opportunamente](#setup-di-jack) `jack`. Se `jack` non si auto-avvia all'avvio di `puredata`, eseguire da shell il coseguente comando:
+
+```sh
+bash ./.jackdrc
+```
 
 
 ## avviare puredata al boot di rockpis
