@@ -84,14 +84,12 @@ e inserire la password `rock`
 
 ## ssh su Mac OS X
 
-connessione con la rockpis:
-lato Mac:
-* attivare la condivisione internet e il bridge
-* da terminale cercare l'ip della scheda:
+1. attivare la condivisione internet e il bridge
+2. da terminale cercare l'ip della scheda:
 ```
 fping -g 192.168.x.0/24
 ```
-* connettersi alla scheda via ssh:
+3. connettersi alla scheda via ssh:
 ```
 ssh rock@192.168.x.x
 ```
@@ -99,7 +97,7 @@ oppure (più comodo):
 ```
 ssh rock@rockpis
 ```
-* inserire la password (`rock`)
+4. inserire la password (`rock`)
 
 
 
@@ -130,13 +128,10 @@ sudo apt install jackd2
 
 ## Configurazione del wifi
 
-attivare la connessione tramite il frontend ```nmtui``` di ```nm``` sull'interfaccia wireless ```wlan0```
+attivare la connessione tramite ```nmtui``` sull'interfaccia wireless ```wlan0```
 ```
 sudo nmtui
 ```
-puredata riceve tranquillamente i messaggi tramite l'oggetto ```netreceive```. 
-TODO: una *patch* generica di ricezione.
-
 Una volta che la connessione wi-fi del rockpis è attiva è possibile connettersi con lo stesso tramite il protocollo ```ssh```:
 
 ```
@@ -171,10 +166,13 @@ dopo aver [configurato opportunamente](#setup-di-jack) `jack`. Se `jack` non si 
 bash ./.jackdrc
 ```
 
+puredata riceve i messaggi tramite l'oggetto ```netreceive```. 
+TODO: una *patch* generica di ricezione.
+
 
 ## avviare puredata al boot di rockpis
 
-1. installare **cron** 
+1. installare `cron`: 
 ```
 sudo apt install cron
 ```
@@ -186,10 +184,10 @@ crontab -e
 ```
 @reboot puredata -nogui -alsa -audiodev 3,3 -inchannels 8 /path/to/file.pd
 ```
-in questo modo il file file.pd si avvia con pd all'avvio del rockpis.
+in questo modo all'avvio di rockpis viene eseguito il file file.pd con `pd`.
 
 
-## setup di jack
+## Setup di jack
 
 varificare il nome del dispositivo audio con il comando:
 ```
@@ -204,7 +202,7 @@ l'opzione -p è 1024, verificare che il valore 256 non crei troppi dropouts. In 
 
 
 
-## jack in realtime priority
+## Jack in realtime priority
 
 l'opzione -R del comando precedente tendenzialmente non funziona e restituisce il seguente errore:
 ```
