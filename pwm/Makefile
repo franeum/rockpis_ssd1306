@@ -3,10 +3,10 @@
 # settings and rules.
 
 # library name
-lib.name = pwm
+lib.name = pwm2
 
 # input source file (class name == source file basename)
-class.sources = pwm.c
+class.sources = pwm2.c
 
 ldlibs = -lmraa
 
