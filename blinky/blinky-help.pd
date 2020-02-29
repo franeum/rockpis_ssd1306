@@ -1,0 +1,6 @@
+#N canvas 706 363 450 300 10;
+#X obj 19 20 loadbang;
+#X obj 19 45 metro 100;
+#X obj 19 70 blinky; 
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;

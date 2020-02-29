@@ -1,0 +1,6 @@
+#N canvas 248 392 450 300 10;
+#X obj 83 76 loadbang;
+#X obj 83 97 metro 1000;
+#X obj 83 118 print Hello_World;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
