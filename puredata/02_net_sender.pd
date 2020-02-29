@@ -1,4 +1,4 @@
-#N canvas 511 530 586 412 10;
+#N canvas 511 530 586 412 100;
 #X obj 82 117 loadbang;
 #X obj 82 167 metro 1000;
 #X msg 169 189 connect 192.168.1.116 7000;
