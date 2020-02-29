@@ -1,0 +1,10 @@
+#N canvas 706 363 450 300 10;
+#X obj 19 20 loadbang;
+#X obj 19 45 metro 1000;
+#X obj 19 70 random 1000;
+#X obj 19 95 / 1000;
+#X obj 19 120 pwm; 
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
