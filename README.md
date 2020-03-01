@@ -25,7 +25,10 @@ La scheda si presenta in varie configurazioni hardware, ma in questo progetto è
     * [avvio e test di sclang con `xvfb`](#avvio-e-test-di-sclang-con-xvfb)   
  
 11. [Esecuzione di uno script sc](#esecuzione-di-uno-script-sc)    
-12. [Opzione `python`](#opzione-python)
+12. [GPIO](#gpio)
+    * [la libreria `mraa`](#la-libreria-mraa)
+    * [programmazione del gpio](#programmazione-del-gpio)
+13. [Opzione `python`](#opzione-python)
 
 ## Pinout audio
 <p align="center">
@@ -294,7 +297,7 @@ xvfb-run --auto-servernum sclang test.scd
 
 La rockpis è dotata di due gruppi da 26 pin; il primo (`header 1`) è multipurpose, mentre il seconde (`header 2`) è dedicato soprattutto all'interfaccia audio. Fate riferimento a questo [schema](https://wiki.radxa.com/RockpiS/hardware/gpio) per verificare le diverse funzioni dei pin, che differiscono leggermente fra le vbersioni della scheda.
 
-### la libreria `mraa`
+### la libreria mraa
 
 A partire dal 20 febbraio 2020 il GPIO della rockpis può essere programmato tramite la libreria `mraa`. Per l'installazione del pacchetto `libmraa` fare riferimento a [questo documento](https://wiki.radxa.com/RockpiS/dev/libmraa).  
 L'installazione della libreria fornisce alcuni utili comandi da terminale, ad esempio il programma `mraa-gpio` permette di impostare lo stato dei pin o di ottenere informazione sullo stesso:
