@@ -290,6 +290,10 @@ xvfb-run --auto-servernum sclang test.scd
 ```
 
 
+## GPIO
+
+La rockpis è dotata di due gruppi da 26 pin; il primo (`header 1`) è multipurpose, mentre il seconde (`header 2`) è dedicato soprattutto all'interfaccia audio. Fate riferimento a questo [schema](https://wiki.radxa.com/RockpiS/hardware/gpio) per verificare le diverse versioni della scheda.
+
 ### opzione python (non ancora funzionante)
 
 Sclang ha bisogno di un display per funzionare, quindi data l'assenza dello stesso in rockpis, bisogna cercare un ambiente alternativo per guidare Scsynth. L'opzione è python e il modulo ```supercollider```. Successivamente all'installazione del software si può inviare al rockpis il file con le ```synthdefs```, avviare il motore audio (Scsynth) e iniziare a guidarlo da python.
