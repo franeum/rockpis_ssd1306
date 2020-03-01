@@ -292,7 +292,23 @@ xvfb-run --auto-servernum sclang test.scd
 
 ## GPIO
 
-La rockpis è dotata di due gruppi da 26 pin; il primo (`header 1`) è multipurpose, mentre il seconde (`header 2`) è dedicato soprattutto all'interfaccia audio. Fate riferimento a questo [schema](https://wiki.radxa.com/RockpiS/hardware/gpio) per verificare le diverse versioni della scheda.
+La rockpis è dotata di due gruppi da 26 pin; il primo (`header 1`) è multipurpose, mentre il seconde (`header 2`) è dedicato soprattutto all'interfaccia audio. Fate riferimento a questo [schema](https://wiki.radxa.com/RockpiS/hardware/gpio) per verificare le diverse funzioni dei pin, che differiscono leggermente fra le vbersioni della scheda.
+
+### la libreria `mraa`
+
+A partire dal 20 febbraio 2020 il GPIO della rockpis può essere programmato tramite la libreria `mraa`. Per l'installazione del pacchetto `libmraa` fare riferimento a [questo documento](https://wiki.radxa.com/RockpiS/dev/libmraa).  
+L'installazione della libreria fornisce alcuni utili comandi da terminale, ad esempio il programma `mraa-gpio` permette di impostare lo stato dei pin o di ottenere informazione sullo stesso:
+
+```
+mraa-gpio list #resistuisce la lista dei pin e la loro funzione
+mraa-gpio get <numero_pin> # fornisce lo stato di un pin
+mraa-gpio set <numero_pin> <livello> # imposta il valore di un pin a 0 o 1
+```
+
+### programmazione del gpio
+
+Purtroppo programmare l'interfaccia del rockpis non è semplicissimo. Non c'è un IDE comodo come arduino, quindi bisogna scrivere dei programmi in c, compilarli, ed eseguirli. Esiste un wrapper in python della libreria `mraa`, che, allo steto attuale, non funziona ancora sul rockpis. Sto scrivendo alcuni [external](https://github.com/franeum/rockpis_for_audio/tree/master/blinky) per `pd` per controllare i pin direttamente da puredata, ma il lavoro è appena iniziato.
+
 
 ### opzione python (non ancora funzionante)
 
