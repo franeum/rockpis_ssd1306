@@ -15,7 +15,7 @@ static t_class *blinky_class;
 typedef struct _blinky {  
   	t_object x_obj;
 	volatile sig_atomic_t flag;
-	int state;
+	t_int state;
  	mraa_result_t status;
     	mraa_gpio_context gpio_1;
 } t_blinky;  
@@ -24,7 +24,7 @@ typedef struct _blinky {
 
 /* gestisce l'uscita */
 
-void sig_handler(t_blinky *x, int signum)
+void sig_handler(t_blinky *x, t_int signum)
 {
     if (signum == SIGINT) {
         fprintf(stdout, "Exiting...\n");
@@ -89,8 +89,8 @@ void *blinky_new(void)
 }  
  
 void blinky_setup(void) {  
-  blinky_class = class_new(gensym("blinky"),  
-    (t_newmethod)blinky_new, NULL,
-    sizeof(t_blinky), CLASS_DEFAULT, 0);  
+  //blinky_class = class_new(gensym("blinky"), (t_newmethod)blinky_new, (t_method)blinky_free, sizeof(t_blinky), CLASS_DEFAULT, 0);  
+  blinky_class = class_new(gensym("blinky"), (t_newmethod)blinky_new, (t_method)blinky_free, sizeof(t_blinky), 0, A_GIMME, 0); 
+  //ltc_class = class_new(gensym("neum.ltc~"), (t_newmethod)ltc_new, (t_method)ltc_free, sizeof(t_ltc), 0, A_GIMME, 0);
   class_addbang(blinky_class, blinky_bang);  
 }
