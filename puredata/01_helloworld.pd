@@ -1,6 +1,18 @@
-#N canvas 248 392 450 300 10;
-#X obj 83 76 loadbang;
+#N canvas 254 423 675 486 10;
+#X obj 83 35 loadbang;
 #X obj 83 97 metro 1000;
 #X obj 83 118 print Hello_World;
-#X connect 0 0 1 0;
+#X obj 141 36 key;
+#X obj 282 81 loadbang;
+#X obj 282 131 print -n;
+#X msg 282 106 Press 'q' to switch off and on;
+#X obj 83 60 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0 1
+;
+#X obj 141 61 sel 113;
+#X connect 0 0 7 0;
 #X connect 1 0 2 0;
+#X connect 3 0 8 0;
+#X connect 4 0 6 0;
+#X connect 6 0 5 0;
+#X connect 7 0 1 0;
+#X connect 8 0 7 0;
