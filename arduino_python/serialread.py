@@ -2,15 +2,16 @@
 
 import serial
 import time
-import struct
 
-arduino = serial.Serial('/dev/ttyUSB0', 9600, timeout=1)
+arduino = serial.Serial('/dev/ttyS0', 9600, timeout=None)
 
 while True:
     try:
         datum = arduino.read(1)
-        val = int.from_bytes(datum, byteorder='big')
-        print(val, end=' ')
+        packed = int.from_bytes(aaa, byteorder='big')
+        label = packed >> 8
+        value = packed & 255
+        print(f"{label}: {value}")
         time.sleep(0.01)
     except KeyboardInterrupt:
         exit()
