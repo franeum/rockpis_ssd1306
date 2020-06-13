@@ -326,7 +326,7 @@ Eseguire questi comandi per installare il software:
 sudo apt install supercollider
 sudo apt install liblo7 liblo-dev
 pip3 install Cython
-pip3 install liblo
+pip3 install pyliblo
 pip3 install supercollider
 ```
 *N.B. l'installazione di Cython potrebbe essere molto lunga*
