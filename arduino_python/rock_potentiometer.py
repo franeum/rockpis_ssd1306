@@ -11,6 +11,7 @@ class Pot:
 
   def check_value(self, value: int=0):
     if value != self.previous_value:
+      print(value)
       self.send_value(value) 
       self.previous_value = value
     return None  
