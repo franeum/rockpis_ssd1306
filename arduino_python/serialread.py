@@ -1,4 +1,4 @@
-#!/home/neum/anaconda3/bin/python
+#!/usr/bin/env python3
 
 import serial
 import time
@@ -7,11 +7,11 @@ arduino = serial.Serial('/dev/ttyS0', 9600, timeout=None)
 
 while True:
     try:
-        datum = arduino.read(1)
-        packed = int.from_bytes(aaa, byteorder='big')
+        datum = arduino.read(2)
+        packed = int.from_bytes(datum, byteorder='big')
         label = packed >> 8
         value = packed & 255
-        print(f"{label}: {value}")
+        print(f"controller {label}: {value}")
         time.sleep(0.01)
     except KeyboardInterrupt:
         exit()
