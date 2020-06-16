@@ -32,12 +32,12 @@ void loop() {
   // if the repsonsive value has change, print out 'changed'
   if(analog.hasChanged()) {
     //Serial.print("\tchanged");
-    uint32_t value = constrain(analog.getValue(),0,900);
-    byte va = (byte)map(value,0,900,0,255);
+    uint32_t value = constrain(analog.getValue(),0,920);
+    byte va = (byte)map(value,0,920,0,255);
     d[1] = va;
     Serial.write(d,2);
   }
   
   //Serial.println("");
-  delay(10);
+  delay(5);
 }
