@@ -2,7 +2,7 @@
 
 const int SIZE = 3;
 const int ANALOG_PIN[] = { A0, A1, A2 };
-byte d[] = { 0,0,0 };
+byte d[] = { 0,0 };
 
 // make a ResponsiveAnalogRead object, pass in the pin, and either true or false depending on if you want sleep enabled
 // enabling sleep will cause values to take less time to stop changing and potentially stop changing more abruptly,
@@ -32,7 +32,7 @@ void loop() {
     // if the repsonsive value has change, print out 'changed'
     if(analog_reads[i]->hasChanged()) {
       uint32_t value = analog_reads[i]->getValue();
-      get_bytes(d, i, value);
+      get_bytes(d, (byte)i, value);
     }
   }
   
@@ -41,11 +41,17 @@ void loop() {
 
 void get_bytes(byte x[], byte label, uint32_t number) {
   number = number >> 1;
+  
   byte dx = (byte)(number & 255);
-  byte sx = (byte)((number >> 8) & 255); 
-  x[2] = dx;
-  x[1] = sx;
-  x[0] = label;
-  Serial.write(x, 3);
+  byte sx = (byte)((number >> 8) & 15); 
+  sx = sx + (label << 4);
+  x[1] = dx;
+  x[0] = sx;
+  Serial.write(x, 2);
+  /*
+  Serial.print(x[0]);
+  Serial.print(",");
+  Serial.println(x[1]);
+  */
   return 1;
 }
