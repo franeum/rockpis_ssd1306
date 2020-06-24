@@ -1,0 +1,16 @@
+#N canvas 1180 524 500 300 10;
+#X obj 192 74 netreceive -b -u 9000;
+#X obj 192 97 oscparse;
+#X obj 192 120 list trim;
+#X obj 192 143 route hw_controller;
+#X obj 192 166 route 0 1 2;
+#X obj 192 232 print c_0;
+#X obj 258 233 print c_1;
+#X obj 321 234 print c_2;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 4 0 5 0;
+#X connect 4 1 6 0;
+#X connect 4 2 7 0;
