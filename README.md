@@ -30,6 +30,7 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto Ã
     * [programmazione del gpio](#programmazione-del-gpio)
 
 13. [Opzione `python`](#opzione-python)
+14. [Installare `nodejs`](#installare-nodejs)
 
 ## Pinout audio
 <p align="center">
@@ -329,7 +330,21 @@ pip3 install Cython
 pip3 install pyliblo
 pip3 install supercollider
 ```
-*N.B. l'installazione di Cython potrebbe essere molto lunga*
+*N.B. l'installazione di Cython potrebbe richiedere molto tempo*
+
+## Installare nodejs
+
+installare `curl` con il seguente comando:
+
+```
+sudo apt install curl
+```
+
+e poi:
+```
+curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+sudo apt install -y nodejs
+```
 
 ### 
 
