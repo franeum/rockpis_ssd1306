@@ -392,6 +392,15 @@ $ sudo hciconfig hci0 -a
 
 Ora il rockpis dovrebbe essere visibile da un altro dispositivo, con il nome di `rockpis-test`
 
+Provare i seguenti comando dopo aver eseguito da terminale ```sudo bluetoothctl```:
+
+```
+discoverable on
+pairable on
+agent on
+default-agent
+```
+
 ### 
 
 # TODO:
