@@ -397,8 +397,8 @@ Provare i seguenti comando dopo aver eseguito da terminale ```sudo bluetoothctl`
 ```
 discoverable on
 pairable on
-agent on
-default-agent
+agent NoInputNoOutput
+default-agent (?)
 ```
 
 ### 
