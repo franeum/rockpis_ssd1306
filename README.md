@@ -31,6 +31,7 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto �
 
 13. [Opzione `python`](#opzione-python)
 14. [Installare `nodejs`](#installare-nodejs)
+15. [Configurare il `bluetooth`](#configurare-il-bluetooth)
 
 ## Pinout audio
 <p align="center">
@@ -345,6 +346,50 @@ e poi:
 curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
 sudo apt install -y nodejs
 ```
+
+## Configurare il `bluetooth`
+
+
+### Rendere il rockpis *discoverable*
+
+usare il programma `hciconfig` per configurare il bluetooth
+
+Verificare la presenza del dispositivo:
+```bash
+$ hciconfig -a
+```
+
+La risposta sarà qualcosa del genere:
+```
+hci0:   Type: Primary  Bus: USB
+        BD Address: D0:C6:37:8E:2E:01  ACL MTU: 1021:4  SCO MTU: 96:6
+        DOWN 
+        RX bytes:34379 acl:69 sco:0 events:1286 errors:0
+        TX bytes:13848 acl:73 sco:0 commands:724 errors:0
+        Features: 0xff 0xfe 0x0f 0xfe 0xdb 0xff 0x7b 0x87
+        Packet type: DM1 DM3 DM5 DH1 DH3 DH5 HV1 HV2 HV3 
+        Link policy: RSWITCH HOLD SNIFF 
+        Link mode: SLAVE ACCEPT
+```
+
+```hci0``` è l'identificativo del dispositivo bluetooth.
+
+attivare il dispositivo, attribuirgli un nome, attivare l'```ssp``` (Secure Simple Pairing) e attivare l'inquiry scan e il page scan:
+
+```bash
+$ sudo hciconfig hci0 up
+$ sudo hciconfig hci0 name rockpis-test
+$ sudo hciconfig hci0 sspmode 1
+$ sudo hciconfig hci0 piscan
+```
+
+verificare le opzioni:
+
+```bash
+$ sudo hciconfig hci0 -a
+```
+
+Ora il rockpis dovrebbe essere visibile da un altro dispositivo, con il nome di `rockpis-test`
 
 ### 
 
