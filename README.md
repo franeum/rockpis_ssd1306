@@ -379,6 +379,7 @@ attivare il dispositivo, attribuirgli un nome, attivare l'```ssp``` (Secure Simp
 ```bash
 $ sudo hciconfig hci0 up
 $ sudo hciconfig hci0 name rockpis-test
+$ sudo hciconfig hci0 noscan
 $ sudo hciconfig hci0 sspmode 1
 $ sudo hciconfig hci0 piscan
 ```
