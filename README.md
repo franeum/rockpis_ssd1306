@@ -493,6 +493,13 @@ iptables-restore < /etc/iptables.ipv4.nat
 
 Riavviare 
 
+Ora si dovrebbe *vedere* la rete creata nella rock. Se dovessero esserci problemi di disconnessione dopo qualche minuto si può provare a disabilitare un eventuale servizio `wpa_supplicant` attivo con:
+
+```bash
+$ ps aux | grep wpa
+$ kill -9 <pid>
+```
+
 ### 
 
 # TODO:
