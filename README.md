@@ -32,6 +32,7 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto Ã
 13. [Opzione `python`](#opzione-python)
 14. [Installare `nodejs`](#installare-nodejs)
 15. [Configurare il `bluetooth`](#configurare-il-bluetooth)
+16. [Access Point](#access-point)
 
 ## Pinout audio
 <p align="center">
