@@ -1,0 +1,82 @@
+#:kivy 1.9.1
+
+<MyLabel>:
+    font_size: 24
+    markup: True
+
+<MyButton@Button>:
+    font_size: 22
+
+<SpinnerOption>:
+    #size_hint: None, None
+    background_color: (1,1,1,1)
+    height: 20
+
+<MainBox>:
+    orientation: "horizontal"
+
+    BoxLayout:
+        padding: [25,25,25,25]
+        spacing: 10
+        font_size: 24
+        orientation: "vertical"
+        MyLabel:
+            size_hint_y: 0.05
+            text: self.format_text("Network Config")
+            #font_size: 24
+            markup: True
+        
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: 0.1
+            MyLabel:
+                text: "SSID"
+                markup: True 
+                size_hint_x: 0.25
+                #size_hint_y: 1
+            Spinner:
+                id: spinner_id
+                background_color: (1,1,1,1) 
+                size_hint_x: 1
+                text: 'Home'
+                values: app.networks
+                #on_value:
+                    #print: "The spinner"
+                on_text: root.spinner_clicked(spinner_id.text)
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint_y: 0.1
+            MyLabel:
+                text: "Password"
+                markup: True 
+                size_hint_x: 0.25
+            TextInput:
+                id: pass_field
+                font_size: 20
+                color: [1,0,0,1]
+                size_hint_x: 0.75
+                on_text: root.print_pwd(pass_field.text)
+
+        MyButton:
+            size_hint_y: 0.5
+            text: "send"
+            on_press: root.credential_send()
+    
+    BoxLayout:
+        orientation: "vertical"
+        spacing: 25
+        padding: [25,25,25,25]
+        MyButton:
+            text: "Update system"
+            font_size: 24
+            markup: True
+            size_hint_y: 0.4
+        BoxLayout:
+            orientation: "vertical"
+            font_size: 48
+            size_hint_y: 0.6
+            MyButton:
+                text: "CHOOSE A PATCH"
+            MyButton:
+                text: "UPLOAD PATCH"
