@@ -401,6 +401,98 @@ agent NoInputNoOutput
 default-agent (?)
 ```
 
+## Access Point
+
+Installazione dei pacchetti:  
+
+```bash
+$ sudo apt install hostapd dnsmasq dhcpcd5
+```
+
+Interruzione dei servizi interessati:
+
+```bash
+$ sudo systemctl stop dnsmasq
+$ sudo systemctl stop hostapd
+```
+
+Nel file `/etc/dhcpcd.conf` inserire queste righe:
+```bash
+interface wlan0
+    static ip_address=192.168.4.1/24
+```
+
+Riavviare il demone `dhcpdc`:
+```bash
+$ sudo service dhcpcd restart
+```
+
+Nel file `/etc/dnsmasq.conf` inserire queste righe:
+```bash
+interface=wlan0      # Use the require wireless interface - usually wlan0
+  dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
+```
+
+Creare (se non esiste) il file `/etc/hostapd/hostapd.conf` con il seguente contenuto:
+```bash
+interface=wlan0
+driver=nl80211
+ssid=nome_di_prova
+hw_mode=g
+channel=7
+wmm_enabled=0
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=passowrd_di_prova
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+```
+
+Inserire in `/etc/default/hostapd`:
+```bash
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
+```
+
+Avviare i servizi:
+```bash
+$ sudo service hostapd start  
+$ sudo service dnsmasq start  
+```
+
+Se il servizio `hostapd` viene identificato come `masked`:
+
+```bash
+$ sudo systemctl unmask hostapd
+$ sudo service hostapd start  
+```
+
+Installare `iptables`:
+```bash
+sudo apt install iptables
+```
+
+In `/etc/sysctl.conf' decommentare la riga
+```
+net.ipv4.ip_forward=1
+```
+
+Eseguire:
+```bash
+$ sudo iptables -t nat -A  POSTROUTING -o eth0 -j MASQUERADE
+$ sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
+```
+
+In `/etc/rc.local` aggiungere la seguente linea prima di `exit 0`:
+
+```
+iptables-restore < /etc/iptables.ipv4.nat
+```
+
+Riavviare 
+
 ### 
 
 # TODO:
