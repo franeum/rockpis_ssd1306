@@ -444,12 +444,14 @@ wmm_enabled=0
 macaddr_acl=0
 auth_algs=1
 ignore_broadcast_ssid=0
+rsn_pairwise=CCMP
 wpa=2
 wpa_passphrase=passowrd_di_prova
 wpa_key_mgmt=WPA-PSK
 wpa_pairwise=TKIP
-rsn_pairwise=CCMP
 ```
+
+**N.B. commentare le ultime 4 righe se si vuole una rete aperta (senza autenticazione)**
 
 Inserire in `/etc/default/hostapd`:
 ```bash
@@ -496,7 +498,7 @@ Riavviare
 Ora si dovrebbe *vedere* la rete creata nella rock. Se dovessero esserci problemi di disconnessione dopo qualche minuto si può provare a disabilitare un eventuale servizio `wpa_supplicant` attivo con:
 
 ```bash
-$ ps aux | grep wpa
+$ ps aux | grep wpa_supplicant
 $ kill -9 <pid>
 ```
 
