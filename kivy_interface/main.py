@@ -36,18 +36,20 @@ class MainBox(BoxLayout):
         self.pwd = value 
 
     def credential_send(self):
-        #try:
-        print("le credenziali sono: ", self.ssid, self.pwd)
-        timestamp = time.time()
-        res = ssh.send_credential(self.ssid, self.pwd, timestamp)
-        print(res)
-        if res == 0:
-            pop = CredentialPopup()
-            pop.open()
-        else:
-            print("stocazzo")
-        #except:
-            #print("You have to choose a network and tell a password")
+        try:
+            if self.pwd != '':
+                timestamp = time.time()
+                res = ssh.send_credential(self.ssid, self.pwd, timestamp)
+                print(res)
+                if res == 0:
+                    pop = CredentialPopup()
+                    pop.open()
+                else:
+                    print("problema di comunicazione, riprova")
+            else:
+                print("submit a password")
+        except:
+            print("You have to choose a network and submit a password")
 
 
 
