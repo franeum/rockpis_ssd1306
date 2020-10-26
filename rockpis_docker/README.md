@@ -1,14 +1,28 @@
 
-costruisci l'immagine e instanziala
+Costruire l'immagine
 
 ```bash
 $ docker build -t rockpis .
-$ docker run -d -P --name test_sshd rockpis
-$ docker port test_sshd 22
 ```
 
-connettiti all'istanza tramite ssh:
+Verificare la porta ssh (opzionale):
+```bash
+$ docker port rock 22
+```
+
+creare un bridge per `simulare` l'ip della rock:
+```bash
+$ docker network create --driver=bridge --subnet=192.168.4.0/24 --gateway=192.168.4.100 rock-net
+```
+
+Instanziare l'immagine:
 
 ```bash
-$ ssh root@172.17.0.2
+$ docker run -d -P --name rock --net=rock-net rockpis
+```
+
+Connession all'istanza tramite ssh:
+
+```bash
+$ ssh rock@192.168.4.1
 ```
