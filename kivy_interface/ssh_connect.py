@@ -14,7 +14,9 @@ def send_credential(ssid, pwd, timestamp):
                         username=USERNAME, 
                         password=PASSWORD)
     ssh_client.exec_command(f"echo {ssid} {pwd} > {timestamp}_credenziali.txt")
-    stdin, stdout, stderr = ssh_client.exec_command(f'if test -f {timestamp}_credenziali.txt; then echo 0; else echo 1; fi') 
+    stdin, stdout, stderr = ssh_client.exec_command(f'if test -f {timestamp}_credenziali.txt; then echo 0; else echo 1; fi')
+    #stdin, stdout, stderr = ssh_client.exec_command(f'ls -la') 
+    response = stdout.readlines()
     ssh_client.close()
-    print(stdout.readlines())
-    return stdout.readlines()
+    #print(response)
+    return int(response[0])
