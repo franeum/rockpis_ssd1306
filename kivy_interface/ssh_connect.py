@@ -1,5 +1,20 @@
+#!/usr/bin/env python3 
+
 import paramiko 
 
-ssh_client =paramiko.SSHClient()
-ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh_client.connect(hostname='hostname',username='mokgadi',password='mypassword')
+IP = '192.168.4.1'
+USERNAME = 'rock'
+PASSWORD = 'rock'
+
+
+def send_credential(ssid, pwd, timestamp):
+    ssh_client = paramiko.SSHClient()
+    ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh_client.connect(hostname=IP,
+                        username=USERNAME, 
+                        password=PASSWORD)
+    ssh_client.exec_command(f"echo {ssid} {pwd} > {timestamp}_credenziali.txt")
+    stdin, stdout, stderr = ssh_client.exec_command(f'if test -f {timestamp}_credenziali.txt; then echo 0; else echo 1; fi') 
+    ssh_client.close()
+    print(stdout.readlines())
+    return stdout.readlines()
