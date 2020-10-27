@@ -7,7 +7,7 @@ $ docker build -t rockpis .
 
 Verificare la porta ssh (opzionale):
 ```bash
-$ docker port rock 22
+$ docker port rockis 22
 ```
 
 creare un bridge per `simulare` l'ip della rock:
