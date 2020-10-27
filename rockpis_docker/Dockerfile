@@ -14,7 +14,8 @@ RUN echo "alias ll='ls -la'" >> /home/rock/.bashrc
 RUN echo "alias cl='clear'" >> /home/rock/.bashrc
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
-
+RUN apt-get install -y python3
+RUN apt-get install -y python3-pip
 ENV NOTVISIBLE="in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
