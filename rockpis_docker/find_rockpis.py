@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+## using it to find rockpis ip
+
 import socket
 import json
 import sys 
@@ -14,7 +16,6 @@ def set_broadcast_address(arg):
         b = '192.168.4.255'
     else:
         b = '<broadcast>'
-
     return b
 
 
