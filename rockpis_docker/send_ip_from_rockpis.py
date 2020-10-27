@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+## using it to send rockpis ip
+
 import socket
 import json
 
