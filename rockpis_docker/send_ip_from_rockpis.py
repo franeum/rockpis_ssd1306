@@ -26,9 +26,9 @@ def send_response(cl):
             if data and data == '1':
                 msg = json.dumps(message)
                 cl.sendto(msg.encode(), addr)
-                cl.close()
-                print("chiudo correttamente")
-                exit(0)
+                #cl.close()
+                #print("chiudo correttamente")
+                #exit(0)
         except KeyboardInterrupt:
             cl.close()
             print("key interrupt")
@@ -38,3 +38,5 @@ def send_response(cl):
 if __name__ == "__main__":
     client = create_socket()
     send_response(client)
+    client.close()
+    exit(0)
