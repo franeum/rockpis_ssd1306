@@ -26,3 +26,8 @@ Connession all'istanza tramite ssh:
 ```bash
 $ ssh rock@192.168.4.1
 ```
+
+Se l'instanza esiste ma è interrotta (exited):
+```bash
+$ docker start rock
+```
