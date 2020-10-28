@@ -25,7 +25,7 @@ def send_response(cl):
             data = data.decode('utf-8')
             if data and data == '1':
                 msg = json.dumps(message)
-                cl.sendto(msg.encode(), (addr[0], addr[1]))
+                cl.sendto(msg.encode(), addr)
                 cl.close()
                 print("chiudo correttamente")
                 exit(0)
