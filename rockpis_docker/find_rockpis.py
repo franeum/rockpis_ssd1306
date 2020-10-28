@@ -84,9 +84,9 @@ def get_response(cl):
 
             if machine and machine == 'rockpis':
                 # print(addr[0])
-                logger.info(f"ROCKPIS IP: {_ip}")
                 client.close()
-                exit(0)
+                #exit(0)
+                return _ip 
         except KeyboardInterrupt:
             print("chiudo mestamente")
             client.close()
@@ -105,7 +105,11 @@ if __name__ == "__main__":
         try:
             client = create_socket()
             send_code(client, broadcast, PORT)
-            get_response(client)
+            address = get_response(client)
+            logger.info(f"ROCKPIS IP: {address}")
+            break 
         except socket.timeout:
             logger.debug("TIMEOUT: RETRYING")
             continue
+
+    exit()
