@@ -413,20 +413,24 @@ default-agent (?)
 Installazione dei pacchetti:  
 
 ```bash
-$ sudo apt install hostapd dnsmasq dhcpcd5
+sudo apt install hostapd dnsmasq dhcpcd5
 ```
 
 Interruzione dei servizi interessati:
 
 ```bash
-$ sudo systemctl stop dnsmasq
-$ sudo systemctl stop hostapd
+sudo systemctl stop dnsmasq
+sudo systemctl stop hostapd
 ```
 
 Nel file `/etc/dhcpcd.conf` inserire queste righe:
 ```bash
 interface wlan0
     static ip_address=192.168.4.1/24
+nohook wpa_supplicant
+interface wlan0
+static ip_address=192.168.4.1/24
+static routers=192.168.4.2
 ```
 
 Riavviare il demone `dhcpdc`:
@@ -437,7 +441,7 @@ $ sudo service dhcpcd restart
 Nel file `/etc/dnsmasq.conf` inserire queste righe:
 ```bash
 interface=wlan0      # Use the require wireless interface - usually wlan0
-  dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
+  dhcp-range=192.168.4.3,192.168.4.20,255.255.255.0,24h
 ```
 
 Creare (se non esiste) il file `/etc/hostapd/hostapd.conf` con il seguente contenuto:
@@ -467,15 +471,15 @@ DAEMON_CONF="/etc/hostapd/hostapd.conf"
 
 Avviare i servizi:
 ```bash
-$ sudo service hostapd start  
-$ sudo service dnsmasq start  
+sudo service hostapd start  
+sudo service dnsmasq start  
 ```
 
 Se il servizio `hostapd` viene identificato come `masked`:
 
 ```bash
-$ sudo systemctl unmask hostapd
-$ sudo service hostapd start  
+sudo systemctl unmask hostapd
+sudo service hostapd start  
 ```
 
 Installare `iptables`:
