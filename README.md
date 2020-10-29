@@ -334,6 +334,12 @@ pip3 install supercollider
 ```
 *N.B. l'installazione di Cython potrebbe richiedere molto tempo*
 
+# TODO:
+1. preparare delle synthDefs e inviarle a ```~/.local/share/SuperCollider/synthdefs```
+2. installare in python il modulo ```supercollider```
+3. avviare il server(```scsynth```)
+4. testare 
+
 ## Installare nodejs
 
 installare `curl` con il seguente comando:
@@ -503,10 +509,11 @@ $ ps aux | grep wpa_supplicant
 $ kill -9 <pid>
 ```
 
-### 
+## Preparazione per la connessione automatica alla propria LAN
 
-# TODO:
-1. preparare delle synthDefs e inviarle a ```~/.local/share/SuperCollider/synthdefs```
-2. installare in python il modulo ```supercollider```
-3. avviare il server(```scsynth```)
-4. testare 
+Accendere il dispositivo wifi del rockpis e connettersi alla rete:
+```bash
+$ nmcli r wifi on
+$ nmcli d wifi list # opzionale? potrebbe servire per attivare lo scanning della rete wifi
+$ nmcli d wifi connect <my_net> password <password>
+```
