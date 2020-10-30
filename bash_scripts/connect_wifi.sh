@@ -5,7 +5,7 @@
 connect() {
 	nmcli r wifi on;
 	nmcli d wifi list;
-  nmcli d wifi connect $1 password $2;
+	nmcli d wifi connect $1 password $2;
 }
 
 connect $1 $2
