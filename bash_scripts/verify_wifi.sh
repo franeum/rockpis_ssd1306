@@ -4,34 +4,20 @@
 
 conn=$(nmcli --terse d wifi | grep "*:")
 
-# args: ssid, ssid_connessa
+IFS=':'
+read -ra ADDR <<< $conn
+connected_to=${ADDR[1]}
 
-compare() {
-    #connessione=$1
-    IFS=':'
-    read -ra ADDR <<< $1
-    if [ "${ADDR[1]}" = "$2" ]; then
-        echo Sei già connesso alla rete preferita
-    else
-        echo Non sei connesso alla tua rete preferita
-    fi        
-}
+if [ $# != 2  ]; then
+    echo Yout must provice ssid and password
+    exit 1
+fi
 
-: '
-nmcli --terse d wifi | grep "*:"
-
-if [ $? -eq 0 ]; then
-    nmcli d wifi list	
+if [ "$connected_to" = "$1" ]; then
+    echo sei gia connesso "(${ADDR[1]})"
 else
-    if [ $# -ge 2 ]; then 
-        compare $1
-        nmcli r wifi on 
-        nmcli d wifi connect $1 password $2
-        nmcli d wifi list
-    else
-        echo you must provide SSID name and PASSWORD
-    fi
-fi 
-'
+    nmcli r wifi on
+    nmcli d wifi connect $1 password $2
+fi
 
-compare $conn $1 
+
