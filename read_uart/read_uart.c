@@ -22,8 +22,7 @@ sig_handler(int signum)
 
 int main(int argc, char** argv) {
     mraa_uart_context uart;
-    //char buffer[] = "Hello Mraa!";
-    char buffer[] = { 0 };
+    char buffer[] = { 0, 0 };
 
     /* install signal handler */
     signal(SIGINT, sig_handler);
@@ -34,6 +33,8 @@ int main(int argc, char** argv) {
     //! [Interesting]
     /* initialize UART */
     uart = mraa_uart_init(UART);
+    mraa_uart_set_baudrate(uart, 115200);
+
     if (uart == NULL) {
         fprintf(stderr, "Failed to initialize UART\n");
         goto err_exit;
@@ -42,10 +43,12 @@ int main(int argc, char** argv) {
 
 
     while (flag) {
-        /* send data through UART */
-        mraa_uart_read(uart, buffer, sizeof(buffer));
-        printf("%d", buffer[0]);
-        //sleep(1);
+        if (mraa_uart_data_available(uart,0)) {
+	    	mraa_uart_read(uart, buffer, sizeof(buffer));
+        	printf("%d: %d\n", buffer[0], buffer[1]);
+        	//sleep(1);
+	
+	}
     }
 
     /* stop UART */
