@@ -1,38 +1,4 @@
-/*
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-#include "driver/gpio.h"
-#include "sdkconfig.h"
-#include <time.h>
-#include <stdlib.h>
-
-#define RAND_MAX_VALUE 256
-
-void app_main(void) {
-
-    srand(time(NULL));
-
-    while(1) { 
-        printf("%d", rand() % RAND_MAX_VALUE);
-        printf("\n");
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-    }
-}
-*/
-
-/**
- * This is an example which echos any data it receives on configured UART back to the sender,
- * with hardware flow control turned off. It does not use UART driver event queue.
- *
- * - Port: configured UART
- * - Receive (Rx) buffer: on
- * - Transmit (Tx) buffer: off
- * - Flow control: off
- * - Event queue: off
- * - Pin assignment: see defines below (See Kconfig)
- */
-
+// send bytes to uart esp32 -> rockpis 
 
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
@@ -42,6 +8,12 @@ void app_main(void) {
 #include "sdkconfig.h"
 #include <time.h>
 #include <stdlib.h>
+#include "driver/adc.h"
+#include "esp_adc_cal.h"
+
+#define DEFAULT_VREF    1100        //Use adc2_vref_to_gpio() to obtain a better estimate
+#define NO_OF_SAMPLES   64
+
 
 #define ECHO_TEST_TXD (4)
 #define ECHO_TEST_RXD (5)
@@ -50,12 +22,53 @@ void app_main(void) {
 
 #define ECHO_UART_PORT_NUM      (0)
 #define ECHO_UART_BAUD_RATE     (115200)
-#define ECHO_TASK_STACK_SIZE    (2048)
+#define ECHO_TASK_STACK_SIZE    2048
 
 #define BUF_SIZE (1024)
 
+
+static esp_adc_cal_characteristics_t *adc_chars;
+static const adc_channel_t channel = ADC_CHANNEL_6;     //GPIO34 if ADC1, GPIO14 if ADC2
+static const adc_bits_width_t width = ADC_WIDTH_BIT_12;
+static const adc_atten_t atten = ADC_ATTEN_MAX; //ADC_ATTEN_DB_0;
+static const adc_unit_t unit = ADC_UNIT_1;
+
+
+static void check_efuse(void) {
+    //Check if TP is burned into eFuse
+    if (esp_adc_cal_check_efuse(ESP_ADC_CAL_VAL_EFUSE_TP) == ESP_OK) {
+        printf("eFuse Two Point: Supported\n");
+    } else {
+        printf("eFuse Two Point: NOT supported\n");
+    }
+    //Check Vref is burned into eFuse
+    if (esp_adc_cal_check_efuse(ESP_ADC_CAL_VAL_EFUSE_VREF) == ESP_OK) {
+        printf("eFuse Vref: Supported\n");
+    } else {
+        printf("eFuse Vref: NOT supported\n");
+    }
+}
+
+
+static void print_char_val_type(esp_adc_cal_value_t val_type)
+{
+    if (val_type == ESP_ADC_CAL_VAL_EFUSE_TP) {
+        printf("Characterized using Two Point Value\n");
+    } else if (val_type == ESP_ADC_CAL_VAL_EFUSE_VREF) {
+        printf("Characterized using eFuse Vref\n");
+    } else {
+        printf("Characterized using Default Vref\n");
+    }
+}
+
+
 static void echo_task(void *arg)
 {
+    check_efuse();
+
+    adc1_config_width(width);
+    adc1_config_channel_atten(channel, atten);
+
 
     uart_config_t uart_config = {
         .baud_rate = ECHO_UART_BAUD_RATE,
@@ -65,6 +78,7 @@ static void echo_task(void *arg)
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
         .source_clk = UART_SCLK_APB,
     };
+
     int intr_alloc_flags = 0;
 
 #if CONFIG_UART_ISR_IN_IRAM
@@ -75,21 +89,44 @@ static void echo_task(void *arg)
     ESP_ERROR_CHECK(uart_param_config(ECHO_UART_PORT_NUM, &uart_config));
     ESP_ERROR_CHECK(uart_set_pin(ECHO_UART_PORT_NUM, ECHO_TEST_TXD, ECHO_TEST_RXD, ECHO_TEST_RTS, ECHO_TEST_CTS));
 
+
+    //Characterize ADC
+    adc_chars = calloc(1, sizeof(esp_adc_cal_characteristics_t));
+    esp_adc_cal_value_t val_type = esp_adc_cal_characterize(unit, atten, width, DEFAULT_VREF, adc_chars);
+    print_char_val_type(val_type);
+
     // Configure a temporary buffer for the incoming data
-    uint8_t *data = (uint8_t *) malloc(BUF_SIZE);
+    //uint8_t *data = (uint8_t *) malloc(BUF_SIZE);
+    //uint8_t *id = (uint8_t *)arg;
+    uint8_t data[] = { 0, 0 };
     data[0] = 1;
 
+    uint8_t prev = 0;
+
     while (1) {
-        // Read data from the UART
-        // int len = uart_read_bytes(ECHO_UART_PORT_NUM, data, BUF_SIZE, 20 / portTICK_RATE_MS);
-        // Write data back to the UART
-        data[1] = rand() % 256;
-        uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, 2);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        uint32_t adc_reading = 0;
+
+        for (int i = 0; i < NO_OF_SAMPLES; i++) {
+            if (unit == ADC_UNIT_1)
+                adc_reading += adc1_get_raw((adc1_channel_t)channel);
+        }
+        adc_reading /= NO_OF_SAMPLES;
+        adc_reading = adc_reading >> 5;
+
+        if (prev != adc_reading) {
+            data[1] = (uint8_t)adc_reading;
+            prev = adc_reading;
+            uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, sizeof(data));
+            //printf("%d: %d\n", data[0], data[1]);
+        }
+
+        vTaskDelay(10 / portTICK_PERIOD_MS);
+        //data[1] = rand() % 256;
+        //uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, 2);
+        //vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
 void app_main(void) {
-    srand(time(NULL));
-    xTaskCreate(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 10, NULL);
+    xTaskCreate(echo_task, "uart_echo_task", 2048, (void *)1, 2048, NULL);
 }
