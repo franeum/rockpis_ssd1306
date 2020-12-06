@@ -1,4 +1,4 @@
-
+/*
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -19,7 +19,7 @@ void app_main(void) {
         vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
-
+*/
 
 /**
  * This is an example which echos any data it receives on configured UART back to the sender,
@@ -33,7 +33,7 @@ void app_main(void) {
  * - Pin assignment: see defines below (See Kconfig)
  */
 
-/*
+
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -77,7 +77,7 @@ static void echo_task(void *arg)
 
     // Configure a temporary buffer for the incoming data
     uint8_t *data = (uint8_t *) malloc(BUF_SIZE);
-    data[0] = 0;
+    data[0] = 1;
 
     while (1) {
         // Read data from the UART
@@ -93,5 +93,3 @@ void app_main(void) {
     srand(time(NULL));
     xTaskCreate(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, NULL, 10, NULL);
 }
-
-*/
