@@ -11,9 +11,10 @@
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 
+#define DEBUG 1
+
 #define DEFAULT_VREF    1100        //Use adc2_vref_to_gpio() to obtain a better estimate
 #define NO_OF_SAMPLES   64
-
 
 #define ECHO_TEST_TXD (4)
 #define ECHO_TEST_RXD (5)
@@ -28,10 +29,17 @@
 
 
 static esp_adc_cal_characteristics_t *adc_chars;
-static const adc_channel_t channel = ADC_CHANNEL_6;     //GPIO34 if ADC1, GPIO14 if ADC2
+//static const adc_channel_t channel = ADC_CHANNEL_6;     //GPIO34 if ADC1, GPIO14 if ADC2
 static const adc_bits_width_t width = ADC_WIDTH_BIT_12;
 static const adc_atten_t atten = ADC_ATTEN_MAX; //ADC_ATTEN_DB_0;
 static const adc_unit_t unit = ADC_UNIT_1;
+
+
+typedef struct pot {
+    uint8_t id;
+    uint8_t prev;
+    adc_channel_t chan;
+} potentiometer;
 
 
 static void check_efuse(void) {
@@ -64,6 +72,11 @@ static void print_char_val_type(esp_adc_cal_value_t val_type)
 
 static void echo_task(void *arg)
 {
+    potentiometer *pot = (potentiometer *)arg;
+    uint8_t id = (uint8_t)pot->id;
+    adc_channel_t channel = (adc_channel_t)pot->chan;
+    uint8_t prev = (uint8_t)pot->prev;
+
     check_efuse();
 
     adc1_config_width(width);
@@ -95,13 +108,8 @@ static void echo_task(void *arg)
     esp_adc_cal_value_t val_type = esp_adc_cal_characterize(unit, atten, width, DEFAULT_VREF, adc_chars);
     print_char_val_type(val_type);
 
-    // Configure a temporary buffer for the incoming data
-    //uint8_t *data = (uint8_t *) malloc(BUF_SIZE);
-    //uint8_t *id = (uint8_t *)arg;
     uint8_t data[] = { 0, 0 };
-    data[0] = 1;
-
-    uint8_t prev = 0;
+    data[0] = id;
 
     while (1) {
         uint32_t adc_reading = 0;
@@ -110,23 +118,31 @@ static void echo_task(void *arg)
             if (unit == ADC_UNIT_1)
                 adc_reading += adc1_get_raw((adc1_channel_t)channel);
         }
+
         adc_reading /= NO_OF_SAMPLES;
         adc_reading = adc_reading >> 5;
 
         if (prev != adc_reading) {
             data[1] = (uint8_t)adc_reading;
             prev = adc_reading;
+#if DEBUG
+            printf("%d: %d\n", data[0], data[1]);
+#else
             uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, sizeof(data));
-            //printf("%d: %d\n", data[0], data[1]);
+#endif
         }
 
         vTaskDelay(10 / portTICK_PERIOD_MS);
-        //data[1] = rand() % 256;
-        //uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, 2);
-        //vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
 void app_main(void) {
-    xTaskCreate(echo_task, "uart_echo_task", 2048, (void *)1, 2048, NULL);
+
+    potentiometer pot1 = {
+        .id = 1,
+        .chan = ADC1_CHANNEL_6,
+        .prev = 0
+    };
+
+    xTaskCreate(echo_task, "uart_echo_task", 2048, (void *)&pot1, 2048, NULL);
 }
