@@ -76,8 +76,12 @@ if __name__ == "__main__":
     x = 0
     font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=12)
 
+    write_text(draw, disp, image, font, width, height, "Choose wifi SSID")
+
     list_wifi = net.get_wifi_list()
     Push.counter_max = len(list_wifi) - 1
+
+    time.sleep(2)
 
     write_text(draw, disp, image, font, width, height, list_wifi[0])
 
