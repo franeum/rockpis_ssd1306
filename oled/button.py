@@ -19,10 +19,10 @@ class Push:
             print(f"pushed {self.gpio}: {self.counter}")
 
 if __name__ == "__main__":
-    #PUSH1 = Push(3)
-    PUSH2 = Push(5)
+    PUSH1 = Push(23)
+    PUSH2 = Push(24)
 
     while True:
-        #PUSH1.read_value()
+        PUSH1.read_value()
         PUSH2.read_value()
         
