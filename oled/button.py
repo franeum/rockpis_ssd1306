@@ -13,10 +13,11 @@ class Push:
 
     def read_value(self):
         value = self.push.read()
-        if (value != self.prev) and (value == 0):
+        if value != self.prev:
             self.prev = value 
             self.counter += 1
-            print(f"pushed {self.gpio}: {self.counter}")
+            if value == 0:
+                print(f"pushed {self.gpio}: {self.counter}")
 
 if __name__ == "__main__":
     PUSH1 = Push(23)
