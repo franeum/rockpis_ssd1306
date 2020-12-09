@@ -2,8 +2,11 @@
 
 import subprocess
 
-def wifi_list():
-    CMD = ['nmcli','-g','SSID','device','wifi']
-    wifi_list = subprocess.check_output(CMD, shell=True).decode("utf-8")
-    wifi_list = [x.strip(None) for x in wifi_list.splitlines()]
-    return wifi_list
+def get_wifi_list():
+    CMD = ['nmcli','-g','SSID','dev','wifi']
+    wifi_list = subprocess.check_output(CMD).decode("utf-8")
+    print(wifi_list)
+    wifi_list = [x.strip(None) for x in wifi_list.splitlines() if x != '']
+    return list(set(wifi_list))
+
+print(get_wifi_list())

@@ -75,13 +75,13 @@ if __name__ == "__main__":
     x = 0
     font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=16)
 
-    list_wifi = net.wifi_list()
+    list_wifi = net.get_wifi_list()
 
     while True:
         val1 = PUSH1.read_value()
         if val1:
-            write_text(draw, disp, image, font, width, height, list_wifi[val1])
+            write_text(draw, disp, image, font, width, height, list_wifi[min([val1,len(list_wifi)])])
 
         val2 = PUSH2.read_value()
         if val2:
-            write_text(draw, disp, image, font, width, height, list_wifi[val2])
+            write_text(draw, disp, image, font, width, height, list_wifi[min([val2,len(list_wifi)])])
