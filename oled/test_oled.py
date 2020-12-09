@@ -85,7 +85,7 @@ while True:
     time.sleep(0.1)
 """
 #while True:
-draw.text((x, top + 8), "CIAO AMORE", font=font, fill=255)
+draw.text((x, top + 8), "TEST", font=font, fill=255)
 disp.image(image)
 disp.show()
 time.sleep(2)

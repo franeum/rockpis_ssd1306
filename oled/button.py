@@ -4,6 +4,7 @@ import mraa
 import time
 import busio
 import adafruit_ssd1306
+import get_nets as net 
 from board import SCL3, SDA3
 from PIL import Image, ImageDraw, ImageFont
 
@@ -27,7 +28,7 @@ class Push:
             if value == 0:
                 Push.counter = self.a_func(Push.counter)
                 print(Push.counter)
-                return str(Push.counter)
+                return Push.counter
 
     def add(self, c):
         return c + 1
@@ -74,11 +75,13 @@ if __name__ == "__main__":
     x = 0
     font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=16)
 
+    list_wifi = net.wifi_list()
+
     while True:
         val1 = PUSH1.read_value()
         if val1:
-            write_text(draw, disp, image, font, width, height, val1)
+            write_text(draw, disp, image, font, width, height, list_wifi[val1])
 
         val2 = PUSH2.read_value()
         if val2:
-            write_text(draw, disp, image, font, width, height, val2)
+            write_text(draw, disp, image, font, width, height, list_wifi[val2])
