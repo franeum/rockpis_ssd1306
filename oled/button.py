@@ -10,6 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 class Push:
     counter = 0
+    counter_max = 1000
 
     def __init__(self, gpio=None, func=-1):
         self.gpio = gpio 
@@ -31,7 +32,7 @@ class Push:
                 return Push.counter
 
     def add(self, c):
-        return c + 1
+        return min([Push.counter_max, c + 1])
 
     def subtract(self, c):
         return max([0,c-1])
@@ -41,7 +42,7 @@ def write_text(_draw, _disp, _image, _font, w, h, txt):
     _draw.rectangle((0, 0, w, h), outline=0, fill=0)
     _disp.fill(0)
     _disp.show()
-    _draw.text((x, top + 8), txt, font=_font, fill=255)
+    _draw.text((x, top + 12), txt, font=_font, fill=255)
     _disp.image(_image)
     _disp.show()
 
@@ -73,15 +74,18 @@ if __name__ == "__main__":
     bottom = height - padding
     # Move left to right keeping track of the current x position for drawing shapes.
     x = 0
-    font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=16)
+    font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=12)
 
     list_wifi = net.get_wifi_list()
+    Push.counter_max = len(list_wifi) - 1
+
+    write_text(draw, disp, image, font, width, height, list_wifi[0])
 
     while True:
         val1 = PUSH1.read_value()
         if val1:
-            write_text(draw, disp, image, font, width, height, list_wifi[min([val1,len(list_wifi)])])
+            write_text(draw, disp, image, font, width, height, list_wifi[val1])
 
         val2 = PUSH2.read_value()
         if val2:
-            write_text(draw, disp, image, font, width, height, list_wifi[min([val2,len(list_wifi)])])
+            write_text(draw, disp, image, font, width, height, list_wifi[val2])
