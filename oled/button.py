@@ -4,21 +4,31 @@ import mraa
 import time
 
 class Push:
-    def __init__(self, gpio=None):
+    counter = 0
+
+    def __init__(self, gpio=None, func=-1):
         self.gpio = gpio 
         self.push = mraa.Gpio(gpio)
         self.push.dir(mraa.DIR_IN)
         self.prev = 1
-        self.counter = 0
+        if func == -1:
+            self.a_func = self.subtract()
+        else 
+            self.a_func = self.add()
 
     def read_value(self):
         value = self.push.read()
         if value != self.prev:
             self.prev = value 
             if value == 0:
-                self.counter += 1
-                print(f"pushed {self.gpio}: {self.counter}")
+                self.counter = self.a_func(self.counter)
+                print(self.counter)
 
+    def add(self, c):
+        return c + 1
+
+    def subtract(self, c):
+        return max([0,c-1])
 
 if __name__ == "__main__":
     PUSH1 = Push(23)
