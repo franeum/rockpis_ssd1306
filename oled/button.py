@@ -36,9 +36,12 @@ class Push:
         return max([0,c-1])
 
 
-def write_text(_draw, _disp, txt):
-    _draw.text((x, top + 8), txt, font=font, fill=255)
-    _disp.image(image)
+def write_text(_draw, _disp, _image, _font, w, h, txt):
+    _draw.rectangle((0, 0, w, h), outline=0, fill=0)
+    _disp.fill(0)
+    _disp.show()
+    _draw.text((x, top + 8), txt, font=_font, fill=255)
+    _disp.image(_image)
     _disp.show()
 
 
@@ -72,6 +75,10 @@ if __name__ == "__main__":
     font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=16)
 
     while True:
-        PUSH1.read_value()
-        PUSH2.read_value()
-        
+        val1 = PUSH1.read_value()
+        if val1:
+            write_text(draw, disp, image, font, width, height, val1)
+
+        val2 = PUSH2.read_value()
+        if val2:
+            write_text(draw, disp, image, font, width, height, val2)
