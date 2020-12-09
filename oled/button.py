@@ -12,17 +12,17 @@ class Push:
         self.push.dir(mraa.DIR_IN)
         self.prev = 1
         if func == -1:
-            self.a_func = self.subtract()
-        else 
-            self.a_func = self.add()
+            self.a_func = self.subtract
+        else:
+            self.a_func = self.add
 
     def read_value(self):
         value = self.push.read()
         if value != self.prev:
             self.prev = value 
             if value == 0:
-                self.counter = self.a_func(self.counter)
-                print(self.counter)
+                Push.counter = self.a_func(Push.counter)
+                print(Push.counter)
 
     def add(self, c):
         return c + 1
@@ -31,8 +31,8 @@ class Push:
         return max([0,c-1])
 
 if __name__ == "__main__":
-    PUSH1 = Push(23)
-    PUSH2 = Push(24)
+    PUSH1 = Push(23,-1)
+    PUSH2 = Push(24,1)
 
     while True:
         PUSH1.read_value()
