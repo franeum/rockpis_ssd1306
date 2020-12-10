@@ -33,13 +33,15 @@ def press(gpio):
     if gpio.read() == 1:
         self.flag = False 
         c.past = time.time() - c.start
-        print(repr(c.past))
-        print_some()
+        if c.past >= 3.0:
+            print_some()
+        else:
+            print("strunz")
 
 
 
 def print_some():
-    print("non abbastanza tempo")
+    print("Ottimo")
 
 # GPIO
 pin = 24;
@@ -52,19 +54,7 @@ try:
 
     # set direction and edge types for interrupt
     x.dir(mraa.DIR_IN)
-    
-    while c.flag:
-
-        x.isr(mraa.EDGE_BOTH, press, x)
-        
-        if (time.time() - c.start) <= 3.0:
-            time.sleep(0.1)
-        else:
-
-        # wait until ENTER is pressed
-        # var = input("Press ENTER to stop")
-            print("ben fatto, più di 3 secondi")
-            break 
+    x.isr(mraa.EDGE_BOTH, press, x)
 
     var = input("Press ENTER to stop")
     x.isrExit()
