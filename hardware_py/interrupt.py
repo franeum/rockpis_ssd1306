@@ -37,11 +37,12 @@ def press(gpio):
         if c.past >= 3.0:
             print(1)
         else:
-            print(0)
+            print("piu tempo per cortesia")
 
 
 # GPIO
 pin = 24;
+points = '.'
 
 try:
     # initialise GPIO
@@ -57,13 +58,12 @@ try:
         #print("flag:", c.flag)
         if c.flag == True: 
             time_pasted = time.time() - c.start
-            print('.', end='')
+            points += '.'
+            print(points)
             if (time_pasted) >= 3.0:
                 print("\nEXECUTE!!!!!!!")
                 c.flag = False 
-            else:
-                print("\nmore long pls")
-                c.flag = False
+            
         else:
             if c.exit_flag == 0:
                 print("More long please") 
