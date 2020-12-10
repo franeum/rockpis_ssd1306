@@ -54,7 +54,7 @@ try:
     x.isr(mraa.EDGE_BOTH, press, x)
 
     while True:
-        print("flag:", c.flag)
+        #print("flag:", c.flag)
         if c.flag == True: 
             time_pasted = time.time() - c.start
             print('.', end='')
@@ -62,7 +62,7 @@ try:
                 print("\nEXECUTE!!!!!!!")
                 c.flag = False 
         else:
-            if self.exit_flag = 0
+            if c.exit_flag == 0:
                 print("More long please") 
                 c.exit_flag = 1
 
