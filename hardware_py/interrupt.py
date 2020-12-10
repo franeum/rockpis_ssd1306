@@ -20,6 +20,7 @@ class Counter:
         self.past = 0
         self.flag = False   
         self.exit_flag = 0 
+        self.points = '.'
 
 c = Counter()
 
@@ -38,12 +39,12 @@ def press(gpio):
         if c.past >= 3.0:
             print(1)
         else:
+            c.points = '.'
             print("piu tempo per cortesia")
 
 
 # GPIO
 pin = 24;
-points = '.'
 
 try:
     # initialise GPIO
@@ -59,11 +60,11 @@ try:
         #print("flag:", c.flag)
         if c.flag == True: 
             time_pasted = time.time() - c.start
-            points += '.'
+            c.points += '.'
             os.system('clear') # clear terminal
-            print(points)
+            print(c.points)
             if (time_pasted) >= 3.0:
-                points = '.'
+                c.points = '.'
                 print("\nEXECUTE!!!!!!!")
                 c.flag = False 
             
