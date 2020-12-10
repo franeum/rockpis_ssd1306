@@ -52,10 +52,11 @@ try:
 
     # set direction and edge types for interrupt
     x.dir(mraa.DIR_IN)
-    x.isr(mraa.EDGE_BOTH, press, x)
     
     while c.flag:
 
+        x.isr(mraa.EDGE_BOTH, press, x)
+        
         if (time.time() - c.start) <= 3.0:
             time.sleep(0.1)
         else:
