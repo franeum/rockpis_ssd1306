@@ -31,7 +31,7 @@ def press(gpio):
         c.start = time.time()
 
     elif gpio.read() == 1:
-        self.flag = False 
+        c.flag = False 
         c.past = time.time() - c.start
         if c.past >= 3.0:
             print(1)
