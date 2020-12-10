@@ -17,6 +17,7 @@ class Counter:
         self.start = 0
         self.now = 0
         self.past = 0
+        self.flag = False  
 
 c = Counter()
 
@@ -26,19 +27,27 @@ def press(gpio):
     #print("pin " + repr(gpio.getPin(True)) + " = " + repr(gpio.read()))
     
     if gpio.read() == 0:
-        print(0)
+        c.flag = True 
         print("pressed")
         c.start = time.time()
     
     if gpio.read() == 1:
-        print("released after seconds")
+        self.flag = False 
         c.past = time.time() - c.start
         print(repr(c.past))
         print_some()
 
+    while c.flag:
+        c.past = time.time() - c.start 
+        if c.past <= 3.0:
+            time.sleep(0.1)
+        else:
+            print("buono, eseguo")
+            self.flag = False  
+
 
 def print_some():
-    print("stocazzooooooo")
+    print("non abbastanza tempo")
 
 # GPIO
 pin = 24;
