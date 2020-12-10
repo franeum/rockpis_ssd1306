@@ -62,10 +62,11 @@ try:
 
         # wait until ENTER is pressed
         # var = input("Press ENTER to stop")
-            x.isrExit()
+            print("ben fatto, più di 3 secondi")
+            break 
 
     var = input("Press ENTER to stop")
     x.isrExit()
-    
+
 except ValueError as e:
     print(e)
