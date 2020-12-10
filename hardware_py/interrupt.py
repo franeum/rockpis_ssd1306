@@ -17,7 +17,8 @@ class Counter:
         self.start = 0
         self.now = 0
         self.past = 0
-        self.flag = False    
+        self.flag = False   
+        self.exit_flag = 0 
 
 c = Counter()
 
@@ -39,24 +40,6 @@ def press(gpio):
             print(0)
 
 
-
-def start_timer():
-    while True:
-        print("flag:", c.flag)
-        if c.flag == True: 
-            time_pasted = time.time() - c.start
-            print(time_pasted)
-            if (time_pasted) >= 3.0:
-                print("EXECUTE!!!!!!!")
-                c.flag = False 
-                break
-        else:
-            print("More long please") 
-            break
-
-        time.sleep(0.1) 
-
-
 # GPIO
 pin = 24;
 
@@ -74,12 +57,14 @@ try:
         print("flag:", c.flag)
         if c.flag == True: 
             time_pasted = time.time() - c.start
-            print(time_pasted)
+            print('.', end='')
             if (time_pasted) >= 3.0:
-                print("EXECUTE!!!!!!!")
+                print("\nEXECUTE!!!!!!!")
                 c.flag = False 
         else:
-            print("More long please") 
+            if self.exit_flag = 0
+                print("More long please") 
+                c.exit_flag = 1
 
         time.sleep(0.1) 
 
