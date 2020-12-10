@@ -54,7 +54,7 @@ try:
     x.isr(mraa.EDGE_BOTH, press, x)
 
     while True:
-        print("flag:", c.flag)
+        #print("flag:", c.flag)
         if c.flag == True: 
             time_pasted = time.time() - c.start
             print('.', end='')
