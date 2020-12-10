@@ -29,7 +29,7 @@ def press(gpio):
         c.flag = True 
         print("pressed")
         c.start = time.time()
-        listen(c)
+        start_timer(c)
 
     elif gpio.read() == 1:
         c.flag = False 
@@ -41,16 +41,18 @@ def press(gpio):
 
 
 
-def listen(cls):
+def start_timer(cls):
     while True:
         print("flag:", cls.flag)
         if cls.flag == True: 
-            if (time.time() - cls.start) >= 3.0:
-                print("buono!!!!!!!")
+            time_pasted = time.time() - cls.start
+            print(time_pasted)
+            if (time_pasted) >= 3.0:
+                print("EXECUTE!!!!!!!")
                 cls.flag = False 
                 break
 
-        time.sleep(0.5) 
+        time.sleep(0.1) 
 
 
 # GPIO
