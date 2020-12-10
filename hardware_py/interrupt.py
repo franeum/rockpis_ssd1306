@@ -61,6 +61,9 @@ try:
             if (time_pasted) >= 3.0:
                 print("\nEXECUTE!!!!!!!")
                 c.flag = False 
+            else:
+                print("\nmore long pls")
+                c.flag = False
         else:
             if c.exit_flag == 0:
                 print("More long please") 
