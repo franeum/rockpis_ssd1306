@@ -8,9 +8,9 @@ class Push:
     counter_max = 1000
 
     __FUNCTIONS = {
-        -1: self.subtract, 
-        0: self.oneshot,
-        1: self.add
+        -1: subtract, 
+        0: oneshot,
+        1: add
     }
 
     def __init__(self, gpio=None, func=0):
@@ -27,15 +27,18 @@ class Push:
             self.prev = value 
             if value == 0:
                 self.a_func()
-
-    def add(self, c):
+    
+    @staticmethod
+    def add(c):
         Push.counter = min([Push.counter_max, Push.counter + 1])
         return Push.counter
 
-    def subtract(self, c):
+    @staticmethod
+    def subtract(c):
         Push.counter = max([0, Push.counter - 1])
         return Push.counter
 
-    def oneshot(self):
+    @staticmethod
+    def oneshot():
         print(1)
         return 1
