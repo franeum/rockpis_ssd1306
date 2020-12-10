@@ -62,7 +62,7 @@ try:
                 print("\nEXECUTE!!!!!!!")
                 c.flag = False 
         else:
-            if self.exit_flag = 0
+            if c.exit_flag == 0:
                 print("More long please") 
                 c.exit_flag = 1
 
