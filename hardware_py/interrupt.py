@@ -60,9 +60,8 @@ try:
         print("flag:", c.flag)
         if c.flag == True: 
             if (time.time() - c.start)  >= 3.0:
-                print("buono!!!!!!!")
                 c.flag = False 
-                break 
+                break
 
         time.sleep(0.5)
 
