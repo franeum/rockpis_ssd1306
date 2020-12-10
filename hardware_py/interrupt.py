@@ -59,13 +59,16 @@ try:
         if c.flag == True: 
             time_pasted = time.time() - c.start
             points += '.'
+            print(chr(27) + "[2J") # clear terminal
             print(points)
             if (time_pasted) >= 3.0:
+                points = '.'
                 print("\nEXECUTE!!!!!!!")
                 c.flag = False 
             
         else:
             if c.exit_flag == 0:
+                points = '.'
                 print("More long please") 
                 c.exit_flag = 1
 
