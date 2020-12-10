@@ -43,9 +43,9 @@ def press(gpio):
 
 def listen(cls):
     while True:
-        print("flag:")
+        print("flag:", cls.flag)
         if cls.flag == True: 
-            if cls.past >= 3.0:
+            if (time.time() - cls.start) >= 3.0:
                 print("buono!!!!!!!")
                 cls.flag = False 
                 break
