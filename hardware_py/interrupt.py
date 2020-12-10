@@ -10,6 +10,7 @@
 import mraa
 import time
 import sys
+import os 
 
 class Counter:
     def __init__(self):
@@ -59,7 +60,7 @@ try:
         if c.flag == True: 
             time_pasted = time.time() - c.start
             points += '.'
-            print(chr(27) + "[2J") # clear terminal
+            os.system('clear') # clear terminal
             print(points)
             if (time_pasted) >= 3.0:
                 points = '.'
