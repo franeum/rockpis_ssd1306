@@ -29,7 +29,6 @@ def press(gpio):
         c.flag = True 
         print("pressed")
         c.start = time.time()
-        start_timer()
 
     elif gpio.read() == 1:
         c.flag = False 
@@ -70,6 +69,19 @@ try:
     # set direction and edge types for interrupt
     x.dir(mraa.DIR_IN)
     x.isr(mraa.EDGE_BOTH, press, x)
+
+    while True:
+        print("flag:", c.flag)
+        if c.flag == True: 
+            time_pasted = time.time() - c.start
+            print(time_pasted)
+            if (time_pasted) >= 3.0:
+                print("EXECUTE!!!!!!!")
+                c.flag = False 
+        else:
+            print("More long please") 
+
+        time.sleep(0.1) 
 
     var = input("Press ENTER to stop")
     x.isrExit()
