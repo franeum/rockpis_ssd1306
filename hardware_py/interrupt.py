@@ -34,11 +34,11 @@ def press(gpio):
         print("released after seconds")
         c.past = time.time() - c.start
         print(repr(c.past))
+        print_some()
 
-def release(gpio):
-    c.now = time.now() 
-    c.past = c.now - c.start
-    print(f"release after: {c.past} seconds")
+
+def print_some():
+    print("stocazzooooooo")
 
 # GPIO
 pin = 24;
