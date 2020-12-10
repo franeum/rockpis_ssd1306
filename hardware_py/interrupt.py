@@ -51,10 +51,9 @@ def start_timer(cls):
                 print("EXECUTE!!!!!!!")
                 cls.flag = False 
                 break
-            else:
-                print("More long please")
-                cls.flag = False 
-                break
+        else:
+            print("More long please") 
+            break
 
         time.sleep(0.1) 
 
