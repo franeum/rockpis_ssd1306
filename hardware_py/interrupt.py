@@ -30,13 +30,13 @@ def press(gpio):
         print("pressed")
         c.start = time.time()
 
-    if gpio.read() == 1:
+    elif gpio.read() == 1:
         self.flag = False 
         c.past = time.time() - c.start
         if c.past >= 3.0:
-            print_some()
+            print(1)
         else:
-            print("strunz")
+            print(0)
 
 
 
