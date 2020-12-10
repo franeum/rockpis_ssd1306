@@ -25,25 +25,17 @@ c = Counter()
 # objects
 def press(gpio):
 
-    while c.flag:
+    if gpio.read() == 0:
+        c.flag = True 
+        print("pressed")
+        c.start = time.time()
 
-        if gpio.read() == 0:
-            c.flag = True 
-            print("pressed")
-            c.start = time.time()
-    
-        if gpio.read() == 1:
-            self.flag = False 
-            c.past = time.time() - c.start
-            print(repr(c.past))
-            print_some()
+    if gpio.read() == 1:
+        self.flag = False 
+        c.past = time.time() - c.start
+        print(repr(c.past))
+        print_some()
 
-        c.past = time.time() - c.start 
-        if c.past <= 3.0:
-            time.sleep(0.1)
-        else:
-            print("buono, eseguo")
-            self.flag = False  
 
 
 def print_some():
@@ -61,9 +53,19 @@ try:
     # set direction and edge types for interrupt
     x.dir(mraa.DIR_IN)
     x.isr(mraa.EDGE_BOTH, press, x)
+    
+    while c.flag:
 
-    # wait until ENTER is pressed
+        if (time.time() - c.start) <= 3.0:
+            time.sleep(0.1)
+        else:
+
+        # wait until ENTER is pressed
+        # var = input("Press ENTER to stop")
+            x.isrExit()
+
     var = input("Press ENTER to stop")
     x.isrExit()
+    
 except ValueError as e:
     print(e)
