@@ -5,18 +5,24 @@ import time
 
 class Push:
 
-    def __init__(self, gpio=None):
+    def __init__(self, gpio=None, sleep=0.1, max_sleep=1):
         self.gpio = gpio 
         self.push = mraa.Gpio(gpio)
         self.push.dir(mraa.DIR_IN)
         self.prev = 1
+        self._sleep = sleep 
+        self._max_sleep = max_sleep 
+        self._current_sleep = sleep 
 
     def get_val(self):
+        time.sleep(self._current_sleep)
+        self._current_sleep = self._sleep 
         value = self.push.read()
 
         if value != self.prev:
             self.prev = value 
             if value == 0:
+                self._current_sleep = self._max_sleep
                 return self.oneshot()
 
     def oneshot(self):
