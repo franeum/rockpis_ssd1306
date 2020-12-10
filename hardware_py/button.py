@@ -10,17 +10,6 @@ class Push:
         self.push.dir(mraa.DIR_IN)
 
 class Button(Push):
-
-    """def __init__(self, gpio=None, sleep=0.1, max_sleep=1, arg=1):
-        self.gpio = gpio 
-        self.push = mraa.Gpio(gpio)
-        self.push.dir(mraa.DIR_IN)
-        self.prev = 1
-        self._sleep = sleep 
-        self._max_sleep = max_sleep 
-        self._current_sleep = sleep 
-        self._arg = arg""" 
-
     def __init__(self, gpio=None, sleep=0.1, max_sleep=1, arg=1):
         super().__init__(gpio)
         self.prev = 1
@@ -108,3 +97,13 @@ class PushCounter:
     @max.setter
     def min(self, val):
         self._MAX = val 
+
+
+class ButtonTimer(Push):
+    def __init__(self, gpio=None, sleep=0.1, max_sleep=1, arg=1):
+        super().__init__(gpio)
+        self.prev = 1
+        self._sleep = sleep 
+        self._max_sleep = max_sleep 
+        self._current_sleep = sleep 
+        self._arg = arg
