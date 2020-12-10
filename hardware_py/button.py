@@ -8,9 +8,9 @@ class Push:
     counter_max = 1000
 
     __FUNCTIONS = {
-        -1: subtract, 
-        0: oneshot,
-        1: add
+        -1: Push.subtract, 
+        0: Push.oneshot,
+        1: Push.add
     }
 
     def __init__(self, gpio=None, func=0):
