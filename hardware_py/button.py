@@ -4,8 +4,14 @@ import mraa
 import time 
 
 class Push:
+    def __init__(self, gpio=None):
+        self.gpio = gpio 
+        self.push = mraa.Gpio(gpio)
+        self.push.dir(mraa.DIR_IN)
 
-    def __init__(self, gpio=None, sleep=0.1, max_sleep=1):
+class Button(Push):
+
+    """def __init__(self, gpio=None, sleep=0.1, max_sleep=1, arg=1):
         self.gpio = gpio 
         self.push = mraa.Gpio(gpio)
         self.push.dir(mraa.DIR_IN)
@@ -13,6 +19,15 @@ class Push:
         self._sleep = sleep 
         self._max_sleep = max_sleep 
         self._current_sleep = sleep 
+        self._arg = arg""" 
+
+    def __init__(self, gpio=None, sleep=0.1, max_sleep=1, arg=1):
+        super().__init__(gpio)
+        self.prev = 1
+        self._sleep = sleep 
+        self._max_sleep = max_sleep 
+        self._current_sleep = sleep 
+        self._arg = arg
 
     def get_val(self):
         time.sleep(self._current_sleep)
@@ -23,10 +38,36 @@ class Push:
             self.prev = value 
             if value == 0:
                 self._current_sleep = self._max_sleep
-                return self.oneshot()
+                return self.oneshot(self._arg)
 
     def oneshot(self, arg=1):
         return arg
+
+    @property
+    def sleep(self):
+        return self._sleep 
+
+    @sleep.setter
+    def sleep(self, val):
+        self._sleep = val 
+
+    @property
+    def max_sleep(self):
+        return self._sleep 
+
+    @sleep.setter
+    def max_sleep(self, val):
+        self._max_sleep = val 
+
+    @property
+    def arg(self):
+        return self._sleep 
+
+    @arg.setter
+    def arg(self, val):
+        self._arg = val 
+
+
 
 
 class PushCounter:
