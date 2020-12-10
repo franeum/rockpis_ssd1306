@@ -19,9 +19,8 @@ class Push:
             if value == 0:
                 return self.oneshot()
 
-    def oneshot(self):
-        print(1)
-        return 1
+    def oneshot(self, arg=1):
+        return arg
 
 
 class PushCounter:
