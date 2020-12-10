@@ -17,7 +17,7 @@ class Counter:
         self.start = 0
         self.now = 0
         self.past = 0
-        self.flag = True   
+        self.flag = False    
 
 c = Counter()
 
@@ -57,7 +57,12 @@ try:
     x.isr(mraa.EDGE_BOTH, press, x)
 
     while True:
-        print("ciao")
+        if c.flag = True 
+            if c.past >= 3.0:
+                print("buono!!!!!!!")
+                c.flag = False 
+                break 
+
         time.sleep(0.5)
 
     var = input("Press ENTER to stop")
