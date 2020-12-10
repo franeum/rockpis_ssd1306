@@ -57,12 +57,12 @@ try:
     x.isr(mraa.EDGE_BOTH, press, x)
 
     while True:
-        print("flag:", c.flag)
-        """if c.flag == True: 
+        print("flag:")
+        if c.flag == True: 
             if c.past >= 3.0:
                 print("buono!!!!!!!")
                 c.flag = False 
-                break """
+                break
 
         time.sleep(0.5)
 
