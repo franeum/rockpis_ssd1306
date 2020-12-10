@@ -17,27 +17,27 @@ class Counter:
         self.start = 0
         self.now = 0
         self.past = 0
-        self.flag = False  
+        self.flag = True   
 
 c = Counter()
 
 # inside a python interrupt you cannot use 'basic' types so you'll need to use
 # objects
 def press(gpio):
-    #print("pin " + repr(gpio.getPin(True)) + " = " + repr(gpio.read()))
-    
-    if gpio.read() == 0:
-        c.flag = True 
-        print("pressed")
-        c.start = time.time()
-    
-    if gpio.read() == 1:
-        self.flag = False 
-        c.past = time.time() - c.start
-        print(repr(c.past))
-        print_some()
 
     while c.flag:
+
+        if gpio.read() == 0:
+            c.flag = True 
+            print("pressed")
+            c.start = time.time()
+    
+        if gpio.read() == 1:
+            self.flag = False 
+            c.past = time.time() - c.start
+            print(repr(c.past))
+            print_some()
+
         c.past = time.time() - c.start 
         if c.past <= 3.0:
             time.sleep(0.1)
