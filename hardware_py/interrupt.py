@@ -56,6 +56,10 @@ try:
     x.dir(mraa.DIR_IN)
     x.isr(mraa.EDGE_BOTH, press, x)
 
+    while True:
+        print("ciao")
+        time.sleep(0.5)
+
     var = input("Press ENTER to stop")
     x.isrExit()
 
