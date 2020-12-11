@@ -6,6 +6,7 @@ import sys
 import os 
 import threading 
 import curses
+import oled 
 from dataclasses import dataclass
 
 # constants
@@ -29,7 +30,7 @@ class Counter:
         self.x.dir(mraa.DIR_IN)
         self.x.edge(mraa.EDGE_BOTH)
 
-    def on_press(self, func, *args):
+    def on_press(self, func):
         self.x.isr(mraa.EDGE_BOTH, func, self)
 
     def perform_exit(self):
@@ -67,6 +68,7 @@ def timing(cls):
             cls.elapsed = now - cls.start 
             if check_elapsed(cls.elapsed):
                 print("OK, ESEGUO ALTRO PROGRAMMA")
+                oled.write_text("ESEGUO")
                 cls.start = time.time() 
         else:
             if DEBUG: print("non premuto")
@@ -87,7 +89,7 @@ def main():
     try:
         c = Counter()
 
-        t1 = threading.Thread(target=c.on_press, args=(callback, c))
+        t1 = threading.Thread(target=c.on_press, args=(callback,))
         t1.start()
         t1.join() 
         
