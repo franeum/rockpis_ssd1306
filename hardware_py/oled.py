@@ -9,6 +9,28 @@ from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
 
 
+"""
+table of conversion point -> pixel
+point   C               space           2               n.of chars
+5       (3, 6)          (3, 5)          (3, 5)          42
+6       (4, 6)          (4, 5)          (4, 5)          32
+7       (4, 7)          (4, 6)          (4, 6)          32
+8       (5, 8)          (5, 7)          (5, 7)          25
+9       (6, 8)          (5, 8)          (5, 8)          21
+10      (6, 9)          (6, 9)          (6, 9)          21
+11      (7, 10)         (7, 10)         (7, 10)         18
+12      (7, 10)         (7, 10)         (7, 10)         18
+13      (8, 11)         (8, 11)         (8, 11)         16
+14      (8, 12)         (8, 12)         (8, 12)         16
+15      (9, 13)         (9, 13)         (9, 13)         14
+16      (10, 14)        (10, 14)        (10, 14)        12
+17      (10, 15)        (10, 15)        (10, 15)        12
+18      (11, 15)        (11, 15)        (11, 15)        11
+19      (11, 16)        (11, 16)        (11, 16)        11
+20      (12, 17)        (12, 17)        (12, 17)        10
+"""
+
+
 # Create the I2C interface.
 i2c = busio.I2C(SCL3, SDA3)
 
@@ -55,6 +77,7 @@ def write_text(txt):
 
 
 def create_scrolling_text(string, a_time=0.1):
+    # 15
     for i,ch in enumerate(string):
         c = i+1
         write_text(string[:c])
