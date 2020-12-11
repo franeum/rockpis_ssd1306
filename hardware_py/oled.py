@@ -46,17 +46,18 @@ X = 0
 font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=12)
 #font = ImageFont.load_default()
 
-"""draw.text((x, TOP + 8), "TEST", font=font, fill=255)
-disp.image(image)
-disp.show()
-time.sleep(2)
-disp.fill(0)
-disp.show()"""
 
 def write_text(txt):
     draw.text((X, TOP + 8), txt, font=font, fill=255)
     disp.image(image)
     disp.show()
+
+
+def create_scrolling_text(string, a_time=0.1):
+    for i,ch in enumerate(string):
+        c = i+1
+        write_text(string[:c])
+        time.sleep(a_time)
 
 
 if __name__ == "__main__":
