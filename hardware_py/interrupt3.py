@@ -13,18 +13,6 @@ from dataclasses import dataclass
 MAX_TIME    = 3
 DEBUG       = 0
 
-BEGIN_X = 0 
-BEGIN_Y = 0
-SCREEN_HEIGHT = 4 
-SCREEN_WIDTH = 16
-
-curses.initscr()
-curses.noecho()
-curses.curs_set(False)
-screen = curses.newwin(SCREEN_HEIGHT, SCREEN_WIDTH, BEGIN_Y, BEGIN_X)
-screen.refresh()
-
-point_counter = 0
 
 #@dataclass
 class Counter:
@@ -36,6 +24,7 @@ class Counter:
         self.exit_flag = 0 
         self.points = '.'
         self._pin = 24
+        self.screen_counter = 0
         self.x = mraa.Gpio(24)
         self.x.dir(mraa.DIR_IN)
         self.x.edge(mraa.EDGE_BOTH)
@@ -77,23 +66,12 @@ def timing(cls):
             now = time.time()
             cls.elapsed = now - cls.start 
             if check_elapsed(cls.elapsed):
-                if DEBUG: print("OK, ESEGUO ALTRO PROGRAMMA")
+                print("OK, ESEGUO ALTRO PROGRAMMA")
                 cls.start = time.time() 
-                curses.endwin()
         else:
-            print("non premuto")
+            if DEBUG: print("non premuto")
         time.sleep(0.25)
 
-
-
-def print_point_on_screen():
-    screen.addstr(0, point_counter, '.')
-    screen.refresh()
-    point_counter += 1
-
-    if point_counter >= SCREEN_WIDTH - 1:
-        point_counter = 0
-        screen.clear()
 
 
 def check_elapsed(e_time):
