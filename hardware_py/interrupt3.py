@@ -68,7 +68,7 @@ def timing(cls):
             cls.elapsed = now - cls.start 
             if check_elapsed(cls.elapsed):
                 print("OK, ESEGUO ALTRO PROGRAMMA")
-                oled.write_text("ESEGUO")
+                oled.write_text("Create ACP")
                 cls.start = time.time() 
         else:
             if DEBUG: print("non premuto")
