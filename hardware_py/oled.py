@@ -48,6 +48,7 @@ font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-R
 
 
 def write_text(txt):
+    print(font.getlength(txt))
     draw.text((X, TOP + 8), txt, font=font, fill=255)
     disp.image(image)
     disp.show()
