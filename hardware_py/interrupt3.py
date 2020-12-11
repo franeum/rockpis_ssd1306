@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
 
-# Author: Brendan Le Foll <brendan.le.foll@intel.com>
-# Copyright (c) 2014 Intel Corporation.
-#
-# SPDX-License-Identifier: MIT
-#
-# Example Usage: Triggers ISR upon GPIO state change
-
 import mraa
 import time
 import sys
@@ -17,7 +10,6 @@ from dataclasses import dataclass
 # constants
 
 MAX_TIME    = 3
-PIN         = 24
 
 
 #@dataclass
@@ -35,18 +27,17 @@ class Counter:
         self.x.edge(mraa.EDGE_BOTH)
 
     def on_press(self, func, *args):
-        self.x.isr(mraa.EDGE_BOTH, func, self.x)
-
+        self.x.isr(mraa.EDGE_BOTH, func, self)
 
     def perform_exit(self):
         self.x.isrExit()
 
 
 def callback(gpio):
-    if gpio.read() == 0:
+    if gpio.x.read() == 0:
         print("pressed")
 
-    elif gpio.read() == 1:
+    elif gpio.x.read() == 1:
         print("released")
 
 
