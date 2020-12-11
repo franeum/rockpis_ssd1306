@@ -5,12 +5,26 @@ import time
 import sys
 import os 
 import threading 
+import curses
 from dataclasses import dataclass
 
 # constants
 
 MAX_TIME    = 3
+DEBUG       = 0
 
+BEGIN_X = 0 
+BEGIN_Y = 0
+SCREEN_HEIGHT = 4 
+SCREEN_WIDTH = 16
+
+curses.initscr()
+curses.noecho()
+curses.curs_set(False)
+screen = curses.newwin(SCREEN_HEIGHT, SCREEN_WIDTH, BEGIN_Y, BEGIN_X)
+screen.refresh()
+
+point_counter = 0
 
 #@dataclass
 class Counter:
@@ -41,16 +55,20 @@ class Counter:
         self._start = value 
 
 
+
+
 def callback(cls):
     gpio = cls.x
     if gpio.read() == 0:
-        print("pressed")
+        if DEBUG: print("pressed")
         cls.start = time.time()
         cls.flag = True
 
     elif gpio.read() == 1:
-        print("released")
+        if DEBUG: print("released")
         cls.flag = False 
+
+
 
 
 def timing(cls):
@@ -59,11 +77,23 @@ def timing(cls):
             now = time.time()
             cls.elapsed = now - cls.start 
             if check_elapsed(cls.elapsed):
-                print("OK, ESEGUO ALTRO PROGRAMMA")
+                if DEBUG: print("OK, ESEGUO ALTRO PROGRAMMA")
                 cls.start = time.time() 
+                curses.endwin()
         else:
             print("non premuto")
         time.sleep(0.25)
+
+
+
+def print_point_on_screen():
+    screen.addstr(0, point_counter, '.')
+    screen.refresh()
+    point_counter += 1
+
+    if point_counter >= SCREEN_WIDTH - 1:
+        point_counter = 0
+        screen.clear()
 
 
 def check_elapsed(e_time):
@@ -71,6 +101,8 @@ def check_elapsed(e_time):
         return True 
     else:
         return False 
+
+
 
 
 def main():
@@ -87,6 +119,7 @@ def main():
 
         var = input("Press ENTER to stop")
         c.perform_exit()
+
     except ValueError as e:
         print(e)
 
