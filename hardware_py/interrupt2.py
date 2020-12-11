@@ -12,6 +12,7 @@ import time
 import sys
 import os 
 import threading 
+from dataclasses import dataclass
 
 # constants
 
@@ -61,7 +62,7 @@ def configure_pin(pin, func, cls):
 def main():
     try:
         # initialise GPIO
-        x = configure_pin(PIN, press)
+        x = configure_pin(PIN, press, c)
 
         while True:
             #print("flag:", c.flag)
