@@ -1,7 +1,3 @@
-# This example is for use on (Linux) computers that are using CPython with
-# Adafruit Blinka to support CircuitPython libraries. CircuitPython does
-# not support PIL/pillow (python imaging library)!
-
 #!/usr/bin/env python3
 
 import time
@@ -39,7 +35,7 @@ draw.rectangle((0, 0, width, height), outline=0, fill=0)
 
 # Draw some shapes.
 # First define some constants to allow easy resizing of shapes.
-padding = -2
+padding = -2 
 TOP = padding
 bottom = height - padding
 # Move left to right keeping track of the current x position for drawing shapes.
@@ -47,8 +43,8 @@ X = 0
 
 
 # Load default font.
-font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=16)
-
+font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=12)
+#font = ImageFont.load_default()
 
 """draw.text((x, TOP + 8), "TEST", font=font, fill=255)
 disp.image(image)
@@ -58,7 +54,7 @@ disp.fill(0)
 disp.show()"""
 
 def write_text(txt):
-    draw.text((X, TOP + 8), "TEST", font=font, fill=255)
+    draw.text((X, TOP + 8), txt, font=font, fill=255)
     disp.image(image)
     disp.show()
 
