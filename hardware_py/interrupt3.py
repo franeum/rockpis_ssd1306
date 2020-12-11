@@ -16,8 +16,8 @@ MAX_TIME    = 3
 class Counter:
     def __init__(self):
         self.c  = 0
-        self.start = 0
-        self.past = 0
+        self._start = 0
+        self.elapsed = 0
         self.flag = False   
         self.exit_flag = 0 
         self.points = '.'
@@ -32,25 +32,46 @@ class Counter:
     def perform_exit(self):
         self.x.isrExit()
 
+    @property
+    def start(self):
+        return self._start 
 
-def callback(gpio):
+    @start.setter
+    def start(self, value):
+        self._start = value 
+
+
+def callback(cls):
+    gpio = cls.x
     if gpio.x.read() == 0:
         print("pressed")
-        gpio.start = time.time()
-        gpio.flag = True
+        cls.start = time.time()
+        cls.flag = True
 
     elif gpio.x.read() == 1:
         print("released")
-        gpio.flag = False 
+        cls.flag = False 
 
 
 def timing(cls):
     while True:
         if cls.flag:
-            print("premuto")
+            now = time.time()
+            cls.elapsed = now - cls.start 
+            if check_elapsed:
+                print("OK, ESEGUO ALTRO PROGRAMMA")
+
         else:
             print("non premuto")
         time.sleep(0.25)
+
+
+def check_elapsed(e_time):
+    if e_time >= MAX_TIME:
+        return True 
+    else:
+        return False 
+
 
 def main():
     try:
