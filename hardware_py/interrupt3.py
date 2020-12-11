@@ -43,12 +43,12 @@ class Counter:
 
 def callback(cls):
     gpio = cls.x
-    if gpio.x.read() == 0:
+    if gpio.read() == 0:
         print("pressed")
         cls.start = time.time()
         cls.flag = True
 
-    elif gpio.x.read() == 1:
+    elif gpio.read() == 1:
         print("released")
         cls.flag = False 
 
@@ -58,9 +58,9 @@ def timing(cls):
         if cls.flag:
             now = time.time()
             cls.elapsed = now - cls.start 
-            if check_elapsed:
+            if check_elapsed(cls.elapsed):
                 print("OK, ESEGUO ALTRO PROGRAMMA")
-
+                cls.start = time.time() 
         else:
             print("non premuto")
         time.sleep(0.25)
