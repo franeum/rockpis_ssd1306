@@ -44,7 +44,10 @@ def callback(gpio):
         gpio.flag = True
 
 
-
+def timing(cls):
+    while cls.flag:
+        print("proceduma")
+        time.sleep(0.25)
 
 def main():
     try:
@@ -53,11 +56,11 @@ def main():
         t1 = threading.Thread(target=c.on_press, args=(callback, c))
         t1.start()
         t1.join() 
-        """c.on_press(callback, c)
+        
+        t2 = threading.Thread(target=timing, args=(c,))
 
         var = input("Press ENTER to stop")
-        c.perform_exit()"""
-
+        c.perform_exit()
     except ValueError as e:
         print(e)
 
