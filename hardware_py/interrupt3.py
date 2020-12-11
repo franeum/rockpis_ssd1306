@@ -7,15 +7,13 @@ import os
 import threading 
 import curses
 import oled 
-from dataclasses import dataclass
+
 
 # constants
-
 MAX_TIME    = 3
 DEBUG       = 0
 
 
-#@dataclass
 class Counter:
     def __init__(self):
         self.c  = 0
@@ -23,7 +21,6 @@ class Counter:
         self.elapsed = 0
         self.flag = False   
         self.exit_flag = 0 
-        self.points = '.'
         self._pin = 24
         self.screen_counter = 0
         self.x = mraa.Gpio(24)
@@ -45,8 +42,6 @@ class Counter:
         self._start = value 
 
 
-
-
 def callback(cls):
     gpio = cls.x
     if gpio.read() == 0:
@@ -57,8 +52,6 @@ def callback(cls):
     elif gpio.read() == 1:
         if DEBUG: print("released")
         cls.flag = False 
-
-
 
 
 def timing(cls):
