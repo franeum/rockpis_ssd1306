@@ -50,7 +50,7 @@ class Counter:
 def main():
     try:
         c = Counter()
-        c.on_press(c.callback(), 2)
+        c.on_press(c.callback, 2)
 
         var = input("Press ENTER to stop")
         c.perform_exit()
