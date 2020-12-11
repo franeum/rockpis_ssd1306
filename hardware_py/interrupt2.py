@@ -63,7 +63,7 @@ def main():
     try:
         # initialise GPIO
         x = configure_pin(PIN, press, c)
-
+"""
         while True:
             #print("flag:", c.flag)
             if c.flag == True: 
@@ -82,7 +82,7 @@ def main():
                     print("More long please") 
                     c.exit_flag = 1
 
-            time.sleep(0.1) 
+            time.sleep(0.1) """
 
         var = input("Press ENTER to stop")
         x.isrExit()
