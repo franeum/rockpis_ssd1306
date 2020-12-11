@@ -36,18 +36,27 @@ class Counter:
 def callback(gpio):
     if gpio.x.read() == 0:
         print("pressed")
+        gpio.start = time.time()
+        gpio.flag = True
 
     elif gpio.x.read() == 1:
         print("released")
+        gpio.flag = True
+
+
 
 
 def main():
     try:
         c = Counter()
-        c.on_press(callback, c)
+
+        t1 = threading.Thread(target=c.on_press, args=(callback, c))
+        t1.start()
+        t1.join() 
+        """c.on_press(callback, c)
 
         var = input("Press ENTER to stop")
-        c.perform_exit()
+        c.perform_exit()"""
 
     except ValueError as e:
         print(e)
