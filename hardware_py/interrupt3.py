@@ -41,12 +41,15 @@ def callback(gpio):
 
     elif gpio.x.read() == 1:
         print("released")
-        gpio.flag = True
+        gpio.flag = False 
 
 
 def timing(cls):
-    while cls.flag:
-        print("proceduma")
+    while True:
+        if cls.flag:
+            print("premuto")
+        else:
+            print("non premuto")
         time.sleep(0.25)
 
 def main():
@@ -58,6 +61,8 @@ def main():
         t1.join() 
         
         t2 = threading.Thread(target=timing, args=(c,))
+        t2.start() 
+        t2.join()
 
         var = input("Press ENTER to stop")
         c.perform_exit()
