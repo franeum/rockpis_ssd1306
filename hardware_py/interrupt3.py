@@ -33,28 +33,21 @@ class Counter:
         self.x = mraa.Gpio(24)
         self.x.dir(mraa.DIR_IN)
         self.x.edge(mraa.EDGE_BOTH)
-        #self.x.isr(mraa.EDGE_BOTH, press, self.x)
 
     def on_press(self, func, *args):
-        self.x.isr(mraa.EDGE_BOTH, func, self)
+        self.x.isr(mraa.EDGE_BOTH, func, self.x)
 
-    def callback(self, d):
-        """
-        if self.x.read() == 0:
-            print("pressed")
-
-        elif self.x.read() == 1:
-            print("released")    
-        """
-        print("azione")
 
     def perform_exit(self):
         self.x.isrExit()
 
 
-def callback(d):
-    print(d.x)
-    print("pressed")
+def callback(gpio):
+    if gpio.read() == 0:
+        print("pressed")
+
+    elif gpio.read() == 1:
+        print("released")
 
 
 def main():
