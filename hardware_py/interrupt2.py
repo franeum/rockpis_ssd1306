@@ -20,36 +20,37 @@ MAX_TIME    = 3
 PIN         = 24
 
 
-@dataclass
+#@dataclass
 class Counter:
-    c: int          = 0
-    start: float    = 0
-    past: float     = 0
-    flag: bool      = False   
-    exit_flag: int  = 0 
-    points: str     = '.'
+    def __init__(self):
+        self.c  = 0
+        self.start = 0
+        self.past = 0
+        self.flag = False   
+        self.exit_flag = 0 
+        self.points = '.'
 
-c = Counter()
+#c = Counter()
 
 # inside a python interrupt you cannot use 'basic' types so you'll need to use
 # objects
-def press(gpio, cl):
+def press(gpio, *args):
     """interrupt handler"""
-    
+
     if gpio.read() == 0:
-        cl.flag = True 
-        cl.start = time.time()
+        #cl.flag = True 
+        #cl.start = time.time()
         print("pressed")
 
     elif gpio.read() == 1:
-        cl.flag = False 
-        cl.past = time.time() - c.start
-        if c.past >= MAX_TIME:
-            print(1)
-        else:
-            cl.points = '.'
-            print("piu tempo per cortesia")
-
+        #cl.flag = False 
+        #cl.past = time.time() - cl.start
+        #if cl.past >= MAX_TIME:
+        #    print(1)
+        #else:
+        #    cl.points = '.'
+        #    print("piu tempo per cortesia")
+        print("released")
 
 def configure_pin(pin, func, cls):
     configured_pin = mraa.Gpio(pin)
@@ -61,9 +62,13 @@ def configure_pin(pin, func, cls):
 
 def main():
     try:
+        c = Counter()
         # initialise GPIO
-        x = configure_pin(PIN, press, c)
-"""
+        #x = configure_pin(PIN, press, c)
+        x = mraa.Gpio(PIN)
+        x.dir(mraa.DIR_IN)
+        x.isr(mraa.EDGE_BOTH, press, x)
+        """
         while True:
             #print("flag:", c.flag)
             if c.flag == True: 
