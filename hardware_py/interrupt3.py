@@ -75,7 +75,7 @@ def timing(cls):
         time.sleep(0.25)
 
 
-def create_acp_writing(string):
+def create_scrolling_text(string):
     for i,ch in enumerate(string):
         c = i+1
         oled.write_text(string[:c])
