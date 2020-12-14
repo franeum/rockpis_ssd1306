@@ -587,6 +587,28 @@ Una volta configurato l'`access point`, si può attivare o disattivare con il co
 $ sudo service hostapd {start|stop}
 ```
 
+## Disabilitare permanentemente il servizio `hostapd` (access point)
+
+semplicemente:
+
+```bash
+sudo systemctl disable hostapd
+```
+
+## Abilitare permanentemente il il servizio `hostapd` (access point)
+
+Per abilitare il servizio:
+
+```bash
+sudo systemctl enable hostapd
+```
+
+Per avviarlo:
+
+```bash
+sudo systemctl start hostapd
+```
+
 ## Preparazione per la connessione automatica alla propria LAN
 
 Accendere il dispositivo wifi del rockpis e connettersi alla rete:
