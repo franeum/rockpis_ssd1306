@@ -21,16 +21,20 @@ def wifi_device_name():
     device_name = res[0]
     return device_name 
 
+
+
+
+
 def get_connection_string(ssid, password, device):
-    return f"nmcli d wifi connect {ssid} password {password} ifname {device}".split()
+    return f"nmcli d wifi connect {ssid} password {password} ifname {device}"
 
 
 def connect_wifi(ssid, password, device):
     return sp.check_output(get_connection_string(ssid, password, device)) 
 
 
-def get_disconnection_string():
-    return "sudo nmcli con down id".split()
+def get_disconnection_string(uuid):
+    return f"sudo nmcli con down id {uuid}"
 
 
 def disconnetc_wifi():
@@ -38,20 +42,24 @@ def disconnetc_wifi():
     res = sp.check_output(get_disconnection_string())
     return res 
 
+
+
 def set_nmcli_command(decorated):
     @wraps(decorated)
-    def wrapper(list_of_words):
-        return sp.check_output(list_of_words) 
+    def wrapper(*string):
+        print(string)
+        #list_of_string = string.split()
+        #return sp.check_output(list_of_string) 
+        # TODO
     return wrapper 
 
 @set_nmcli_command
-def connect_wifi(string):
+def connect_wifi(ssid, password, device):
     return get_connection_string(ssid, password, device)
 
 @set_nmcli_command
-def disconnect_wifi(string):
-    uuid = get_uuid()
-    return get_connection_string(ssid, password, device)
+def disconnect_wifi(uuid):
+    return get_disconnection_string(uuid)
 
 if __name__ == "__main__":
-    nmcli("ciao ciao")
+    connect_wifi("vodafone", "antani", "stocazzo")
