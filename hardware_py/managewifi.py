@@ -2,12 +2,17 @@
 
 import re
 import subprocess as sp 
-from functools import wraps
 
-WIFI_DEVICE = re.compile(r'^w.+0$')
+
+WIFI_DEVICE             = re.compile(r'^w.+0$')
+CONNECTION_STRING       = "nmcli d wifi connect {} password {} ifname {}"
+DISCONNECTION_STRING    = "nmcli con down id {}"
+UUID_QUERY              = "nmcli -g DEVICE,UUID con show"
+DEVICE_NAME_QUERY       = "nmcli -g DEVICE con show"
+
 
 def get_uuid():
-    res = sp.check_output(['nmcli','-g','DEVICE,UUID','con','show'])
+    res = _nmcli_command(UUID_QUERY)
     res = res.splitlines()
 
     for dev in res:
@@ -17,49 +22,26 @@ def get_uuid():
 
 
 def wifi_device_name():
-    res = [i.decode('utf-8') for i in sp.check_output(['nmcli','-g','DEVICE','con','show']).splitlines() if re.search(WIFI_DEVICE, i.decode('utf-8'))]
+    res = [i.decode('utf-8') for i in sp.check_output(DEVICE_NAME_QUERY).splitlines() if re.search(WIFI_DEVICE, i.decode('utf-8'))]
     device_name = res[0]
     return device_name 
 
 
-
-
-
-def get_connection_string(ssid, password, device):
-    return f"nmcli d wifi connect {ssid} password {password} ifname {device}"
+def _nmcli_command(string):
+    #return sp.check_output(string.split())
+    print(string)
 
 
 def connect_wifi(ssid, password, device):
-    return sp.check_output(get_connection_string(ssid, password, device)) 
+    string = CONNECTION_STRING.format(ssid, password, device)
+    return _nmcli_command(string) 
 
 
-def get_disconnection_string(uuid):
-    return f"sudo nmcli con down id {uuid}"
-
-
-def disconnetc_wifi():
+def disconnect_wifi():
     uuid = get_uuid()
-    res = sp.check_output(get_disconnection_string())
-    return res 
+    string = DISCONNECTION_STRING.format(uuid)
+    return _nmcli_command(string)
 
-
-
-def set_nmcli_command(decorated):
-    @wraps(decorated)
-    def wrapper(*string):
-        print(string)
-        #list_of_string = string.split()
-        #return sp.check_output(list_of_string) 
-        # TODO
-    return wrapper 
-
-@set_nmcli_command
-def connect_wifi(ssid, password, device):
-    return get_connection_string(ssid, password, device)
-
-@set_nmcli_command
-def disconnect_wifi(uuid):
-    return get_disconnection_string(uuid)
 
 if __name__ == "__main__":
     connect_wifi("vodafone", "antani", "stocazzo")
