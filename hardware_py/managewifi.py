@@ -3,7 +3,7 @@
 import re
 import subprocess as sp 
 
-
+DEBUG                   = 1
 WIFI_DEVICE             = re.compile(r'^w.+0$')
 CONNECTION_STRING       = "nmcli d wifi connect {} password {} ifname {}"
 DISCONNECTION_STRING    = "nmcli con down id {}"
@@ -28,8 +28,10 @@ def wifi_device_name():
 
 
 def _nmcli_command(string):
-    #return sp.check_output(string.split())
-    print(string)
+    if DEBUG:
+        print(string)
+    else:
+        return sp.check_output(string.split())
 
 
 def connect_wifi(ssid, password, device):
