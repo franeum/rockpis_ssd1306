@@ -3,6 +3,6 @@
 import configlogger as log  
 import logging
 
-logger = log.set_logger(__name__)
+logger = log.Logger(__name__, log_file=False)
 
 logger.info('Messaggio from submodule')
