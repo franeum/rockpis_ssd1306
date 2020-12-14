@@ -1,15 +1,27 @@
-import logging
+import colorlog, logging 
 
-def set_logger(string, stream=True, file=False):
-    logger = logging.getLogger(string) 
-    logger.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler('debug.log')
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-    ch.setFormatter(formatter)
-    logger.addHandler(ch)
-    return logger 
+OUTPUT_FILE = 'tastoma.log'
+
+class Logger:
+    def __init__(self, name, stream=True, log_file=False):
+        self.logger = logging.getLogger(name.replace('_','')) 
+        self.logger.setLevel(logging.DEBUG)
+        self.formatter = colorlog.ColoredFormatter('%(log_color)s%(asctime)s\t-\t%(name)-8s\t - %(levelname)s: %(message)s')
+        self.check_file(log_file)
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+        ch.setFormatter(self.formatter)
+        self.logger.addHandler(ch) 
+
+    def __getattr__(self, name):
+        def wrapper(message):
+            if name in ['debug','info','warning','error','critical']:
+                return getattr(self.logger, name)(message.upper())
+        return wrapper
+
+    def check_file(self, logfile):
+        if logfile:
+            fh = logging.FileHandler(OUTPUT_FILE)
+            fh.setLevel(logging.DEBUG)
+            fh.setFormatter(self.formatter)
+            self.logger.addHandler(fh)
