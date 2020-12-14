@@ -616,5 +616,11 @@ Accendere il dispositivo wifi del rockpis e connettersi alla rete:
 ```bash
 $ nmcli r wifi on
 $ nmcli d wifi list # opzionale? potrebbe servire per attivare lo scanning della rete wifi
-$ nmcli d wifi connect <my_net> password <password>
+$ nmcli d wifi connect <my_net> password <password> ifname wlan0
+```
+
+Disconnettersi dalla rete:
+
+```bash
+sudo nmcli con down id UUID-RETE
 ```
