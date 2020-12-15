@@ -43,7 +43,7 @@ X = 0
 
 
 # Load default font.
-font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=12)
+font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=14)
 #font = ImageFont.load_default()
 
 
@@ -62,4 +62,4 @@ def create_scrolling_text(string, a_time=0.1):
 
 
 if __name__ == "__main__":
-    write_text("PROVA PROVA 123")
+    write_text("192.168.0.124")
