@@ -7,25 +7,20 @@ import os
 import threading 
 import curses
 import oled 
-from dataclasses import dataclass
+
 
 # constants
-
 MAX_TIME    = 3
 DEBUG       = 0
+D_OLED      = oled.OledDisplay() 
 
-
-#@dataclass
 class Counter:
     def __init__(self):
         self.c  = 0
         self._start = 0
         self.elapsed = 0
         self.flag = False   
-        self.exit_flag = 0 
-        self.points = '.'
         self._pin = 24
-        self.screen_counter = 0
         self.x = mraa.Gpio(24)
         self.x.dir(mraa.DIR_IN)
         self.x.edge(mraa.EDGE_BOTH)
@@ -45,8 +40,6 @@ class Counter:
         self._start = value 
 
 
-
-
 def callback(cls):
     gpio = cls.x
     if gpio.read() == 0:
@@ -59,8 +52,6 @@ def callback(cls):
         cls.flag = False 
 
 
-
-
 def timing(cls):
     while True:
         if cls.flag:
@@ -68,7 +59,7 @@ def timing(cls):
             cls.elapsed = now - cls.start 
             if check_elapsed(cls.elapsed):
                 print("OK, ESEGUO ALTRO PROGRAMMA")
-                oled.create_scrolling_text("Create ACP......", a_time=0.1)
+                D_OLED.create_scrolling_text("Create ACP......", a_time=0.1)
                 cls.start = time.time() 
         else:
             if DEBUG: print("non premuto")
