@@ -61,7 +61,7 @@ else:
 
 print("CONFIGURAZIONE COMPLETATA")
 
-image = Image.new("RGB", (width, height))
+image = Image.new("L", (width, height))
 
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
@@ -80,7 +80,7 @@ font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FON
 
 for _ in range(10):
     # Draw Some Text
-    display.fill(0)
+    disp.fill(0)
     text = random.choice(kwlist) #"Hello World!"
     (font_width, font_height) = font.getsize(text)
     draw.text(
