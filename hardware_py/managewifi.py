@@ -1,30 +1,57 @@
 #!/usr/bin/env python3
 
 import re
+import json 
 import subprocess as sp 
 
-DEBUG                   = 1
+
+DEBUG                   = 0
+EXPORT_JSON             = 1
 WIFI_DEVICE             = re.compile(r'^w.+0$')
 CONNECTION_STRING       = "nmcli d wifi connect {} password {} ifname {}"
 DISCONNECTION_STRING    = "nmcli con down id {}"
-UUID_QUERY              = "nmcli -g DEVICE,UUID con show"
-DEVICE_NAME_QUERY       = "nmcli -g DEVICE con show"
+GET_DEVICE_QUERY        = "nmcli -g GENERAL.DEVICE,GENERAL.TYPE --mode multiline dev show"
+GET_UUID_QUERY          = "nmcli -g DEVICE,UUID con show --active"
+GET_WIFI_LIST_QUERY     = "nmcli -g SSID,SIGNAL dev wifi"
 
+
+def jsonize(fn):
+    def wrapper(*args):
+        if EXPORT_JSON == 1:
+            if args:
+                return json.dumps(fn(args))
+            else:
+                return json.dumps(fn())
+        return fn()
+    return wrapper 
+
+
+def format_name(dotted):
+    return dotted.split('.')[1]
+
+
+def get_device():
+    """get wifi device name"""
+    res = _nmcli_command(GET_DEVICE_QUERY)
+    devices = [dev.decode('utf-8').split(':') for dev \
+        in res.splitlines() if dev.decode('utf-8') != '']
+    container = {}
+    
+    for n,d in enumerate(devices):
+        container[format_name(d[0])] = d[1]
+        if n % 2 == 1:
+            if container['TYPE'] == 'wifi':
+                return container['DEVICE']
+    
 
 def get_uuid():
-    res = _nmcli_command(UUID_QUERY)
+    res = _nmcli_command(GET_UUID_QUERY)
     res = res.splitlines()
 
     for dev in res:
         device = dev.decode('utf-8').split(':')
         if re.search(WIFI_DEVICE, device[0]):
             return device[1]
-
-
-def wifi_device_name():
-    res = [i.decode('utf-8') for i in sp.check_output(DEVICE_NAME_QUERY).splitlines() if re.search(WIFI_DEVICE, i.decode('utf-8'))]
-    device_name = res[0]
-    return device_name 
 
 
 def _nmcli_command(string):
@@ -45,5 +72,20 @@ def disconnect_wifi():
     return _nmcli_command(string)
 
 
+@jsonize 
+def get_wifi_list():
+    res = _nmcli_command(GET_WIFI_LIST_QUERY)
+    res = [i.decode("utf-8").split(':') for i in res.splitlines()]
+    formatted_data = {}
+
+    for item in res:
+        if item[1].isdigit():
+            signal = int(item[1])
+        else:
+            signal = item[1]
+        formatted_data[item[0]] = signal 
+    return formatted_data
+
+
 if __name__ == "__main__":
-    connect_wifi("vodafone", "antani", "stocazzo")
+    print(get_wifi_list())
