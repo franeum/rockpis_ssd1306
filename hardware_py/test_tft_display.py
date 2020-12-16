@@ -1,6 +1,7 @@
 
 import digitalio
 import board
+import time 
 from PIL import Image, ImageDraw, ImageFont
 import adafruit_rgb_display.ili9341 as ili9341
 import adafruit_rgb_display.st7789 as st7789  # pylint: disable=unused-import
@@ -8,6 +9,8 @@ import adafruit_rgb_display.hx8357 as hx8357  # pylint: disable=unused-import
 import adafruit_rgb_display.st7735 as st7735  # pylint: disable=unused-import
 import adafruit_rgb_display.ssd1351 as ssd1351  # pylint: disable=unused-import
 import adafruit_rgb_display.ssd1331 as ssd1331  # pylint: disable=unused-import
+from keyword import kwlist
+import random 
 
 # First define some constants to allow easy resizing of shapes.
 BORDER = 20
@@ -70,17 +73,19 @@ draw.rectangle(
 )
 
 # Load a TTF Font
-font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FONTSIZE)
+font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FONTSIZE) 
 
-# Draw Some Text
-text = "Hello World!"
-(font_width, font_height) = font.getsize(text)
-draw.text(
-    (width // 2 - font_width // 2, height // 2 - font_height // 2),
-    text,
-    font=font,
-    fill=(255, 255, 0),
-)
+for _ in range(10):
+    # Draw Some Text
+    text = random.choice(kwlist) #"Hello World!"
+    (font_width, font_height) = font.getsize(text)
+    draw.text(
+        (width // 2 - font_width // 2, height // 2 - font_height // 2),
+        text,
+        font=font,
+        fill=(255, 255, 0),
+    )
 
-# Display image.
-disp.image(image)
+    # Display image.
+    disp.image(image)
+    time.sleep(1)
