@@ -67,27 +67,30 @@ image = Image.new("L", (width, height))
 draw = ImageDraw.Draw(image)
 
 # Draw a green filled box as the background
-draw.rectangle((0, 0, width, height), fill=(0, 255, 0))
+draw.rectangle((0, 0, width, height), fill=(255, 255, 255))
 disp.image(image)
 
 # Draw a smaller inner purple rectangle
-draw.rectangle(
+"""draw.rectangle(
     (BORDER, BORDER, width - BORDER - 1, height - BORDER - 1), fill=(170, 0, 136)
-)
+)"""
 
 # Load a TTF Font
 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FONTSIZE) 
 
 for _ in range(10):
     # Draw Some Text
-    disp.fill(0)
+    
+    draw.rectangle((0, 0, width, height), fill=(255, 255, 255))
+    disp.image(image)
+
     text = random.choice(kwlist) #"Hello World!"
     (font_width, font_height) = font.getsize(text)
     draw.text(
         (width // 2 - font_width // 2, height // 2 - font_height // 2),
         text,
         font=font,
-        fill=(255, 255, 0),
+        fill=(0, 0, 0),
     )
 
     # Display image.
