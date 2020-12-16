@@ -12,7 +12,19 @@ CONNECTION_STRING       = "nmcli d wifi connect {} password {} ifname {}"
 DISCONNECTION_STRING    = "nmcli con down id {}"
 GET_DEVICE_QUERY        = "nmcli -g GENERAL.DEVICE,GENERAL.TYPE --mode multiline dev show"
 GET_UUID_QUERY          = "nmcli -g DEVICE,UUID con show --active"
-GET_WIFI_LIST_QUERY     = "nmcli -g SSID,SIGNAL dev wifi"
+GET_WIFI_LIST_QUERY     = "nmcli -g SSID,SIGNAL dev wifi list"
+WIFI_STATUS             = "nmcli r wifi"
+ENABLE_WIFI_QUERY       = "nmcli r wifi on"
+
+
+def _run_process(query):
+    res = sp.run(query.split())
+    return res.returncode
+
+
+def wifi_status():
+    res = _nmcli_command(WIFI_STATUS)
+    return res.decode('utf-8').strip(None) == 'enabled'
 
 
 def jsonize(fn):
@@ -88,4 +100,4 @@ def get_wifi_list():
 
 
 if __name__ == "__main__":
-    print(get_wifi_list())
+    print(wifi_status())
