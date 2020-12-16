@@ -15,8 +15,8 @@ FONTSIZE = 24
 
 # Configuration for CS and DC pins (these are PiTFT defaults):
 cs_pin = digitalio.DigitalInOut(board.pin.SPI2_CS)  
-dc_pin = digitalio.DigitalInOut(board.pin.GPIO0_B7)  
-reset_pin = digitalio.DigitalInOut(board.pin.GPIO0_C0)
+dc_pin = digitalio.DigitalInOut(board.pin.GPIO2_A1)  
+reset_pin = digitalio.DigitalInOut(board.pin.GPIO0_B3)
 
 # Config for display baudrate (default max is 24mhz):
 BAUDRATE = 24000000
@@ -36,7 +36,7 @@ spi = board.SPI()
 # disp = ssd1351.SSD1351(spi, rotation=180,                         # 1.5" SSD1351
 # disp = ssd1351.SSD1351(spi, height=96, y_offset=32, rotation=180, # 1.27" SSD1351
 # disp = ssd1331.SSD1331(spi, rotation=180,                         # 0.96" SSD1331
-disp = st7735.ST7735R(
+disp = ili9341.ILI9341(
     spi,
     rotation=90,  # 2.2", 2.4", 2.8", 3.2" ILI9341
     cs=cs_pin,
