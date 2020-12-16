@@ -60,19 +60,15 @@ else:
 
 print("CONFIGURAZIONE COMPLETATA")
 
-image = Image.new("RGB", (width, height))
+image = Image.new("1", (width, height))
 
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
 
 # Draw a green filled box as the background
-draw.rectangle((0, 0, width, height), fill=(255, 255, 255))
-disp.image(image)
+draw.rectangle((0, 0, width, height), outline=0, fill=0)
+#disp.image(image)
 
-# Draw a smaller inner purple rectangle
-"""draw.rectangle(
-    (BORDER, BORDER, width - BORDER - 1, height - BORDER - 1), fill=(170, 0, 136)
-)"""
 
 # Load a TTF Font
 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FONTSIZE) 
@@ -80,8 +76,8 @@ font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FON
 for _ in range(10):
     # Draw Some Text
     
-    draw.rectangle((0, 0, width, height), fill=(255, 255, 255))
-    disp.image(image)
+    #draw.rectangle((0, 0, width, height), fill=1)
+    #disp.image(image)
 
     text = random.choice(kwlist) #"Hello World!"
     (font_width, font_height) = font.getsize(text)
@@ -89,9 +85,10 @@ for _ in range(10):
         (width // 2 - font_width // 2, height // 2 - font_height // 2),
         text,
         font=font,
-        fill=(0, 0, 0),
+        fill=0,
     )
 
     # Display image.
     disp.image(image)
-    time.sleep(1)
+    disp.show()
+    time.sleep(2)
