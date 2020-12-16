@@ -74,7 +74,7 @@ draw.rectangle(
 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FONTSIZE)
 
 # Draw Some Text
-text = "Hello World!"
+text = "Ciao Agnese!"
 (font_width, font_height) = font.getsize(text)
 draw.text(
     (width // 2 - font_width // 2, height // 2 - font_height // 2),
