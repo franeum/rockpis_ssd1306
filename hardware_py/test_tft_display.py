@@ -58,6 +58,8 @@ else:
     width = disp.width  # we swap height/width to rotate it to landscape!
     height = disp.height
 
+print("CONFIGURAZIONE COMPLETATA")
+
 image = Image.new("RGB", (width, height))
 
 # Get drawing object to draw on image.
@@ -77,6 +79,7 @@ font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", FON
 
 for _ in range(10):
     # Draw Some Text
+    display.fill(0)
     text = random.choice(kwlist) #"Hello World!"
     (font_width, font_height) = font.getsize(text)
     draw.text(
