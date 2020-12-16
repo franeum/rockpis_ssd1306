@@ -3,13 +3,8 @@
 import digitalio
 import board
 import time 
-from PIL import Image, ImageDraw, ImageFont
-import adafruit_rgb_display.ili9341 as ili9341
-import adafruit_rgb_display.st7789 as st7789  # pylint: disable=unused-import
-import adafruit_rgb_display.hx8357 as hx8357  # pylint: disable=unused-import
-import adafruit_rgb_display.st7735 as st7735  # pylint: disable=unused-import
-import adafruit_rgb_display.ssd1351 as ssd1351  # pylint: disable=unused-import
-import adafruit_rgb_display.ssd1331 as ssd1331  # pylint: disable=unused-import
+import displayio
+import adafruit_ili9341
 from keyword import kwlist
 import random 
 
@@ -28,38 +23,23 @@ BAUDRATE = 24000000
 # Setup SPI bus using hardware SPI:
 spi = board.SPI()
 
-# pylint: disable=line-too-long
-# Create the display:
-# disp = st7789.ST7789(spi, rotation=90,                            # 2.0" ST7789
-# disp = st7789.ST7789(spi, height=240, y_offset=80, rotation=180,  # 1.3", 1.54" ST7789
-# disp = st7789.ST7789(spi, rotation=90, width=135, height=240, x_offset=53, y_offset=40, # 1.14" ST7789
-# disp = hx8357.HX8357(spi, rotation=180,                           # 3.5" HX8357
-# disp = st7735.ST7735R(spi, rotation=90,                           # 1.8" ST7735R
-# disp = st7735.ST7735R(spi, rotation=270, height=128, x_offset=2, y_offset=3,   # 1.44" ST7735R
-# disp = st7735.ST7735R(spi, rotation=90, bgr=True,                 # 0.96" MiniTFT ST7735R
-# disp = ssd1351.SSD1351(spi, rotation=180,                         # 1.5" SSD1351
-# disp = ssd1351.SSD1351(spi, height=96, y_offset=32, rotation=180, # 1.27" SSD1351
-# disp = ssd1331.SSD1331(spi, rotation=180,                         # 0.96" SSD1331
-disp = ili9341.ILI9341(
-    spi,
-    rotation=90,  # 2.2", 2.4", 2.8", 3.2" ILI9341
-    cs=cs_pin,
-    dc=dc_pin,
-    rst=reset_pin,
-    baudrate=BAUDRATE,
-)
-# pylint: enable=line-too-long
+displayio.release_displays()
+display_bus = displayio.FourWire(spi, command=dc_pin, chip_select=cs_pin)
 
-# Create blank image for drawing.
-# Make sure to create image with mode 'RGB' for full color.
-if disp.rotation % 180 == 90:
-    height = disp.width  # we swap height/width to rotate it to landscape!
-    width = disp.height
-else:
-    width = disp.width  # we swap height/width to rotate it to landscape!
-    height = disp.height
+display = adafruit_ili9341.ILI9341(display_bus, width=320, height=240)
 
-print("CONFIGURAZIONE COMPLETATA")
+# Make the display context
+splash = displayio.Group(max_size=10)
+display.show(splash)
+
+color_bitmap = displayio.Bitmap(320, 240, 1)
+color_palette = displayio.Palette(1)
+color_palette[0] = 0xFF0000
+
+bg_sprite = displayio.TileGrid(color_bitmap,
+                               pixel_shader=color_palette,
+                               x=0, y=0)
+splash.append(bg_sprite)
 
 while True:
     # Fill the screen red, green, blue, then black:
