@@ -485,8 +485,6 @@ sudo systemctl stop hostapd
 Nel file `/etc/dhcpcd.conf` inserire queste righe:
 
 ```bash
-interface wlan0
-    static ip_address=192.168.4.1/24
 nohook wpa_supplicant
 interface wlan0
 static ip_address=192.168.4.1/24
@@ -553,7 +551,7 @@ Installare `iptables`:
 sudo apt install iptables
 ```
 
-In `/etc/sysctl.conf' decommentare la riga
+In `/etc/sysctl.conf` decommentare la riga
 
 ```
 net.ipv4.ip_forward=1
@@ -607,6 +605,22 @@ Per avviarlo:
 
 ```bash
 sudo systemctl start hostapd
+```
+
+**N.B. Per abilitare il servizio è necessario riavviare il sistema**
+
+### Aggiornamento attivazione access point (2020-12-17)
+
+Per (ri)attivare l'`access point` dopo una disconnessione dal wifi eseguire il comando:
+
+comando intero:
+
+```bash
+sudo -i -- sh -c 'systemctl stop dnsmasq && \
+systemctl stop hostapd && \
+systemctl restart dhcpcd && \
+systemctl start dnsmasq && \
+systemctl start hostapd'
 ```
 
 ## Preparazione per la connessione automatica alla propria LAN
