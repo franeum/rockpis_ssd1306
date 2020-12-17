@@ -60,7 +60,7 @@ else:
 
 print("CONFIGURAZIONE COMPLETATA")
 
-image = Image.new("1", (width, height))
+image = Image.new("RGB", (width, height))
 
 # Get drawing object to draw on image.
 draw = ImageDraw.Draw(image)
