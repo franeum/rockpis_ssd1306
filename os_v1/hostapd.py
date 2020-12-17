@@ -33,4 +33,5 @@ def status():
 
 
 if __name__ == '__main__':
-    print(status())
+    command('enable')
+    command('start')
