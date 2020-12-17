@@ -26,7 +26,7 @@ def command(key):
 
 def status():
     res = sh.command(APD_QUERY.format('status'))
-    return res 
+    return res.decode('utf-8') 
 
 
 if __name__ == '__main__':
