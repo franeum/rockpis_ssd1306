@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import time
+import random
 import subprocess
-
-from board import SCL3, SDA3
 import busio
-from PIL import Image, ImageDraw, ImageFont
 import adafruit_ssd1306
+from keyword import kwlist
+from board import SCL3, SDA3
+from PIL import Image, ImageDraw, ImageFont
 
 
 """
@@ -30,16 +31,18 @@ point   C               space           2               n.of chars
 20      (12, 17)        (12, 17)        (12, 17)        10
 """
 
+FONTSIZE = 12
 TOP = -2
 X = 0
 
 class OledDisplay:
-    def __init__(self, scl=board.SCL3, sda=board.SDA3, pixelX=128, pixelY=32):
+    def __init__(self, scl=SCL3, sda=SDA3, pixelX=128, pixelY=32):
         self.i2c = busio.I2C(scl, sda) 
         self.disp = adafruit_ssd1306.SSD1306_I2C(pixelX, pixelY, self.i2c)
         self.width = self.disp.width
         self.height = self.disp.height
-        self._font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=12) 
+        #self._font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=12) 
+        self._font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", size=FONTSIZE)
         self.__image()
         self.__draw()
         self.clear()
@@ -54,8 +57,9 @@ class OledDisplay:
         self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
 
     def clear(self):
+        self.draw.rectangle((0, 0, self.width, self.height), outline=0, fill=0)
         self.disp.fill(0)
-        self.show()
+        self.disp.show()
 
     def write_text(self, txt):
         self.draw.text((X, TOP + 8), txt, font=self._font, fill=255)
@@ -82,6 +86,19 @@ if __name__ == "__main__":
     o = OledDisplay()
     o.write_text("TEST")
     time.sleep(2)
+    o.clear()
+    print("cleared")
     o.create_scrolling_text("Scrolling........")
     time.sleep(2)
+    o.clear()
+    now = time.time()
+    for _ in range(20):
+        txt = random.choice(kwlist)
+        o.write_text(txt)
+        time.sleep(0.01)
+        o.clear()
+        yetnow = time.time()
+        print(yetnow - now)
+        now = yetnow
+
     o.clear()

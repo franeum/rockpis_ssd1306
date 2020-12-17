@@ -96,14 +96,18 @@ def get_wifi_list():
     res = [i.decode("utf-8").split(':') for i in res.splitlines()]
     formatted_data = {}
 
-    for item in res:
-        
-        if item[1].isdigit():
-            signal = int(item[1])
-        else:
-            signal = item[1]
-        formatted_data[item[0]] = signal 
+    to_check_doubles = []
 
+    for item in res:
+        if len(item) == 2:
+            if item[0] not in to_check_doubles:
+                to_check_doubles.append(item[0])
+                if item[1].isdigit():
+                    signal = int(item[1])
+                else:
+                    signal = item[1]
+                formatted_data[item[0]] = signal 
+            
     return formatted_data
 
 
