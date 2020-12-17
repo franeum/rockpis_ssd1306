@@ -9,7 +9,7 @@ import subprocess as sp
 DEBUG                   = 0
 WIFI_DEVICE             = re.compile(r'^w.+0$')
 CONNECTION_STRING       = "nmcli d wifi connect {} password {} ifname {}"
-DISCONNECTION_STRING    = "nmcli con down id {}"
+DISCONNECTION_STRING    = "nmcli con down uuid {}"
 GET_DEVICE_QUERY        = "nmcli -g GENERAL.DEVICE,GENERAL.TYPE --mode multiline dev show"
 GET_UUID_QUERY          = "nmcli -g DEVICE,UUID con show --active"
 GET_WIFI_LIST_QUERY     = "nmcli -g SSID,SIGNAL dev wifi list"
@@ -81,7 +81,7 @@ def connect_wifi(ssid, password):
 
 
 def disconnect_wifi():
-    uuid = get_uuid()
+    uuid = get_uuid()['uuid']
     string = DISCONNECTION_STRING.format(uuid)
     res = __nmcli_command(string)
 
