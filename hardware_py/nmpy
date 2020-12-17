@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import sys 
+import json 
+import argparse 
+import nmcli_manager as nm 
+from operator import methodcaller 
+
+
+EXPORT_JSON         = 1
+NM_SHORTCUT         = 'nm'
+FUNCTION_STRING     = "{}.{}({})"
+
+
+def jsonize(fn):
+    def wrapper(args):
+
+        if EXPORT_JSON == 1:
+
+            if args:
+                return json.dumps(fn(args))
+            else:
+                return json.dumps(fn())
+
+        return fn()
+
+    return wrapper 
+
+
+@jsonize
+def get_function(com):
+
+    fn = getattr(nm, com[0])
+
+    if len(com) == 1:
+        return fn()
+    else:
+        # uso la starred expression per "spalmare" gli argomenti della funzione
+        return fn(*com[1:])
+
+
+if __name__ == '__main__':
+    args = sys.argv 
+    command = args[1:]
+    
+    print(get_function(command))
