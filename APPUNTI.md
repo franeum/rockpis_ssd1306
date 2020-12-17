@@ -14,4 +14,7 @@
 
 ### dettagli implementativi di cui ai punti precedenti
 
-2.  attivazione `accesspoint`: hostapd.py
+2.  -   attivazione `accesspoint`: **hostapd.py**
+    -   evento su pulsante: **apd_button.py**
+    -   oled display: **oled.py**
+3.  -   creazione della connessione al wifi: **nmpy.py**

@@ -16,7 +16,8 @@ def check_exit(status_code):
 
 
 def command(key):
-
+    """execute some operations over hostapd service
+    """
     if key in KEYWORD:
         res = sh.run(APD_QUERY.format(key)) 
         return check_exit(res)
@@ -25,6 +26,8 @@ def command(key):
 
 
 def status():
+    """query status to hostapd service
+    """
     res = sh.command(APD_QUERY.format('status'))
     return res.decode('utf-8') 
 
