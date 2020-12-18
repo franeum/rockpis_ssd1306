@@ -18,3 +18,43 @@
     -   evento su pulsante: **apd_button.py**
     -   oled display: **oled.py**
 3.  -   creazione della connessione al wifi: **nmpy.py**
+
+### Attivazione dell'`access point`
+
+1. Se esiste una connessione una connessione attiva, _catturare_ il nome del profilo di connessione
+
+2. Se esiste, impostare il profilo di connessione per non connettersi automaticamente:
+
+```bash
+sudo nmcli con modify "$PROFILE" autoconnect no
+```
+
+3.  attivare `hostapd` e gli altri servizi connessi:
+
+```bash
+sudo -i -- sh -c 'systemctl stop dnsmasq && \
+systemctl stop hostapd && \
+systemctl restart dhcpcd && \
+systemctl start dnsmasq && \
+systemctl start hostapd'
+```
+
+```bash
+sudo nmcli dev disconnect wlan0
+```
+
+```bash
+sudo -i -- sh -c 'systemctl stop dnsmasq && \
+systemctl stop hostapd && \
+systemctl restart dhcpcd && \
+systemctl start dnsmasq && \
+systemctl start hostapd'
+```
+
+Prima di creare l'`acces point` accertare l'esistenza di una delle seguenti condizioni:
+
+1.  Esiste una connessione wifi attiva
+2.  Non esiste una connessione wifi attiva
+
+Nel primo caso bisogna disattivare la connessione attiva:
+nmcli dev disconnect wlan0

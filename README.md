@@ -487,8 +487,8 @@ Nel file `/etc/dhcpcd.conf` inserire queste righe:
 ```bash
 nohook wpa_supplicant
 interface wlan0
-static ip_address=192.168.4.1/24
-static routers=192.168.4.2
+static ip_address=192.168.72.1/24
+static routers=192.168.72.2
 ```
 
 Riavviare il demone `dhcpdc`:
@@ -501,7 +501,7 @@ Nel file `/etc/dnsmasq.conf` inserire queste righe:
 
 ```bash
 interface=wlan0      # Use the require wireless interface - usually wlan0
-  dhcp-range=192.168.4.3,192.168.4.20,255.255.255.0,24h
+  dhcp-range=192.168.72 .3,192.168.72.20,255.255.255.0,24h
 ```
 
 Creare (se non esiste) il file `/etc/hostapd/hostapd.conf` con il seguente contenuto:
@@ -568,6 +568,17 @@ In `/etc/rc.local` aggiungere la seguente linea prima di `exit 0`:
 
 ```
 iptables-restore < /etc/iptables.ipv4.nat
+```
+
+Verificare che il file `/etc/NetworkManager/NetworkManager.conf` si presenti in questo modo:
+
+```yaml
+[main]
+plugins=ifupdown,keyfile,ofono
+dns=dnsmasq
+
+[ifupdown]
+managed=false
 ```
 
 Riavviare
@@ -638,3 +649,29 @@ Disconnettersi dalla rete:
 ```bash
 sudo nmcli con down id UUID-RETE
 ```
+
+## Disabilitare la connessione automatica alla rete wifi
+
+```bash
+sudo nmcli con modify "$PROFILE" autoconnect no
+```
+
+### Annotazione importante su `hostapd` e `dhcpcd`
+
+Se i due servizi sono abilitati ad ogni avvio del `rockpis`, potrebbero non permettere la connessione alla rete wifi, quindi è una buona idea eliminare i file relativi dalla directory `/etc/rcX.d`, dove `X` corrisponde al valore indicato dal comando `sudo runlevel`.
+
+I file relativi sono i seguenti:
+
+```bash
+K01dhcpcd -> ../init.d/dhcpcd
+S01hostapd -> ../init.d/hostapd
+S01dnsmasq -> ../init.d/dnsmasq
+```
+
+eliminarli semplicemente con il comando `rm`:
+
+```bash
+sudo rm K01dhcpcd && sudo rm S01hostapd && sudo rm S01dnsmasq
+```
+
+nmcli d wifi connect VodafoneA66208560 password bbzmecflaht7y2f5 ifname wlan0 name myvodafone
