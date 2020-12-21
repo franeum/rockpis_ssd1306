@@ -674,7 +674,7 @@ eliminarli semplicemente con il comando `rm`:
 sudo rm K01dhcpcd && sudo rm S01hostapd && sudo rm S01dnsmasq
 ```
 
-nmcli d wifi connect VodafoneA66208560 password bbzmecflaht7y2f5 ifname wlan0 name myvodafone
+**Se il wififi non si connette automaticamente, eliminare il MAC address della scheda wifi tramite il comando `sudo nmtui`**
 
 ### Creazione di un dns server per il web server locale
 
