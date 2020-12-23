@@ -2,7 +2,7 @@
 
 # check if disconnected (30 is disconnected, 100 is connected)
 
-server_path=~/Documenti/rockpis_server_ap/server
+server_path=/home/rock/Documenti/rockpis_server_ap/server/
 
 function concheck {
 	res=`nmcli -g GENERAL.STATE dev show wlan0 | grep 100` 
@@ -19,7 +19,8 @@ function createap {
 	systemctl stop hostapd &&
 	systemctl restart dhcpcd &&
 	systemctl start dnsmasq &&
-	systemctl start hostapd
+	systemctl start hostapd 
+
 	res=$?
 	
 	echo $res 
@@ -50,10 +51,11 @@ function main {
 		exit 1
 	fi
 
-    killall node
+	sudo systemctl restart dnsmasq
+	pkill node
 
-    cd $server_path
-    PORT=80 npm run dev
+	cd $server_path
+	PORT=80 npm run dev
 }
 
 main
