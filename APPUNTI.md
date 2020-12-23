@@ -58,3 +58,29 @@ Prima di creare l'`acces point` accertare l'esistenza di una delle seguenti cond
 
 Nel primo caso bisogna disattivare la connessione attiva:
 nmcli dev disconnect wlan0
+
+## Abilitare l'accesso di `root` da `ssh`
+
+Aprire il file `/etc/ssh/sshd_config` e aggiungere la seguente riga:
+
+```bash
+PermitRootLogin yes
+```
+
+## Abilitare l'utente `rock` ad avere i privilegi di `root` senza sudo (né password)
+
+```bash
+sudo visudo
+```
+
+All'interno del file che si presenta, scrivere le seguenti righe
+
+```bash
+rock ALL=(ALL) NOPASSWD: ALL
+```
+
+## Ottenere l'ip di una connessione
+
+```bash
+nmcli -g IP4.ADDRESS d show p2p0 | cut -f1 -d/
+```
