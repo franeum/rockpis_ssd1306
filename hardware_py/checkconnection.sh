@@ -2,6 +2,8 @@
 
 # check if disconnected (30 is disconnected, 100 is connected)
 
+server_path=~/Documenti/rockpis_server_ap/server
+
 function concheck {
 	res=`nmcli -g GENERAL.STATE dev show wlan0 | grep 100` 
 	if [ -n "$res" ]; then
@@ -28,13 +30,13 @@ function main {
 	check=$(concheck)
 
 	if [[ $check -eq 1 ]]; then
-		echo disconnesso			
+		echo yet disconnected 			
 	else
-		echo connesso...
+		echo connected...
 
 		nmcli dev disconnect wlan0 # disconnetto l'interfaccia wlan0
 			
-		echo ora disconnesso	
+		echo now disconnected 	
 	fi
 
 	nmcli dev set wlan0 autoconnect no
@@ -43,11 +45,15 @@ function main {
 
 	if [[ $ap -eq 0 ]]; then
 		echo ACCESS POINT CREATED
-		exit 0	
 	else
 		echo SOMETHING WRONG
 		exit 1
 	fi
+
+    killall node
+
+    cd $server_path
+    PORT=80 npm run dev
 }
 
 main

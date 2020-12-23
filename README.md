@@ -674,4 +674,47 @@ eliminarli semplicemente con il comando `rm`:
 sudo rm K01dhcpcd && sudo rm S01hostapd && sudo rm S01dnsmasq
 ```
 
-nmcli d wifi connect VodafoneA66208560 password bbzmecflaht7y2f5 ifname wlan0 name myvodafone
+**Se il wififi non si connette automaticamente, eliminare il MAC address della scheda wifi tramite il comando `sudo nmtui`**
+
+### Creazione di un dns server per il web server locale
+
+Aggiungere le seguenti righe alla fine del file `/etc/dnsmasq.conf`:
+
+```bash
+server=8.8.8.8
+no-resolv
+no-poll
+no-hosts
+addn-hosts=/etc/hosts-dns
+expand-hosts
+domain=rockpis.net
+log-queries
+clear-on-reload
+```
+
+Di fatto, eliminando tutte le righe commentate, il file `dnsmasq.conf` dopo la configurazione per `dhcpcd` e per il `dns` avrà le seguenti direttive:
+
+```bash
+server=8.8.8.8
+no-resolv
+no-poll
+no-hosts
+addn-hosts=/etc/hosts-dns
+expand-hosts
+domain=rockpis.net
+log-queries
+clear-on-reload
+
+interface=wlan0
+domain-needed
+bogus-priv
+dhcp-range=192.168.72.3,192.168.72.20,255.255.255.0,24h
+```
+
+Creare il file `/etc/hosts-dns` e al suo interno inserire le seguenti righe:
+
+```bash
+192.168.72.1 myrock.rockpis.net
+```
+
+Quet'ultimo file contiene la risoluzione dei nomi, cioè la tabella di conversione nome -> ip. In questo caso un unico record.
