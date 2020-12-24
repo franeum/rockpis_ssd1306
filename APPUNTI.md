@@ -84,3 +84,10 @@ rock ALL=(ALL) NOPASSWD: ALL
 ```bash
 nmcli -g IP4.ADDRESS d show p2p0 | cut -f1 -d/
 ```
+
+stefano@techelettronica.it
+74HC595
+rgb led anodo o catodo comune
+attiny85 digispark
+speaker
+amplificatore 8403
