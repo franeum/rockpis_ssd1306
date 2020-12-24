@@ -38,6 +38,7 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto �
 1. [Installare `nodejs`](#installare-nodejs)
 1. [Configurare il `bluetooth`](#configurare-il-bluetooth)
 1. [Access Point](#access-point)
+1. [Led wifi](#led-wifi)
 
 ## Pinout audio
 
@@ -718,3 +719,11 @@ Creare il file `/etc/hosts-dns` e al suo interno inserire le seguenti righe:
 ```
 
 Quet'ultimo file contiene la risoluzione dei nomi, cioè la tabella di conversione nome -> ip. In questo caso un unico record.
+
+## Led wifi
+
+Per configurare un led è necessario creare un servizio apposito nella folder `/usr/lib/systemd/system`. Il servizio sarà definito in un file con estensione `.service`. In questo caso creiamo il file `ledwifi.service`. Il contenuto del file è il seguente:\
+
+```bash
+TODO
+```
