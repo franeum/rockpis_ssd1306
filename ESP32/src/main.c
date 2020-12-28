@@ -14,7 +14,7 @@
 #define DEBUG 1
 
 #define DEFAULT_VREF    1100        //Use adc2_vref_to_gpio() to obtain a better estimate
-#define NO_OF_SAMPLES   64
+#define NO_OF_SAMPLES   256
 
 #define ECHO_TEST_TXD (4)
 #define ECHO_TEST_RXD (5)
@@ -30,9 +30,9 @@
 
 static esp_adc_cal_characteristics_t *adc_chars;
 //static const adc_channel_t channel = ADC_CHANNEL_6;     //GPIO34 if ADC1, GPIO14 if ADC2
-static const adc_bits_width_t width = ADC_WIDTH_BIT_12;
+static const adc_bits_width_t width = ADC_WIDTH_BIT_9;
 static const adc_atten_t atten = ADC_ATTEN_MAX; //ADC_ATTEN_DB_0;
-static const adc_unit_t unit = ADC_UNIT_1;
+static const adc_unit_t unit = ADC_UNIT_2;
 
 
 typedef struct pot {
@@ -74,15 +74,15 @@ static void echo_task(void *arg)
 {
     potentiometer *pot = (potentiometer *)arg;
     uint8_t id = (uint8_t)pot->id;
-    adc_channel_t channel = (adc_channel_t)pot->chan;
+    adc_channel_t channel = (adc_channel_t)pot->chan; //(adc_channel_t)pot->chan;
     uint8_t prev = (uint8_t)pot->prev;
 
     check_efuse();
 
-    adc1_config_width(width);
-    adc1_config_channel_atten(channel, atten);
+    //adc1_config_width(width);
+    adc2_config_channel_atten((adc2_channel_t)channel, atten);
 
-
+    /*
     uart_config_t uart_config = {
         .baud_rate = ECHO_UART_BAUD_RATE,
         .data_bits = UART_DATA_8_BITS,
@@ -93,21 +93,23 @@ static void echo_task(void *arg)
     };
 
     int intr_alloc_flags = 0;
+    
 
 #if CONFIG_UART_ISR_IN_IRAM
     intr_alloc_flags = ESP_INTR_FLAG_IRAM;
 #endif
 
+
     ESP_ERROR_CHECK(uart_driver_install(ECHO_UART_PORT_NUM, BUF_SIZE * 2, 0, 0, NULL, intr_alloc_flags));
     ESP_ERROR_CHECK(uart_param_config(ECHO_UART_PORT_NUM, &uart_config));
     ESP_ERROR_CHECK(uart_set_pin(ECHO_UART_PORT_NUM, ECHO_TEST_TXD, ECHO_TEST_RXD, ECHO_TEST_RTS, ECHO_TEST_CTS));
-
+*/
 
     //Characterize ADC
     adc_chars = calloc(1, sizeof(esp_adc_cal_characteristics_t));
     esp_adc_cal_value_t val_type = esp_adc_cal_characterize(unit, atten, width, DEFAULT_VREF, adc_chars);
     print_char_val_type(val_type);
-
+    
     uint8_t data[] = { 0, 0 };
     data[0] = id;
 
@@ -115,34 +117,36 @@ static void echo_task(void *arg)
         uint32_t adc_reading = 0;
 
         for (int i = 0; i < NO_OF_SAMPLES; i++) {
-            if (unit == ADC_UNIT_1)
-                adc_reading += adc1_get_raw((adc1_channel_t)channel);
+            if (unit == ADC_UNIT_2) {
+                int raw;
+                adc2_get_raw((adc2_channel_t)channel, width, &raw);
+                adc_reading += raw;
+            }
         }
 
         adc_reading /= NO_OF_SAMPLES;
-        adc_reading = adc_reading >> 5;
+        adc_reading = adc_reading >> 2;
 
-        if (prev != adc_reading) {
+        if (prev != (uint8_t)adc_reading) {
             data[1] = (uint8_t)adc_reading;
-            prev = adc_reading;
+            prev = adc_reading; 
 #if DEBUG
-            printf("%d: %d\n", data[0], data[1]);
+            printf("%d\n", data[1]);
 #else
             uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, sizeof(data));
 #endif
         }
-
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
 
 void app_main(void) {
 
-    potentiometer pot1 = {
+    static potentiometer pot1 = {
         .id = 1,
-        .chan = ADC1_CHANNEL_6,
+        .chan = ADC_CHANNEL_3,
         .prev = 0
     };
-
-    xTaskCreate(echo_task, "uart_echo_task", 2048, (void *)&pot1, 2048, NULL);
+    
+    xTaskCreate(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, (void *)&pot1, 2, NULL);
 }
