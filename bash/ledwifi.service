@@ -1,0 +1,15 @@
+[Unit]
+ Description=Led Wifi Service
+ After=network-online.target
+ 
+[Service]
+ Type=simple
+ ExecStart=/usr/bin/bash /home/rock/Documenti/rockpis_for_audio/bash/ledforwifi.sh
+ User=root
+ Group=root
+ WorkingDirectory=/home/rock/Documenti/rockpis_for_audio/bash
+ Restart=always
+ RestartSec=5
+ 
+[Install]
+ WantedBy=multi-user.target
