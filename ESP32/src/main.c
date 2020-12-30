@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
+#include "responsive.h"
 
 #define DEBUG 1
 
@@ -113,6 +114,7 @@ static void echo_task(void *arg)
     uint8_t data[] = { 0, 0 };
     data[0] = id;
 
+    /*
     while (1) {
         uint32_t adc_reading = 0;
 
@@ -130,13 +132,32 @@ static void echo_task(void *arg)
         if (prev != (uint8_t)adc_reading) {
             data[1] = (uint8_t)adc_reading;
             prev = adc_reading; 
+    */
+    static Responsive resp = {
+        .analogResolution = 4096,
+        .activityThreshold = 8.0,
+        .edgeSnapEnable = true,
+        .errorEMA = 0.0,
+        .sleeping = false 
+    };
+
+    begin(&resp, 0, 1, 0.01);
+
+    while (1) {
+        uint32_t adc_reading = 0;
+        int raw;
+        adc2_get_raw((adc2_channel_t)channel, width, &raw);
+        update(&resp, raw);
+        printf("%d\n", resp.responsiveValue);
+        adc_reading = getValue(&resp);
+
 #if DEBUG
-            printf("%d\n", data[1]);
+            printf("%d\n", adc_reading);
 #else
             uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, sizeof(data));
 #endif
-        }
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        
+        vTaskDelay(250 / portTICK_PERIOD_MS);
     }
 }
 
