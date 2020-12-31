@@ -11,8 +11,9 @@
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 #include "responsive.h"
+#include "serial_unpack.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 #define DEFAULT_VREF    1100        //Use adc2_vref_to_gpio() to obtain a better estimate
 #define NO_OF_SAMPLES   256
@@ -31,15 +32,14 @@
 
 static esp_adc_cal_characteristics_t *adc_chars;
 //static const adc_channel_t channel = ADC_CHANNEL_6;     //GPIO34 if ADC1, GPIO14 if ADC2
-static const adc_bits_width_t width = ADC_WIDTH_BIT_9;
+static const adc_bits_width_t width = ADC_WIDTH_BIT_12;
 static const adc_atten_t atten = ADC_ATTEN_MAX; //ADC_ATTEN_DB_0;
 static const adc_unit_t unit = ADC_UNIT_2;
 
 
 typedef struct pot {
-    uint8_t id;
-    uint8_t prev;
-    adc_channel_t chan;
+    uint8_t         id;
+    adc_channel_t   chan;
 } potentiometer;
 
 
@@ -75,8 +75,7 @@ static void echo_task(void *arg)
 {
     potentiometer *pot = (potentiometer *)arg;
     uint8_t id = (uint8_t)pot->id;
-    adc_channel_t channel = (adc_channel_t)pot->chan; //(adc_channel_t)pot->chan;
-    uint8_t prev = (uint8_t)pot->prev;
+    adc_channel_t channel = (adc_channel_t)pot->chan;
 
     check_efuse();
 
@@ -112,9 +111,7 @@ static void echo_task(void *arg)
     print_char_val_type(val_type);
     
     uint8_t data[] = { 0, 0 };
-    data[0] = id;
 
-    
     static Responsive resp = {
         .analogResolution = 4096,
         .activityThreshold = 8.0,
@@ -123,18 +120,27 @@ static void echo_task(void *arg)
         .sleeping = false 
     };
 
-    begin(&resp, 0, 1, 0.01);
+    static SerialBytes s_data;
+
+    analog_responsive_begin(&resp, true, 0.01);
 
     while (1) {
         uint32_t adc_reading = 0;
         int raw;
         adc2_get_raw((adc2_channel_t)channel, width, &raw);
-        update(&resp, raw);
-        printf("%d\n", resp.responsiveValue);
+        analog_responsive_update(&resp, raw);
         adc_reading = getValue(&resp);
+        
+        serial_unpack_bytes(&s_data, id, adc_reading);
+        data[0] = s_data.leftmost;
+        data[1] = s_data.rightmost;
 
 #if DEBUG
-            printf("%d\n", adc_reading);
+            printf("id: %d\tvalue: %d\n", data[0], adc_reading);
+            printf("unpacked values: %d, %d\n", 
+                s_data.leftmost,
+                s_data.rightmost
+            );
 #else
             uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, sizeof(data));
 #endif
@@ -147,9 +153,31 @@ void app_main(void) {
 
     static potentiometer pot1 = {
         .id = 1,
-        .chan = ADC_CHANNEL_3,
-        .prev = 0
+        .chan = ADC_CHANNEL_3
     };
+
+
+    uart_config_t uart_config = {
+        .baud_rate = ECHO_UART_BAUD_RATE,
+        .data_bits = UART_DATA_8_BITS,
+        .parity    = UART_PARITY_DISABLE,
+        .stop_bits = UART_STOP_BITS_1,
+        .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+        .source_clk = UART_SCLK_APB,
+    };
+
+    int intr_alloc_flags = 0;
+        
+
+    #if CONFIG_UART_ISR_IN_IRAM
+        intr_alloc_flags = ESP_INTR_FLAG_IRAM;
+    #endif
+
+
+    ESP_ERROR_CHECK(uart_driver_install(ECHO_UART_PORT_NUM, BUF_SIZE * 2, 0, 0, NULL, intr_alloc_flags));
+    ESP_ERROR_CHECK(uart_param_config(ECHO_UART_PORT_NUM, &uart_config));
+    ESP_ERROR_CHECK(uart_set_pin(ECHO_UART_PORT_NUM, ECHO_TEST_TXD, ECHO_TEST_RXD, ECHO_TEST_RTS, ECHO_TEST_CTS));
+
     
     xTaskCreate(echo_task, "uart_echo_task", ECHO_TASK_STACK_SIZE, (void *)&pot1, 2, NULL);
 }
