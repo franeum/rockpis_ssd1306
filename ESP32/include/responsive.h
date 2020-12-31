@@ -36,7 +36,6 @@ bool hasChanged(Responsive * resp);// { return responsiveValueHasChanged; } // r
 bool isSleeping(Responsive * resp);// { return sleeping; } // returns true if the algorithm is currently in sleeping mode
 //void update(); // updates the value by performing an analogRead() and calculating a responsive value based off it
 void update(Responsive * resp, int rawValueRead); // updates the value accepting a value and calculating a responsive value based off it
-
 void setSnapMultiplier(Responsive * resp, float newMultiplier);
 void enableSleep(Responsive * resp);// { sleepEnable = true; }
 void disableSleep(Responsive * resp);// { sleepEnable = false; }

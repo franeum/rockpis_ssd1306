@@ -114,25 +114,7 @@ static void echo_task(void *arg)
     uint8_t data[] = { 0, 0 };
     data[0] = id;
 
-    /*
-    while (1) {
-        uint32_t adc_reading = 0;
-
-        for (int i = 0; i < NO_OF_SAMPLES; i++) {
-            if (unit == ADC_UNIT_2) {
-                int raw;
-                adc2_get_raw((adc2_channel_t)channel, width, &raw);
-                adc_reading += raw;
-            }
-        }
-
-        adc_reading /= NO_OF_SAMPLES;
-        adc_reading = adc_reading >> 2;
-
-        if (prev != (uint8_t)adc_reading) {
-            data[1] = (uint8_t)adc_reading;
-            prev = adc_reading; 
-    */
+    
     static Responsive resp = {
         .analogResolution = 4096,
         .activityThreshold = 8.0,
@@ -157,7 +139,7 @@ static void echo_task(void *arg)
             uart_write_bytes(ECHO_UART_PORT_NUM, (const char *) data, sizeof(data));
 #endif
         
-        vTaskDelay(250 / portTICK_PERIOD_MS);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
 
