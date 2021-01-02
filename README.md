@@ -54,9 +54,10 @@ _N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, q
 
 ### ssh su Debian
 
-1. avviare una finestra di terminale e cercare il nome dell'interfaccia ethernet del computer:```
-   ip a
+1. avviare una finestra di terminale e cercare il nome dell'interfaccia ethernet del computer:
 
+```
+ip a
 ```
 
 l'interfaccia sarà **eth0** oppure qualcosa come **enxx**. Questo rappresenta il nostro _eth-device-name_
@@ -448,7 +449,7 @@ mraa-gpio list #resistuisce la lista dei pin e la loro funzione
 mraa-gpio get <numero_pin> # fornisce lo stato di un pin
 mraa-gpio set <numero_pin> <livello> # imposta il valore di un pin a 0 o 1
 
-````
+```
 
 ### programmazione del gpio
 
@@ -468,7 +469,7 @@ sudo apt install liblo7 liblo-dev
 pip3 install Cython
 pip3 install pyliblo
 pip3 install supercollider
-````
+```
 
 _N.B. l'installazione di Cython potrebbe richiedere molto tempo_
 
