@@ -1,4 +1,4 @@
-theme: jekyll-theme-time-machine
+theme: jekyll-theme-minimal
 title: Rockpis for audio
 baseurl: "/rockpis_for_audio"
 url: "https://franeum.github.io"
