@@ -54,7 +54,7 @@ _N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, q
 
 ### ssh su Debian
 
-1. avviare una finestra di terminale e cercare il nome dell'interfaccia ethernet del computer:
+1\. avviare una finestra di terminale e cercare il nome dell'interfaccia ethernet del computer:
 
 ```
 ip a
@@ -62,7 +62,7 @@ ip a
 
 l'interfaccia sarà **eth0** oppure qualcosa come **enxx**. Questo rappresenta il nostro _eth-device-name_
 
-2. creare una connessione con il seguente comando:
+2\. creare una connessione con il seguente comando:
 
 ```
 
