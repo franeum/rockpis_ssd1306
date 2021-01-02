@@ -1,2 +1,2 @@
 remote_theme: pmarsceill/just-the-docs
-exclude: ["EXPERIMENTAL_SCRIPTS/","APPUNTI.md]
+exclude: ["EXPERIMENTAL_SCRIPTS/","APPUNTI.md"]
