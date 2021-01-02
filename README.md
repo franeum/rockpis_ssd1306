@@ -6,6 +6,8 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto Ã
 
 ---
 
+---
+
 1. [Pinout audio](#pinout-audio)
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh-tramite-connessione-ethernet)
 
@@ -35,6 +37,8 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto Ã
 1. [Configurare il `bluetooth`](#configurare-il-bluetooth)
 1. [Access Point](#access-point)
 1. [Led wifi](#led-wifi)
+
+---
 
 ---
 
