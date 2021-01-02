@@ -14,9 +14,14 @@ body {
 }
 
 .inner {
-    max-width: 900px;
+    max-width: 960px;
 }
 
 #project_tagline {
     font-size: 32px;
+}
+
+pre,
+code {
+    font-size: 1em;
 }
