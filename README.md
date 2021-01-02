@@ -70,7 +70,7 @@ nmcli con add con-name my-eth-1 ifname <eth-device-name> type ethernet ipv4.meth
 
 ```
 
-3. attivare la connessione:
+3\. attivare la connessione:
 
 ```
 
@@ -78,7 +78,7 @@ nmcli con up my-eth-1
 
 ```
 
-4. verificare che la connessione sia attiva:
+4\. verificare che la connessione sia attiva:
 
 ```
 
@@ -86,7 +86,7 @@ nmcli con show
 
 ```
 
-5. ottenere l'ip dell'interfaccia ethernet:
+5\. ottenere l'ip dell'interfaccia ethernet:
 
 ```
 
@@ -96,7 +96,7 @@ ip a
 
 l'ip potrebbe essere qualcosa come 10.0.x.x oppure 192.168.x.x. Annotare i primi 3 valori (es: 10.0.1 oppure 192.168.1). questi rappresentano l'indirizzo di sottorete (_subnet_addr_) che ci interessa.
 
-6. collegare la _rockpis_ alla porta ethernet e pingare l'intera sottorete:
+6\. collegare la _rockpis_ alla porta ethernet e pingare l'intera sottorete:
 
 ```
 
@@ -122,7 +122,7 @@ $ fping -r 1 -g 10.42.0.0/24 2> /dev/null | grep -v -i unreachable
 
 ```
 
-7. il primo ip è quello locale, il secondo è quello della rockpis, a questo punto possiamo connetterci (l'utente di default è _rock_) alla scheda con il protocollo ssh:
+7\. il primo ip è quello locale, il secondo è quello della rockpis, a questo punto possiamo connetterci (l'utente di default è _rock_) alla scheda con il protocollo ssh:
 
 ```
 
