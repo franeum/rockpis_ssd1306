@@ -1,3 +1,6 @@
-[submodule "rockpis_server_ap"]
-	path = rockpis_server_ap
+[submodule "ESP32_CONTROLLER"]
+	path = ESP32_CONTROLLER
+	url = git@github.com:franeum/rockpis_esp32_controller.git
+[submodule "SERVER_AP"]
+	path = SERVER_AP
 	url = git@github.com:franeum/rockpis_server_ap.git
