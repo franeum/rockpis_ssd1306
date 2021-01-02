@@ -1,5 +1,7 @@
 # LEM
 
+---
+
 ## Linux Embedded Music
 
 Appunti sparsi di configurazione della scheda Rock Pi S per musicisti.  
@@ -9,8 +11,6 @@ A differenza delle altre schede simil-Raspberry, che nella migliore delle ipotes
 La scheda si presenta in varie configurazioni hardware, ma per questo progetto è stata testata una scheda v1.1 con 512 MB di ram, WiFi e Bluetooth integrati. Il sistema operativo montato su una SD card da 8 giga è Debian Buster, [fornito dal produttore](https://wiki.radxa.com/RockpiS/downloads) e regolarmente aggiornato.
 
 ---
-
-# Indice
 
 1. [Pinout audio](#pinout-audio)
 1. [Collegarsi a `rockpis` tramite `ssh`](#collegarsi-a-rockpis-via-ssh-tramite-connessione-ethernet)
@@ -42,13 +42,15 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto �
 1. [Access Point](#access-point)
 1. [Led wifi](#led-wifi)
 
-## Pinout audio
+---Pinout audio
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/franeum/rockpis_for_audio/master/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
 </p>
 
 _N.B. Nella versione 1.2 della scheda, i microfoni 3 e 4 sono stati eliminati, quindi restano attivi i microfoni 1,2,5,6,7,8_
+
+---
 
 ## Collegarsi a rockpis via ssh (tramite connessione ethernet)
 
@@ -116,6 +118,8 @@ ssh rock@10.42.0.250
 
 e inserire la password `rock`
 
+---
+
 ## ssh su Mac OS X
 
 1\. attivare la condivisione internet e il bridge
@@ -138,6 +142,8 @@ ssh rock@rockpis
 ```
 
 4\. inserire la password (`rock`)
+
+---
 
 ## Preparare il sistema
 
@@ -164,6 +170,8 @@ sudo apt install alsa-utils
 sudo apt install jackd2
 ```
 
+---
+
 ## Configurazione del wifi
 
 attivare la connessione tramite `nmtui` sull'interfaccia wireless `wlan0`
@@ -179,6 +187,8 @@ ssh rock@192.168.1.11
 ```
 
 e scollegare quindi il cavo ethernet. Il rockpis comincia a camminare con le sue gambe!
+
+---
 
 ---
 
@@ -211,6 +221,8 @@ bash ./.jackdrc
 puredata riceve i messaggi tramite l'oggetto `netreceive`.
 TODO: una _patch_ generica di ricezione.
 
+---
+
 ## avviare puredata al boot di rockpis
 
 1. installare `cron`:
@@ -233,6 +245,8 @@ crontab -e
 
 in questo modo all'avvio di rockpis viene eseguito il file file.pd con `pd`.
 
+---
+
 ## Setup di jack
 
 varificare il nome del dispositivo audio con il comando:
@@ -249,6 +263,8 @@ Per avviare `jackd` su richiesta copiare la seguente riga nel file `~/.jackdrc` 
 ```
 
 l'opzione -p è 1024, verificare che il valore 256 non crei troppi dropouts. In quel caso incrementare il valore (che deve essere una potenza di 2).
+
+---
 
 ## Jack in realtime priority
 
@@ -288,6 +304,8 @@ sudo usermod -a -G audio yourUserID
 dove yourUserID sarà presumibilmente `rock`
 
 5. Uscire dal sistema e riloggarsi con `ssh`
+
+---
 
 ## Installazione di supercollider
 
@@ -356,6 +374,8 @@ Server.default.waitForBoot({
 xvfb-run --auto-servernum sclang test.scd
 ```
 
+---
+
 ## GPIO
 
 La rockpis è dotata di due gruppi da 26 pin; il primo (`header 1`) è multipurpose, mentre il seconde (`header 2`) è dedicato soprattutto all'interfaccia audio. Fate riferimento a questo [schema](https://wiki.radxa.com/RockpiS/hardware/gpio) per verificare le diverse funzioni dei pin, che differiscono leggermente fra le vbersioni della scheda.
@@ -400,6 +420,8 @@ _N.B. l'installazione di Cython potrebbe richiedere molto tempo_
 3. avviare il server(`scsynth`)
 4. testare
 
+---
+
 ## Installare nodejs
 
 installare `curl` con il seguente comando:
@@ -414,6 +436,8 @@ e poi:
 curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
 sudo apt install -y nodejs
 ```
+
+---
 
 ## Configurare il `bluetooth`
 
@@ -469,6 +493,8 @@ pairable on
 agent NoInputNoOutput
 default-agent (?)
 ```
+
+---
 
 ## Access Point
 
@@ -599,6 +625,8 @@ Una volta configurato l'`access point`, si può attivare o disattivare con il co
 $ sudo service hostapd {start|stop}
 ```
 
+---
+
 ## Disabilitare permanentemente il servizio `hostapd` (access point)
 
 semplicemente:
@@ -606,6 +634,8 @@ semplicemente:
 ```bash
 sudo systemctl disable hostapd
 ```
+
+---
 
 ## Abilitare permanentemente il il servizio `hostapd` (access point)
 
@@ -637,6 +667,8 @@ systemctl start dnsmasq && \
 systemctl start hostapd'
 ```
 
+---
+
 ## Preparazione per la connessione automatica alla propria LAN
 
 Accendere il dispositivo wifi del rockpis e connettersi alla rete:
@@ -652,6 +684,8 @@ Disconnettersi dalla rete:
 ```bash
 sudo nmcli con down id UUID-RETE
 ```
+
+---
 
 ## Disabilitare la connessione automatica alla rete wifi
 
@@ -721,6 +755,8 @@ Creare il file `/etc/hosts-dns` e al suo interno inserire le seguenti righe:
 ```
 
 Quet'ultimo file contiene la risoluzione dei nomi, cioè la tabella di conversione nome -> ip. In questo caso un unico record.
+
+---
 
 ## Led wifi
 
