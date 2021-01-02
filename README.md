@@ -42,7 +42,9 @@ La scheda si presenta in varie configurazioni hardware, ma per questo progetto Ã
 1. [Access Point](#access-point)
 1. [Led wifi](#led-wifi)
 
----Pinout audio
+---
+
+## Pinout audio
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/franeum/rockpis_for_audio/master/immagini/rockpis_audio_interface.png" alt="drawing" width="300"/>
