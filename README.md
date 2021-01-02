@@ -1,9 +1,3 @@
-# LEM
-
----
-
-## Linux Embedded Music
-
 Appunti sparsi di configurazione della scheda Rock Pi S per musicisti.  
 La scheda [Rock Pi S](https://wiki.radxa.com/RockpiS), la più piccola della famiglia [Rock](https://wiki.radxa.com/Home), è provvista di un'uscita stereofonica e di 8 entrate microfoniche nella v1.1, 6 nella v1.2 e 4 nella v1.3.  
 La ragione di quest'equipaggiamento risiede nel fatto che la scheda è stata concepita per applicazioni IoT con riconoscimento vocale.
