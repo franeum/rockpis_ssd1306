@@ -134,8 +134,8 @@ e inserire la password `rock`
 
 ## ssh su Mac OS X
 
-1. attivare la condivisione internet e il bridge
-2. da terminale cercare l'ip della scheda:
+1\. attivare la condivisione internet e il bridge
+2\. da terminale cercare l'ip della scheda:
 
 ```
 
@@ -143,7 +143,7 @@ fping -g 192.168.x.0/24
 
 ```
 
-3. connettersi alla scheda via ssh:
+3\. connettersi alla scheda via ssh:
 
 ```
 
@@ -159,7 +159,7 @@ ssh rock@rockpis
 
 ```
 
-4. inserire la password (`rock`)
+4\. inserire la password (`rock`)
 
 ## Preparare il sistema
 
