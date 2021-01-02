@@ -1,3 +1,0 @@
-[submodule "SERVER_AP"]
-	path = SERVER_AP
-	url = git@github.com:franeum/rockpis_server_ap.git
