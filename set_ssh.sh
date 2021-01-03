@@ -2,7 +2,8 @@
 
 for i in ROCKPIS-*; do
     cd ${i}
-    name=`git remote -v | grep -Po "/.+\.git"`
-    git remote set-url origin git@github.com:franeum${name}
+    name=`git remote -v | grep push | grep -Eo "franeum/[^/].+\.git"`
+    #echo ${name}
+    git remote set-url origin git@github.com:${name}
     cd ..
 done
