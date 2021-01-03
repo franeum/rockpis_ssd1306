@@ -1,0 +1,3 @@
+[submodule "ROCKPIS-SYSTEMD"]
+	path = ROCKPIS-SYSTEMD
+	url = https://github.com/franeum/rockpis-systemd.git
