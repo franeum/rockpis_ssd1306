@@ -1,9 +1,0 @@
-[submodule "SERVER_AP"]
-	path = SERVER_AP
-	url = https://github.com/franeum/rockpis_server_ap.git
-[submodule "ESP32_CONTROLLER"]
-	path = ESP32_CONTROLLER
-	url = https://github.com/franeum/rockpis_esp32_controller.git
-[submodule "SYSTEMD"]
-	path = SYSTEMD
-	url = https://github.com/franeum/rockpis-systemd.git
