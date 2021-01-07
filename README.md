@@ -67,7 +67,8 @@ l'interfaccia sarà **eth0** oppure qualcosa come **enxx**. Questo rappresenta i
 2\. creare una connessione con il seguente comando:
 
 ```bash
-nmcli con add con-name my-eth-1 ifname <eth-device-name> type ethernet ipv4.method shared
+nmcli con add con-name my-eth-1 ifname <eth-device-name> \
+type ethernet ipv4.method shared
 ```
 
 3\. attivare la connessione:
