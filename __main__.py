@@ -1,4 +1,4 @@
-#/usr/bin/env python3
+#!/usr/bin/env python3
 
 # This example is for use on (Linux) computers that are using CPython with
 # Adafruit Blinka to support CircuitPython libraries. CircuitPython does
@@ -50,7 +50,7 @@ x = 0
 
 
 # Load default font.
-font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=16)
+font = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=10)
 
 # Alternatively load a TTF font.  Make sure the .ttf font file is in the
 # same directory as the python script!
@@ -82,9 +82,10 @@ while True:
     time.sleep(0.1)
 """
 #while True:
-draw.text((x, top + 8), "TEST", font=font, fill=255)
+draw.text((x, top + 8), "Ciao Amore", font=font, fill=255)
+draw.text((x, top + 16), "grazie di esistere!", font=font, fill=255)
 disp.image(image)
 disp.show()
-time.sleep(2)
+time.sleep(10)
 disp.fill(0)
 disp.show()
