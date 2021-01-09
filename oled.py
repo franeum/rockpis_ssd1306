@@ -14,8 +14,8 @@ FONT_PATH   = "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"
 class Oled64:
     def __init__(self):
         self.image = Image.new("1", (WIDTH, HEIGHT))
-        self.size = 10
-        self.font = Oled64.set_font()
+        #self.size = 10
+        #self.font = Oled64.set_font()
         self.draw = ImageDraw.Draw(self.image)
 
     def write(self, txt=None, row=1, newline=True):
@@ -23,12 +23,16 @@ class Oled64:
         if newline:
             self.clear_rect()
 
-        while self.font.getsize(txt)[0] < (WIDTH - 1): 
-            self.size += 1
-            self.font = Oled64.set_font(self.size)
+        size = 1
+        font = Oled64.set_font(size)
 
-        line = row * (row - 1) * int(HEIGHT / 4)
-        self.draw.text((0, line), txt, font=self.font, fill=255)
+        while font.getsize(txt)[0] < (WIDTH - 8): 
+            size += 1
+            font = Oled64.set_font(size)
+
+        line = (row - 1) * int(HEIGHT / 4)
+        print(line)
+        self.draw.text((0, line), txt, font=font, fill=255)
         OLED.image(self.image)
         OLED.show()
 
@@ -37,4 +41,4 @@ class Oled64:
 
     @staticmethod
     def set_font(size=10):
-        return ImageFont.FreeTrueType(FONT_PATH, size)
+        return ImageFont.FreeTypeFont(FONT_PATH, size)
