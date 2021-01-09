@@ -19,11 +19,10 @@ class Oled64:
         self.draw = ImageDraw.Draw(self.image)
 
     def write(self, txt=None, row=1, newline=True):
-        
         if newline:
             self.clear_rect()
 
-        while self.font.getsize(txt)[0] < (WIDTH - 1): 
+        while self.font.getsize(txt)[0] < (WIDTH - 1):
             self.size += 1
             self.font = Oled64.set_font(self.size)
 
