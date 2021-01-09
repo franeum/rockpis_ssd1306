@@ -1,3 +1,12 @@
+### inizializzare i submoduli 
+
+git submodule update --init --recursive
+
+### pulling all submodules
+
+git pull --recurse-submodules
+
+
 ### kicad footprint:
 
 [SSD1306](https://github.com/pforrmi/KiCad-SSD1306-128x64)  
