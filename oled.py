@@ -9,7 +9,7 @@ HEIGHT  = 64
 I2C     = busio.I2C(SCL3, SDA3)
 OLED    = adafruit_ssd1306.SSD1306_I2C(WIDTH, HEIGHT, I2C)
 IMAGE   = Image.new("1", (width, height))
-FONT    = ImageFont.truetype("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=10)
+FONT    = ImageFont.FreeTyoeFont("/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf", size=10)
 
 class Oled64:
     def __init__(self):
