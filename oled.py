@@ -15,7 +15,7 @@ class Oled64:
     def __init__(self):
         self.image = Image.new("1", (WIDTH, HEIGHT))
         self.size = 10
-        self.font = set_font()
+        self.font = Oled64.set_font()
         self.draw = ImageDraw.Draw(self.image)
 
     def write(self, txt=None, row=1, newline=True):
@@ -25,7 +25,7 @@ class Oled64:
 
         while self.font.getsize(txt)[0] < (WIDTH - 1): 
             self.size += 1
-            self.font = set_font(self.size)
+            self.font = Oled64.set_font(self.size)
 
         line = row * (row - 1) * int(HEIGHT / 4)
         self.draw.text((0, line), txt, font=self.font, fill=255)
